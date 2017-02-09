@@ -41,7 +41,11 @@
             android:launchMode="singleInstance" />
         <activity android:name=".ui.mainview.activity.ToFriendListActivity" />
         <activity android:name=".ui.mainview.activity.FromFriendsListActivity" />
-        <activity android:name=".ui.mainview.activity.MainProduct"></activity>
+        <activity android:name=".ui.mainview.activity.MainProduct" />
+        <activity
+            android:name=".ui.mainview.activity.GiftManageActivity"
+            android:label="@string/title_activity_gift_manage"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

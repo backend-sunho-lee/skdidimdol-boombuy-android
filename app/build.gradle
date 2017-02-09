@@ -43,4 +43,12 @@ dependencies {
     compile 'com.android.support:support-v4:24.2.1'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'
+
+    // 파이어베이스
+    compile 'com.google.firebase:firebase-core:10.0.1'
+    // FCM 메시징
+    compile 'com.google.firebase:firebase-messaging:10.0.1'
+
+    compile 'com.navercorp.volleyextensions:volley-extensions:1.1.1'
+    compile 'com.google.code.gson:gson:2.8.0'
 }

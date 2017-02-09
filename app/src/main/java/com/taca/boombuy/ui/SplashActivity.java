@@ -51,15 +51,16 @@ public class SplashActivity extends Activity {
         Bitmap icon = BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_launcher);
         Single_Value.getInstance().vo_giftitem_list = new VO_giftitem_list();
         Single_Value.getInstance().vo_giftitem_list.setProduct_imageView_cell(icon);
-        Single_Value.getInstance().vo_giftitem_list.setProduct_title_cell("김지민");
-        Single_Value.getInstance().vo_giftitem_list.setProduct_price_cell("30,000원");
+        Single_Value.getInstance().vo_giftitem_list.setProduct_title_cell("basic");
+        Single_Value.getInstance().vo_giftitem_list.setProduct_price_cell("basic");
         Single_Value.getInstance().vo_giftitem_lists.add(Single_Value.getInstance().vo_giftitem_list);
 
+        Single_Value.getInstance().item_arraylist.clear();
         Bitmap icon2 = BitmapFactory.decodeResource(this.getResources(), R.drawable.product_icon);
         for (int i = 0; i < 5; i++) {
             Single_Value.getInstance().vo_giftitem_list = new VO_giftitem_list();
             Single_Value.getInstance().vo_giftitem_list.setProduct_imageView_cell(icon2);
-            Single_Value.getInstance().vo_giftitem_list.setProduct_title_cell("김지민"+i);
+            Single_Value.getInstance().vo_giftitem_list.setProduct_title_cell("상품"+i);
             Single_Value.getInstance().vo_giftitem_list.setProduct_price_cell("30,000원");
             Single_Value.getInstance().item_arraylist.add(Single_Value.getInstance().vo_giftitem_list);
         }

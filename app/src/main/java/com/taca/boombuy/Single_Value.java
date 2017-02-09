@@ -44,8 +44,30 @@ public class Single_Value {
     // 전체 선물 리스트 VO
     public ArrayList<VO_giftitem_list> item_arraylist = new ArrayList<VO_giftitem_list>();
 
-    // 체크박스 선물 리스트 VO
-    public ArrayList<VO_giftitem_list> checkbox_checklist = new ArrayList<VO_giftitem_list>();
+    /*// 체크박스 선물 리스트 VO
+    public ArrayList<VO_giftitem_list> checkbox_checklist = new ArrayList<VO_giftitem_list>();*/
 
+    public int devided_master() {
+        int total = 0;
+        int master_price = 0;
+        int devided_price = 0;
+        for (int i = 0; i < Single_Value.getInstance().vo_giftitem_lists.size(); i++) {
+            // 글자 "원"을 제거한 후 인트형으로 바꿔서 토탈 금액을 구함
+            total += Integer.parseInt((Single_Value.getInstance().vo_giftitem_lists.get(i).getProduct_price_cell()).replace(",", "").replace("원", ""));
+        }
+        devided_price = total / (Single_Value.getInstance().vo_from_friends_infos.size() + 1);
+        master_price = total - (devided_price * Single_Value.getInstance().vo_from_friends_infos.size());
+        return master_price;
+    }
 
+    public int devided_non_master() {
+        int total = 0;
+        int devided_price = 0;
+        for (int i = 0; i < Single_Value.getInstance().vo_giftitem_lists.size(); i++) {
+            // 글자 "원"을 제거한 후 인트형으로 바꿔서 토탈 금액을 구함
+            total += Integer.parseInt((Single_Value.getInstance().vo_giftitem_lists.get(i).getProduct_price_cell()).replace(",", "").replace("원", ""));
+        }
+        devided_price = total / (Single_Value.getInstance().vo_from_friends_infos.size() + 1);
+        return devided_price;
+    }
 }

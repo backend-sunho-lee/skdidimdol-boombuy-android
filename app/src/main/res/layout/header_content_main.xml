@@ -207,15 +207,68 @@
         android:background="@color/boderColor" />
 
     <LinearLayout
+        android:id="@+id/mycell"
         android:layout_width="match_parent"
         android:layout_height="44.5dp"
-        android:layout_weight="89">
+        android:layout_weight="89"
+        android:orientation="horizontal"
+        android:weightSum="1000">
 
-        <TextView
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="내가 결제할 금액~~ + 버튼" />
+            android:layout_weight="20"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="150">
+            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:civ_border_color="@color/boderColor"
+                app:civ_border_width="0.5dp"
+                android:background="@drawable/img_basic_profile"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="30"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="350">
+            <TextView
+                android:textSize="17dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="내가 결제할 금액" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="200">
+            <TextView
+                android:id="@+id/tv_devided_master"
+                android:textSize="17dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:text="" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="250">
+            <ImageButton
+                android:onClick="onMovePaymentActivity"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
     </LinearLayout>
 
     <!--가로 줄-->

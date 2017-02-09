@@ -66,6 +66,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // 보낼 사람들 이름 텍스트뷰
     public static TextView tv_from_friends_name;
 
+    // 내가 결제할 금액 텍스트뷰
+    TextView tv_devided_master;
+
+    // 내가 결제할 금액 나오는 리니어(값이 없을 때는 invisible하려고)
+    LinearLayout mycell;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,22 +137,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         recyclerview.setAdapter(recycleAdapter);
     }
 
-    //int test = 0;
+    public void onMovePaymentActivity(View view) {
+        /*Intent intent = new Intent(MainActivity.this, GiftManageActivity.class);
+        startActivity(intent);*/
+    }
 
     public void onAdd(View view) {
-        /*test++;
-        Collections.reverse(Single_Value.getInstance().vo_giftitem_lists); // 새로운 데이터를 리스트의 앞에 추가 해야하므로 리버스한 후 추가 후 다시 리버스
-
-        Bitmap icon = BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_launcher);
-        Single_Value.getInstance().vo_giftitem_list = new VO_giftitem_list();
-        Single_Value.getInstance().vo_giftitem_list.setBitmap(icon);
-        Single_Value.getInstance().vo_giftitem_list.setText1("김지민" + test);
-        Single_Value.getInstance().vo_giftitem_list.setText2("30000원");
-        Single_Value.getInstance().vo_giftitem_lists.add(Single_Value.getInstance().vo_giftitem_list);
-
-        Collections.reverse(Single_Value.getInstance().vo_giftitem_lists);
-
-        recyclerview.setAdapter(recycleAdapter);*/
         Intent intent = new Intent(MainActivity.this, MainProduct.class);
         startActivity(intent);
     }
@@ -258,7 +254,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // 데이터 설정
             //holder.iv_from_profile_cell.setImageBitmap();
             holder.tv_from_name_cell.setText(Single_Value.getInstance().vo_from_friends_infos.get(position).getName());
-            holder.tv_divided_cell.setText(Single_Value.getInstance().vo_from_friends_infos.get(position).getPhone_num());
+            holder.tv_divided_cell.setText(Single_Value.getInstance().devided_non_master() + "원");
 
             return convertView;
         }
@@ -418,9 +414,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //////////////////////////////////////////////메인 리스트뷰
             lv_from_name_list.setAdapter(fromListAdapter);
         }
-        if (Single_Value.getInstance().vo_giftitem_lists.size() != 0) {
-            recyclerview.setAdapter(recycleAdapter);
-        }
+
+        // 캐스팅 안됨
+        /*if (Single_Value.getInstance().vo_giftitem_lists.size() != 1) {
+            //tv_devided_master.setText(Single_Value.getInstance().devided_master() + "원");
+        } else {
+            //mycell.setVisibility(View.GONE);
+        }*/
+
+        recyclerview.setAdapter(recycleAdapter);
     }
 
 }

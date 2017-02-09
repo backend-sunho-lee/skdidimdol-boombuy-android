@@ -4,10 +4,13 @@
     android:layout_height="match_parent"
     tools:context="com.taca.boombuy.ui.mainview.fragment.ReceivedGift">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <ExpandableListView
+        android:id="@+id/expandable_listview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:groupIndicator="@null"
+        >
+
+    </ExpandableListView>
 
 </FrameLayout>

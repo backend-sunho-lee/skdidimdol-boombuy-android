@@ -25,7 +25,7 @@
                 android:textStyle="bold" />
 
             <ImageButton
-                android:id="@+id/received_gift_cell_iv_state"
+                android:id="@+id/received_gift_cell_open"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -35,11 +35,10 @@
     </LinearLayout>
 
 
-
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
 
         >
 
@@ -64,11 +63,12 @@
             android:layout_height="100dp"
             android:orientation="horizontal">
 
-
-            <FrameLayout
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="5">
+                android:layout_weight="5"
+                android:gravity="center">
 
                 <ImageView
                     android:id="@+id/received_gift_cell_sendMemberProfile"
@@ -77,19 +77,35 @@
                     android:layout_gravity="center"
                     android:src="@drawable/img_basic_profile" />
 
-            </FrameLayout>
+                <TextView
+                    android:id="@+id/gift_sendPeople"
+                    android:gravity="center"
+                    android:text="한길웅 외 3명"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"/>
+            </LinearLayout>
 
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
+
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_weight="1"
-                android:src="@drawable/arrow_right" />
+                android:layout_width="0dp"
+                android:layout_height="wrap_content">
 
-            <FrameLayout
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/arrow_right"
+                    android:id="@+id/imageView" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="vertical"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="5">
-
+                android:layout_weight="5"
+                android:gravity="center">
 
                 <ImageView
                     android:id="@+id/received_gift_cell_receivedMemberProfile"
@@ -98,11 +114,20 @@
                     android:layout_gravity="center"
                     android:src="@drawable/img_basic_profile" />
 
-            </FrameLayout>
+                <TextView
+                    android:id="@+id/gift_receivedPerson"
+                    android:gravity="center"
+                    android:text="홍승지"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"/>
+            </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
 
+
+    <!-- 밑에부분 아직 보류 -->
     <LinearLayout
         android:id="@+id/received_gift_cell_detail_gift_info_layout"
         android:layout_width="match_parent"
@@ -118,11 +143,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="같이사는새키들 리스트뷰" />
-
+<!--
             <ListView
                 android:id="@+id/received_gift_cell_detail_gift_info_buyer_listview"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></ListView>
+                android:layout_height="wrap_content"></ListView>-->
         </LinearLayout>
 
         <LinearLayout
@@ -134,11 +159,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="구매 상품 정보 리스트뷰" />
-
+<!--
             <ListView
                 android:id="@+id/received_gift_cell_detail_gift_info_product_listview"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"></ListView>
+                android:layout_height="match_parent"></ListView>-->
             <!--
                     <LinearLayout
                         android:orientation="horizontal"

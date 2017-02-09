@@ -144,8 +144,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void onMovePaymentActivity(View view) {
-        /*Intent intent = new Intent(MainActivity.this, GiftManageActivity.class);
-        startActivity(intent);*/
+        Intent intent = new Intent(MainActivity.this, GiftManageActivity.class);
+        startActivity(intent);
     }
 
     public void onAdd(View view) {

@@ -22,6 +22,7 @@
         android:layout_height="match_parent">
 
         <TextView
+            android:id="@+id/received_gift_cell_child_product_name"
             android:gravity="center"
             android:layout_weight="1"
             android:text="상품 이름 "
@@ -29,6 +30,7 @@
             android:layout_height="0dp" />
 
         <TextView
+            android:id="@+id/received_gift_cell_child_product_price"
             android:gravity="center"
             android:text="상품 가격"
             android:layout_weight="1"

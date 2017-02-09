@@ -26,6 +26,7 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/received_gift_cell_child_sendName"
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:gravity="center"
@@ -40,6 +41,8 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/received_gift_cell_child_sendPrice"
+
                 android:textSize="20dp"
                 android:textStyle="bold"
                 android:gravity="center"
@@ -55,6 +58,7 @@
             android:layout_height="match_parent">
 
             <ImageButton
+                android:id="@+id/received_gift_cell_child_sendPayBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

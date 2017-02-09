@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/wrapper"
+    android:layout_width="wrap_content"
+    android:layout_height="130dp"
+    android:layout_margin="10dp"
+    android:orientation="horizontal">
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/cell_basic"
+            android:layout_width="180dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/product_imageView_cell"
+                android:layout_width="match_parent"
+                android:layout_height="70dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:orientation="horizontal"
+                android:weightSum="1000">
+
+                <TextView
+                    android:id="@+id/product_title_cell"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="750" />
+
+                <Button
+                    android:id="@+id/btn_remove_gift"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="250" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/product_price_cell"
+                android:layout_width="match_parent"
+                android:layout_height="30dp" />
+        </LinearLayout>
+
+        <ImageButton
+            android:onClick="onAdd"
+            android:id="@+id/btn_add_gift_list"
+            android:background="@drawable/btn_gift_add_list"
+            android:layout_width="180dp"
+            android:layout_height="match_parent" />
+    </FrameLayout>
+
+
+</android.support.v7.widget.CardView>

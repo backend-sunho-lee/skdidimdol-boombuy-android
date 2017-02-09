@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_boombuy_shop"
+            android:icon="@drawable/ic_menu_camera"
+            android:title="BOOMBUY SHOP" />
+        <item
+            android:id="@+id/nav_gift_manage"
+            android:icon="@drawable/ic_menu_gallery"
+            android:title="선물관리" />
+        <item
+            android:id="@+id/nav_giftbox"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="선물함" />
+        <item
+            android:id="@+id/nav_setting"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="설정" />
+    </group>
+
+    <!--<item android:title="Communicate"
+        android:visible="true">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/ic_menu_share"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/ic_menu_send"
+                android:title="Send" />
+        </menu>
+    </item>-->
+
+</menu>

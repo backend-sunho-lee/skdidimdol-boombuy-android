@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <!--커스텀칼라-->
+
+    <!--테두리 색깔-->
+    <color name="boderColor">#5b5b5b</color>
+
+    <!--팝업창 바깥 블러 칼라-->
+    <color name="popup_blur_Color">#00000000</color>
+
+    <!--기본 흰색-->
+    <color name="basic_white">#FFFFFF</color>
+    <!--기본 검은색-->
+    <color name="basic_black">#000000</color>
+
+</resources>

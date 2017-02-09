@@ -62,15 +62,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     LinearLayoutManager linearLayoutManager;
 
     // 받을 사람 이름 텍스트뷰
-    public static TextView tv_to_friend_name;
+    TextView tv_to_friend_name;
     // 보낼 사람들 이름 텍스트뷰
-    public static TextView tv_from_friends_name;
+    TextView tv_from_friends_name;
 
     // 내가 결제할 금액 텍스트뷰
     TextView tv_devided_master;
 
-    // 내가 결제할 금액 나오는 리니어(값이 없을 때는 invisible하려고)
-    LinearLayout mycell;
+    // 총 결제 금액 텍스트 뷰
+    TextView tv_total_price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +103,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         tv_to_friend_name = (TextView) findViewById(R.id.tv_to_friend_name);
         tv_from_friends_name = (TextView) findViewById(R.id.tv_from_friends_name);
+
+        // 내가 결제할 금액 텍스트뷰
+        tv_devided_master = (TextView) findViewById(R.id.tv_devided_master);
+
+        // 총 결제 금액 텍스트 뷰
+        tv_total_price = (TextView) findViewById(R.id.tv_total_price);
 
         //임시 나중엔 sharedpreference나 디비에 연동---------------------
         //iv_profile.setImageResource(R.mipmap.ic_launcher);
@@ -387,7 +393,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         }
                     }
                     Single_Value.getInstance().vo_giftitem_lists.remove(i);
-                    recyclerview.setAdapter(recycleAdapter);
+
+                    refreshMainView();
                 }
             });
         }
@@ -397,6 +404,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onResume() {
         super.onResume();
+        refreshMainView();
+    }
+
+    public void refreshMainView(){
         if (Single_Value.getInstance().vo_to_friend_infos.size() != 0) {
             tv_to_friend_name.setText(Single_Value.getInstance().vo_to_friend_infos.get(0).getName());
         }
@@ -414,14 +425,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //////////////////////////////////////////////메인 리스트뷰
             lv_from_name_list.setAdapter(fromListAdapter);
         }
+        // 내가 결제할 금액
+        tv_devided_master.setText(Single_Value.getInstance().devided_master() + "원");
 
-        // 캐스팅 안됨
-        /*if (Single_Value.getInstance().vo_giftitem_lists.size() != 1) {
-            //tv_devided_master.setText(Single_Value.getInstance().devided_master() + "원");
-        } else {
-            //mycell.setVisibility(View.GONE);
-        }*/
+        // 총 결제 금액
+        tv_total_price.setText(Single_Value.getInstance().getTotalPrice()+"원");
 
+        // 리싸이클뷰
         recyclerview.setAdapter(recycleAdapter);
     }
 

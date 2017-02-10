@@ -16,6 +16,8 @@ import com.taca.boombuy.netmodel.ReqSendFcm;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 /**
  * Created by jimin on 2017-01-20.
  */
@@ -41,15 +43,15 @@ public class Network {
 
     ///////////////////////////////////////////////////////////////////////////
     // 통신 API
-    public void sendFcm(Context context, FCMModel fcmModel) {
+    public void sendFcm(Context context, ArrayList<FCMModel> cc) {
 
-        // 전송 : { header:{code:AD}, body:[token:xx, content:xx] }
+        // 전송 : { header:{code:AD}, body:[{token:xx, content:xx}] }
         // 응답 : { code:1, msg:"ok" }
         // 1. 파라미터 구성
         ReqSendFcm reqSendFcm = new ReqSendFcm();
         ReqHeader reqHeader = new ReqHeader();
         reqSendFcm.setHeader(reqHeader);
-        reqSendFcm.setBody(fcmModel);
+        reqSendFcm.setBody(cc);
         // 2. 요청객체 준비
         try {
             JsonObjectRequest jsonObjectRequest =

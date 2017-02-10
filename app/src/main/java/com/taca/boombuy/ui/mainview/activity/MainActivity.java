@@ -147,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // 데이터 공급원 아답터 연결
         recyclerview.setAdapter(recycleAdapter);
+
     }
 
     public void onMovePaymentActivity(View view) {
@@ -155,11 +156,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         ArrayList<FCMModel> fcmModels = new ArrayList<FCMModel>();
         FCMModel fcmModel = new FCMModel();
-        //fcmModel.setToken(FirebaseInstanceId.getInstance().getToken());
-        fcmModel.setToken("ccGKhTjloXU:APA91bHbJgKGr88hvP3_0uZ_-3xpaAyyLqWLcnro8ukQVu2FU3RVYpMEmV0wD5c934VbSjgqqLNegNgWVb3kmzYXM2F_KWgyfx5B0AhDdkNy3nZioD_mU-WqVt4FHNJTGcNYvSAJggbG");
+        fcmModel.setToken(FirebaseInstanceId.getInstance().getToken());
+        //fcmModel.setToken("ccGKhTjloXU:APA91bHbJgKGr88hvP3_0uZ_-3xpaAyyLqWLcnro8ukQVu2FU3RVYpMEmV0wD5c934VbSjgqqLNegNgWVb3kmzYXM2F_KWgyfx5B0AhDdkNy3nZioD_mU-WqVt4FHNJTGcNYvSAJggbG");
         fcmModel.setContent("Send!!!!!!!!!!!!!!!!!");
         fcmModels.add(fcmModel);
-        Network.getInstance().sendFcm(getApplicationContext(), fcmModel);
+        Network.getInstance().sendFcm(getApplicationContext(), fcmModels);
     }
 
     public void onAdd(View view) {

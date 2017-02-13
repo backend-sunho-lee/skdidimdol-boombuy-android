@@ -33,27 +33,28 @@ public class Single_Value {
 
 
 
-    // 선물 보낼 사람들 전화번호부 리스트, VO
+    // 선물 보낼 사람들 전화번호부 총 리스트, VO
     public ArrayList<VO_from_friends_local_list> vo_from_friends_local_lists = new ArrayList<VO_from_friends_local_list>();
     public VO_from_friends_local_list vo_from_friends_local_list;
 
     @Override
     public String toString() {
         return "Single_Value{" +
-                "vo_from_friends_local_list=" + vo_from_friends_local_list +
+                "vo_from_friends_local_list=" + vo_from_friends_local_list.toString() +
                 '}';
     }
 
-    // 선물 보낼 사람들 이름, 전화번호 VO
+    // 선물 보낼 사람들 이름, 전화번호 VO // parent 할때 이거써야해
     public ArrayList<VO_from_friends_info> vo_from_friends_infos = new ArrayList<VO_from_friends_info>();
-
     public VO_from_friends_info vo_from_friends_info;
-
 
 
     // 선택한 선물 리스트 VO
     public ArrayList<VO_giftitem_list> vo_giftitem_lists = new ArrayList<VO_giftitem_list>();
     public VO_giftitem_list vo_giftitem_list;
+
+
+
 
     // 전체 선물 리스트 VO
     public ArrayList<VO_giftitem_list> item_arraylist = new ArrayList<VO_giftitem_list>();

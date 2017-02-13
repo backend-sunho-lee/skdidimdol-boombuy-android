@@ -8,12 +8,13 @@ import java.util.ArrayList;
 
 public class VO_giftitem_group_info {
 
+
+    ArrayList<VO_from_friends_info> sendPeople;
     String pay_state;
-    ArrayList<VO_from_friends_local_list> sendPeople;
+
     String receivedPerson;
     String date;
     ArrayList<VO_giftitem_list> totalProductInfo;
-
 
     public String getPay_state() {
         return pay_state;
@@ -23,12 +24,11 @@ public class VO_giftitem_group_info {
         this.pay_state = pay_state;
     }
 
-
-    public ArrayList<VO_from_friends_local_list> getSendPeople() {
+    public ArrayList<VO_from_friends_info> getSendPeople() {
         return sendPeople;
     }
 
-    public void setSendPeople(ArrayList<VO_from_friends_local_list> sendPeople) {
+    public void setSendPeople(ArrayList<VO_from_friends_info> sendPeople) {
         this.sendPeople = sendPeople;
     }
 
@@ -56,15 +56,14 @@ public class VO_giftitem_group_info {
         this.totalProductInfo = totalProductInfo;
     }
 
-
     @Override
     public String toString() {
         return "VO_giftitem_group_info{" +
                 "pay_state='" + pay_state + '\'' +
-                ", sendPeople=" + sendPeople +
+                ", sendPeople=" + sendPeople.toString() +
                 ", receivedPerson='" + receivedPerson + '\'' +
                 ", date='" + date + '\'' +
-                ", totalProductInfo=" + totalProductInfo +
+                ", totalProductInfo=" + totalProductInfo.toString() +
                 '}';
     }
 }

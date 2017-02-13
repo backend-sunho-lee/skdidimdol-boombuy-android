@@ -14,6 +14,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,12 +27,16 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Single_Value;
+import com.taca.boombuy.net.Network;
+import com.taca.boombuy.netmodel.FCMModel;
 import com.taca.boombuy.vo.VO_from_friends_info;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -109,7 +114,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // 총 결제 금액 텍스트 뷰
         tv_total_price = (TextView) findViewById(R.id.tv_total_price);
-
+        String tokon = FirebaseInstanceId.getInstance().getToken();
+        Log.i("토큰 확인 : ", tokon);
         //임시 나중엔 sharedpreference나 디비에 연동---------------------
         //iv_profile.setImageResource(R.mipmap.ic_launcher);
         //---------------------------------------------------------------
@@ -141,11 +147,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // 데이터 공급원 아답터 연결
         recyclerview.setAdapter(recycleAdapter);
+
     }
 
     public void onMovePaymentActivity(View view) {
-        Intent intent = new Intent(MainActivity.this, GiftManageActivity.class);
-        startActivity(intent);
+        /*Intent intent = new Intent(MainActivity.this, GiftManageActivity.class);
+        startActivity(intent);*/
+
+        ArrayList<FCMModel> fcmModels = new ArrayList<FCMModel>();
+        FCMModel fcmModel = new FCMModel();
+        fcmModel.setToken(FirebaseInstanceId.getInstance().getToken());
+        //fcmModel.setToken("ccGKhTjloXU:APA91bHbJgKGr88hvP3_0uZ_-3xpaAyyLqWLcnro8ukQVu2FU3RVYpMEmV0wD5c934VbSjgqqLNegNgWVb3kmzYXM2F_KWgyfx5B0AhDdkNy3nZioD_mU-WqVt4FHNJTGcNYvSAJggbG");
+        fcmModel.setContent("Send!!!!!!!!!!!!!!!!!");
+        fcmModels.add(fcmModel);
+        Network.getInstance().sendFcm(getApplicationContext(), fcmModels);
     }
 
     public void onAdd(View view) {
@@ -407,7 +422,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         refreshMainView();
     }
 
-    public void refreshMainView(){
+    public void refreshMainView() {
         if (Single_Value.getInstance().vo_to_friend_infos.size() != 0) {
             tv_to_friend_name.setText(Single_Value.getInstance().vo_to_friend_infos.get(0).getName());
         }
@@ -429,7 +444,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tv_devided_master.setText(Single_Value.getInstance().devided_master() + "원");
 
         // 총 결제 금액
-        tv_total_price.setText(Single_Value.getInstance().getTotalPrice()+"원");
+        tv_total_price.setText(Single_Value.getInstance().getTotalPrice() + "원");
 
         // 리싸이클뷰
         recyclerview.setAdapter(recycleAdapter);

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "688156843413",
+    "firebase_url": "https://boombuy-92d9c.firebaseio.com",
+    "project_id": "boombuy-92d9c",
+    "storage_bucket": "boombuy-92d9c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:688156843413:android:46293d12ae34aa42",
+        "android_client_info": {
+          "package_name": "com.taca.boombuy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "688156843413-59fgqhlovu3jjl7elajrukubareujsu4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBqDX1oMVjflbduPP50MicAYtZ3uWe9Cz8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "688156843413-59fgqhlovu3jjl7elajrukubareujsu4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

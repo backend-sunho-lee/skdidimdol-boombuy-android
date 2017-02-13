@@ -9,8 +9,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.taca.boombuy.R;
-import com.taca.boombuy.ui.popup.SignUpConfirmPopupActivity;
+import com.taca.boombuy.Single_Value;
+import com.taca.boombuy.net.Network;
+import com.taca.boombuy.netmodel.SignUpModel;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -52,8 +55,17 @@ public class SignUpActivity extends AppCompatActivity {
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SignUpActivity.this, SignUpConfirmPopupActivity.class);
-                startActivity(intent);
+
+                Single_Value.getInstance().signUpModel = new SignUpModel();
+                Single_Value.getInstance().signUpModel.setPhone(et_signup_id.getText().toString());
+                Single_Value.getInstance().signUpModel.setPassword(et_signup_password.getText().toString());
+                Single_Value.getInstance().signUpModel.setName(et_signup_name.getText().toString());
+                Single_Value.getInstance().signUpModel.setToken(FirebaseInstanceId.getInstance().getToken());
+                Single_Value.getInstance().signUpModel.setProfile("");
+                Network.getInstance().bb_Signup(getApplicationContext(), Single_Value.getInstance().signUpModel);
+
+                /*Intent intent = new Intent(SignUpActivity.this, SignUpConfirmPopupActivity.class);
+                startActivity(intent);*/
             }
         });
 

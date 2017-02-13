@@ -1,5 +1,7 @@
 package com.taca.boombuy;
 
+import com.taca.boombuy.netmodel.LonInModel;
+import com.taca.boombuy.netmodel.SignUpModel;
 import com.taca.boombuy.vo.VO_from_friends_info;
 import com.taca.boombuy.vo.VO_from_friends_local_list;
 import com.taca.boombuy.vo.VO_giftitem_list;
@@ -58,6 +60,15 @@ public class Single_Value {
 
     /*// 체크박스 선물 리스트 VO
     public ArrayList<VO_giftitem_list> checkbox_checklist = new ArrayList<VO_giftitem_list>();*/
+
+
+    // 회원가입 정보
+    public SignUpModel signUpModel;
+
+    // 로그인 정보
+    public LonInModel lonInModel;
+
+
 
     public int getTotalPrice(){
         int total = 0;

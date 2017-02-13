@@ -45,7 +45,8 @@
         <activity
             android:name=".ui.mainview.activity.GiftManageActivity"
             android:label="@string/title_activity_gift_manage"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.mainview.activity.SignUpTermsActivity"></activity>
     </application>
 
 </manifest>

@@ -13,7 +13,7 @@ import android.widget.ExpandableListView;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.adapter.BaseExpandableAdapter;
-import com.taca.boombuy.vo.VO_from_friends_local_list;
+import com.taca.boombuy.vo.VO_from_friends_info;
 import com.taca.boombuy.vo.VO_giftitem_group_info;
 import com.taca.boombuy.vo.VO_giftitem_list;
 
@@ -94,43 +94,26 @@ public class ReceivedGift extends Fragment {
 
 
     public void prepareData() {
-
-
+        ArrayList<VO_from_friends_info> sendPeople;
         parent = new ArrayList<VO_giftitem_group_info>();
         child = new HashMap<VO_giftitem_group_info, ArrayList<VO_giftitem_list>>();
-
         VO_giftitem_group_info parentTemp = new VO_giftitem_group_info();
-        ArrayList<VO_from_friends_local_list> sendMember = new ArrayList<VO_from_friends_local_list>();
-
 
         // 날짜
         parentTemp.setDate("2017-02-09");
-
-        // 보내는 사람 틀
-        for(int i=0; i<Single_Value.getInstance().vo_from_friends_infos.size(); i++){
-            sendMember.add(Single_Value.getInstance().vo_from_friends_local_lists.get(i));
-        }
-
         // 받는 사람
         parentTemp.setReceivedPerson(Single_Value.getInstance().vo_to_friend_infos.get(0).getName());
-
-
-        //VO_from_friends_local_list
-        // 보내는 사람 다수
-        parentTemp.setSendPeople(sendMember);
-
+        parentTemp.setSendPeople(Single_Value.getInstance().vo_from_friends_infos);
         // 보내는 상품 목록 정보
         parentTemp.setTotalProductInfo(Single_Value.getInstance().vo_giftitem_lists);
         parentTemp.setPay_state("승인");
+
 
         parent.add(parentTemp);
 
         ArrayList<VO_giftitem_list> childTemp = new ArrayList<VO_giftitem_list>();
         childTemp.addAll(Single_Value.getInstance().vo_giftitem_lists);
         child.put(parentTemp, childTemp);
-
-
-
 
     }
 

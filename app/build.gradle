@@ -52,5 +52,8 @@ dependencies {
     // volley 통신
     compile 'com.navercorp.volleyextensions:volley-extensions:1.1.1'
     compile 'com.google.code.gson:gson:2.8.0'
+
+    // 오토버스
+    compile 'com.squareup:otto:1.3.8'
 }
 apply plugin: 'com.google.gms.google-services'

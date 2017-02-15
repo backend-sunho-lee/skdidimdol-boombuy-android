@@ -36,20 +36,17 @@
             android:name=".ui.sign.SignUpActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".ui.popup.SignUpConfirmPopupActivity"
-            android:excludeFromRecents="true"
-            android:launchMode="singleInstance" />
+            android:name=".ui.popup.SignUpPopupActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
         <activity android:name=".ui.mainview.activity.ToFriendListActivity" />
         <activity android:name=".ui.mainview.activity.FromFriendsListActivity" />
         <activity android:name=".ui.mainview.activity.MainProduct" />
         <activity
             android:name=".ui.mainview.activity.GiftManageActivity"
             android:label="@string/title_activity_gift_manage"
-<<<<<<< HEAD
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.mainview.activity.SignUpTermsActivity"></activity>
-=======
-            android:theme="@style/AppTheme.NoActionBar"></activity>
         <!--FCM 메시징 수신 서비스-->
         <service android:name=".fcm.MyFirebaseMessagingService">
             <intent-filter>
@@ -62,7 +59,6 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
->>>>>>> 689895db2f85986cf84d4f9bd7181d47e42a8c97
     </application>
 
 </manifest>

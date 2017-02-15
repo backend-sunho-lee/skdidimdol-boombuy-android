@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.telephony.TelephonyManager;
 
 import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.vo.VO_from_friends_local_list;
@@ -71,5 +72,11 @@ public class U {
                 }
             } while (contactCursor.moveToNext());
         }
+    }
+
+    public String getMyPhoneNum(Context context){
+        TelephonyManager telemamanger;
+        telemamanger = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        return telemamanger.getLine1Number();
     }
 }

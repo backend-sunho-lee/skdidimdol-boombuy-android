@@ -2,6 +2,7 @@ package com.taca.boombuy;
 
 import com.taca.boombuy.netmodel.LonInModel;
 import com.taca.boombuy.netmodel.SignUpModel;
+import com.taca.boombuy.netmodel.UpdateTokenModel;
 import com.taca.boombuy.vo.VO_from_friends_info;
 import com.taca.boombuy.vo.VO_from_friends_local_list;
 import com.taca.boombuy.vo.VO_giftitem_list;
@@ -68,6 +69,9 @@ public class Single_Value {
 
     // 로그인 정보
     public LonInModel lonInModel;
+
+    // 토큰 업데이트 정보(폰번호, 현재 토큰)
+    public UpdateTokenModel updateTokenModel;
 
 
 

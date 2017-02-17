@@ -145,6 +145,9 @@ public class FromFriendsListActivity extends AppCompatActivity {
 
             //MainActivity.tv_from_friends_name.setText(Single_Value.getInstance().vo_from_friends_infos.get(0).getName());
 
+            // 보내는 사람들 모아서 한틀에 틀에담음
+            Single_Value.getInstance().SenderNReceiver.setVo_from_friends_local_list(Single_Value.getInstance().vo_from_friends_infos);
+
             // 데이터 공급원 아답터 연결
             rv_selected_friends.setAdapter(recycleAdapter);
         }
@@ -224,6 +227,7 @@ public class FromFriendsListActivity extends AppCompatActivity {
             //holder.iv_from_profile_cell.setImageBitmap();
             holder.tv_to_friend_local_name.setText(getItem(position).getTv_from_friends_local_name());
             holder.tv_to_friend_local_number.setText(getItem(position).getTv_from_friends_local_number());
+
 
             return convertView;
         }

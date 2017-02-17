@@ -131,12 +131,18 @@ public class totalfrag extends Fragment {
 
                         Collections.reverse(Single_Value.getInstance().vo_giftitem_lists);
 
+                        // 준범]] giftStorage 파트
+                        // 체크한것들은 저장해야지
+
+                        Single_Value.getInstance().SenderNReceiver.setVO_giftitem_total_list(Single_Value.getInstance().vo_giftitem_lists);
+
                         // 선택한 곳
                         Toast.makeText(getActivity(), "선택", Toast.LENGTH_SHORT).show();
 
                     } else {
                         Single_Value.getInstance().vo_giftitem_lists.remove(getItem(position));
-                        // 선택 x
+
+
                         Toast.makeText(getActivity(), position + "번째 선택 취소", Toast.LENGTH_SHORT).show();
                     }
                 }

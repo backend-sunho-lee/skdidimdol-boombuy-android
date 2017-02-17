@@ -86,7 +86,7 @@ public class Network {
         }
     }
 
-    // tbl_bb_member 회원가입
+    // users 회원가입
     public void bb_Signup(Context context, SignUpModel signUpModel) {
         // 전송 : { header:{code:AD}, body:[{phone:xx, password:xx, name:xx, token:xx, profile:xx}] }
         // 응답 : { code:1, msg:"ok" }
@@ -106,9 +106,9 @@ public class Network {
                                 @Override
                                 public void onResponse(JSONObject response) {
                                     // 4. 응답처리
-                                    Log.i("RES", response.toString());
+                                    Log.i("RES", "bb_Signup" + response.toString());
                                     // 이벤트 발생 등록
-                                    OTTOBus.getInstance().getBus().post(response.toString());
+                                    OTTOBus.getInstance().getSign_up_bus().post(response.toString());
                                 }
                             },
                             new Response.ErrorListener() {
@@ -124,7 +124,7 @@ public class Network {
         }
     }
 
-    // tbl_bb_member 로그인
+    // users 로그인
     public void bb_Login(Context context, LonInModel lonInModel) {
         // 전송 : { header:{code:AD}, body:[{uid:xx, name:xx, tel:xx}] }
         // 응답 : { code:1, msg:"ok" }
@@ -144,9 +144,9 @@ public class Network {
                                 @Override
                                 public void onResponse(JSONObject response) {
                                     // 4. 응답처리
-                                    Log.i("RES", response.toString());
+                                    Log.i("RES", "bb_Login" + response.toString());
                                     // 이벤트 발생 등록
-                                    OTTOBus.getInstance().getBus().post(response.toString());
+                                    OTTOBus.getInstance().getSign_in_bus().post(response.toString());
                                 }
                             },
                             new Response.ErrorListener() {
@@ -162,7 +162,7 @@ public class Network {
         }
     }
 
-    // tbl_bb_member token 업데이트
+    // users token 업데이트
     public void bb_Update_token(Context context, UpdateTokenModel updateTokenModel) {
         // 전송 : { header:{code:AD}, body:[{uid:xx, name:xx, tel:xx}] }
         // 응답 : { code:1, msg:"ok" }
@@ -182,7 +182,7 @@ public class Network {
                                 @Override
                                 public void onResponse(JSONObject response) {
                                     // 4. 응답처리
-                                    Log.i("RES", response.toString());
+                                    Log.i("RES", "bb_Update_token" + response.toString());
                                 }
                             },
                             new Response.ErrorListener() {

@@ -30,8 +30,10 @@ import android.widget.TextView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Single_Value;
+import com.taca.boombuy.database.StorageHelper;
 import com.taca.boombuy.net.Network;
 import com.taca.boombuy.netmodel.FCMModel;
+import com.taca.boombuy.netmodel.UpdateTokenModel;
 import com.taca.boombuy.vo.VO_from_friends_info;
 
 import java.io.FileNotFoundException;
@@ -114,8 +116,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // 총 결제 금액 텍스트 뷰
         tv_total_price = (TextView) findViewById(R.id.tv_total_price);
-        String tokon = FirebaseInstanceId.getInstance().getToken();
-        Log.i("토큰 확인 : ", tokon);
+        String token = FirebaseInstanceId.getInstance().getToken();
+        Log.i("토큰 확인 / 전송 : ", token);
+        Single_Value.getInstance().updateTokenModel = new UpdateTokenModel();
+        Single_Value.getInstance().updateTokenModel.setPhone(StorageHelper.getInstance().getString(getApplicationContext(), "my_phone_number"));
+        Single_Value.getInstance().updateTokenModel.setToken(token);
+        Network.getInstance().bb_Update_token(getApplicationContext(), Single_Value.getInstance().updateTokenModel);
+        // 토큰이 바뀌면 쉐어드프리퍼런스에 저장
+        StorageHelper.getInstance().setString(getApplicationContext(), "my_token", token);
+
         //임시 나중엔 sharedpreference나 디비에 연동---------------------
         //iv_profile.setImageResource(R.mipmap.ic_launcher);
         //---------------------------------------------------------------

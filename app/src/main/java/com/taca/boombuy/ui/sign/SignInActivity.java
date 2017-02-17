@@ -40,7 +40,7 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
 
         // 이벤트 받을 녀석(회원가입 완료 메시지)
-        OTTOBus.getInstance().getBus().register(this);
+        OTTOBus.getInstance().getSign_in_bus().register(this);
 
         et_signin_id = (EditText) findViewById(R.id.et_signin_id);
         et_signin_password = (EditText) findViewById(R.id.et_signin_password);
@@ -95,7 +95,7 @@ public class SignInActivity extends AppCompatActivity {
             Intent intent = new Intent(SignInActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             // 오토버스 썼으면 등록해제
-            OTTOBus.getInstance().getBus().unregister(this);
+            OTTOBus.getInstance().getSign_in_bus().unregister(this);
             startActivity(intent);
             finish();
         } else {

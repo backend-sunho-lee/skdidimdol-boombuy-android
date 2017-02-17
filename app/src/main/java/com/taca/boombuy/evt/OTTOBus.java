@@ -11,13 +11,22 @@ public class OTTOBus {
 
     private OTTOBus() {
     }
-    Bus bus = new Bus();
+    Bus sign_up_bus = new Bus();
+    Bus sign_in_bus = new Bus();
 
-    public Bus getBus() {
-        return bus;
+    public Bus getSign_up_bus() {
+        return sign_up_bus;
     }
 
-    public void setBus(Bus bus) {
-        this.bus = bus;
+    public void setSign_up_bus(Bus sign_up_bus) {
+        this.sign_up_bus = sign_up_bus;
+    }
+
+    public Bus getSign_in_bus() {
+        return sign_in_bus;
+    }
+
+    public void setSign_in_bus(Bus sign_in_bus) {
+        this.sign_in_bus = sign_in_bus;
     }
 }

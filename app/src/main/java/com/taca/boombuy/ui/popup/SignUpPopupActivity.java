@@ -33,23 +33,23 @@ public class SignUpPopupActivity extends AppCompatActivity {
     }
 
     public void okSignUpPopup(View view) {
-        overridePendingTransition(R.anim.end_enter, R.anim.end_exit);
-        Intent intent = new Intent(SignUpPopupActivity.this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-        startActivity(intent);
-        finish();
+        goMain();
     }
 
     // 백 버튼 이벤트
     @Override
     public boolean dispatchKeyEvent(KeyEvent event) {
         if (event.getKeyCode() == KeyEvent.KEYCODE_BACK) {
-            overridePendingTransition(R.anim.end_enter, R.anim.end_exit);
-            Intent intent = new Intent(SignUpPopupActivity.this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
-            finish();
+            goMain();
         }
         return true;
+    }
+
+    public void goMain(){
+        overridePendingTransition(R.anim.end_enter, R.anim.end_exit);
+        Intent intent = new Intent(SignUpPopupActivity.this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 }

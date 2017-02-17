@@ -37,7 +37,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         // 이벤트 받을 녀석(회원가입 완료 메시지)
-        OTTOBus.getInstance().getBus().register(this);
+        OTTOBus.getInstance().getSign_up_bus().register(this);
 
         // EditText 매칭
         et_signup_name = (EditText) findViewById(R.id.et_signup_name);
@@ -89,7 +89,7 @@ public class SignUpActivity extends AppCompatActivity {
             StorageHelper.getInstance().setString(SignUpActivity.this, "auto_login_password", et_signup_password.getText().toString());
             Intent intent = new Intent(SignUpActivity.this, SignUpPopupActivity.class);
             // 오토버스 썼으면 등록해제
-            OTTOBus.getInstance().getBus().unregister(this);
+            OTTOBus.getInstance().getSign_up_bus().unregister(this);
             startActivity(intent);
         } else {
             Toast.makeText(SignUpActivity.this, "회원가입 실패", Toast.LENGTH_SHORT).show();

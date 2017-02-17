@@ -1,6 +1,12 @@
 package com.taca.boombuy;
 
+<<<<<<< HEAD
 import com.taca.boombuy.vo.VO_Gift_Total_SendernReceiver;
+=======
+import com.taca.boombuy.netmodel.LonInModel;
+import com.taca.boombuy.netmodel.SignUpModel;
+import com.taca.boombuy.netmodel.UpdateTokenModel;
+>>>>>>> 4c0ae3d33b392b75d19e7c70e381e3e114492601
 import com.taca.boombuy.vo.VO_from_friends_info;
 import com.taca.boombuy.vo.VO_from_friends_local_list;
 import com.taca.boombuy.vo.VO_giftitem_list;
@@ -72,6 +78,18 @@ public class Single_Value {
 
     /*// 체크박스 선물 리스트 VO
     public ArrayList<VO_giftitem_list> checkbox_checklist = new ArrayList<VO_giftitem_list>();*/
+
+
+    // 회원가입 정보
+    public SignUpModel signUpModel;
+
+    // 로그인 정보
+    public LonInModel lonInModel;
+
+    // 토큰 업데이트 정보(폰번호, 현재 토큰)
+    public UpdateTokenModel updateTokenModel;
+
+
 
     public int getTotalPrice(){
         int total = 0;

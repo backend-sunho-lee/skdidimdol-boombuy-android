@@ -45,8 +45,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-import static android.R.attr.bitmap;
-
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     // 기본 UI 틀
@@ -219,15 +217,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             if (position == item_single.getInstance().itemDTOArrayList.size() - 1) { // 제일 마지막일때는 버튼을 씌움
                 ((Main_PostHolder) holder).bindOnPost(
                         1,
-                        Single_Value.getInstance().vo_giftitem_lists.get(position).getProduct_imageView_cell(),
+                        item_single.getInstance().itemDTOArrayList.get(position).getLocation(),
                         "",
-                        "");
+                        10000);
             } else { // 아닐 때는 아이템 보여줌
                 ((Main_PostHolder) holder).bindOnPost(
                         2,
-                        Single_Value.getInstance().vo_giftitem_lists.get(position).getProduct_imageView_cell(),
-                        Single_Value.getInstance().vo_giftitem_lists.get(position).getProduct_title_cell(),
-                        Single_Value.getInstance().vo_giftitem_lists.get(position).getProduct_price_cell());
+                        item_single.getInstance().itemDTOArrayList.get(position).getLocation(),
+                        item_single.getInstance().itemDTOArrayList.get(position).getName(),
+                        item_single.getInstance().itemDTOArrayList.get(position).getPrice()
+                );
             }
         }
     }

@@ -9,6 +9,8 @@ import android.os.Handler;
 
 import com.taca.boombuy.R;
 import com.taca.boombuy.Single_Value;
+import com.taca.boombuy.dto.itemDTO;
+import com.taca.boombuy.singleton.item_single;
 import com.taca.boombuy.ui.sign.SignInActivity;
 import com.taca.boombuy.util.ImageProc;
 import com.taca.boombuy.vo.VO_giftitem_list;
@@ -34,6 +36,13 @@ public class SplashActivity extends Activity {
         Single_Value.getInstance().vo_giftitem_list.setProduct_title_cell("basic");
         Single_Value.getInstance().vo_giftitem_list.setProduct_price_cell("0");
         Single_Value.getInstance().vo_giftitem_lists.add(Single_Value.getInstance().vo_giftitem_list);
+
+        item_single.getInstance().itemDTO = new itemDTO(
+            0, 0, "", 0, "", ""
+        );
+
+        item_single.getInstance().itemDTOArrayList.add(item_single.getInstance().itemDTO);
+
 
         Single_Value.getInstance().item_arraylist.clear();
         Bitmap icon2 = BitmapFactory.decodeResource(this.getResources(), R.drawable.product_icon);

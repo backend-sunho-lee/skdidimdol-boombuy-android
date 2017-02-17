@@ -11,6 +11,8 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.taca.boombuy.evt.OTTOBus;
+import com.taca.boombuy.model.ReqBbSearchBrand;
+import com.taca.boombuy.model.ResBbSearchBrand;
 import com.taca.boombuy.netmodel.FCMModel;
 import com.taca.boombuy.netmodel.LonInModel;
 import com.taca.boombuy.netmodel.ReqBbLogIn;
@@ -66,7 +68,7 @@ public class Network {
             JsonObjectRequest jsonObjectRequest =
                     new JsonObjectRequest(
                             Request.Method.POST,
-                            "http://ec2-35-165-170-210.us-west-2.compute.amazonaws.com:3000/sendFcm",
+                            "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/sendFcm",
                             new JSONObject(new Gson().toJson(reqSendFcm)),
                             new Response.Listener<JSONObject>() {
                                 @Override
@@ -102,7 +104,7 @@ public class Network {
             JsonObjectRequest jsonObjectRequest =
                     new JsonObjectRequest(
                             Request.Method.POST,
-                            "http://ec2-35-165-170-210.us-west-2.compute.amazonaws.com:3000/bb_Signup",
+                            "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/bb_Signup",
                             new JSONObject(new Gson().toJson(reqBbSignUp)),
                             new Response.Listener<JSONObject>() {
                                 @Override
@@ -140,7 +142,7 @@ public class Network {
             JsonObjectRequest jsonObjectRequest =
                     new JsonObjectRequest(
                             Request.Method.POST,
-                            "http://ec2-35-165-170-210.us-west-2.compute.amazonaws.com:3000/bb_Login",
+                            "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/bb_Login",
                             new JSONObject(new Gson().toJson(reqBbLogIn)),
                             new Response.Listener<JSONObject>() {
                                 @Override
@@ -178,7 +180,7 @@ public class Network {
             JsonObjectRequest jsonObjectRequest =
                     new JsonObjectRequest(
                             Request.Method.POST,
-                            "http://ec2-35-165-170-210.us-west-2.compute.amazonaws.com:3000/bb_Update_token",
+                            "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/bb_Update_token",
                             new JSONObject(new Gson().toJson(reqUpdateToken)),
                             new Response.Listener<JSONObject>() {
                                 @Override
@@ -200,7 +202,7 @@ public class Network {
         }
     }
 
-    public void bb_search_items(Context context){
+    public void bb_search_items(Context context) {
 
         ReqBbSearchItem reqBbSearchItem = new ReqBbSearchItem();
         ReqHeader header = new ReqHeader();
@@ -212,17 +214,17 @@ public class Network {
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST,
-                    "http://ec2-35-165-170-210.us-west-2.compute.amazonaws.com:3000/bb_Search_Items",
+                    "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/bb_Search_Items",
                     json,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
 
-                            Log.i("RESULT" , response.toString());
+                            Log.i("RESULT", response.toString());
 
                             ResBbSearchItem resBbSearchItem = new Gson().fromJson(response.toString(), ResBbSearchItem.class);
 
-                            Log.i("RESULT RES", resBbSearchItem.toString() );
+                            Log.i("RESULT RES", resBbSearchItem.toString());
 
                             OTTOBus.getInstance().getSearch_items_bus().post(resBbSearchItem);
 
@@ -239,8 +241,48 @@ public class Network {
             );
 
             getRequestQueue(context).add(jsonObjectRequest);
-        } catch(Exception e){
+        } catch (Exception e) {
 
+            e.printStackTrace();
+        }
+    }
+
+    public void bb_search_brands(Context context) {
+
+        ReqBbSearchBrand reqBbSearchBrand = new ReqBbSearchBrand();
+
+        ReqHeader header = new ReqHeader();
+        header.setCode("브랜드 총 출력");
+        reqBbSearchBrand.setHeader(header);
+
+        try {
+            JSONObject json = new JSONObject(new Gson().toJson(reqBbSearchBrand));
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.POST,
+                    "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/bb_Search_Brands",
+                    json,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+
+                            Log.i("BRAND RESPONSE", response.toString());
+
+                            ResBbSearchBrand resBbSearchBrand = new Gson().fromJson(response.toString(), ResBbSearchBrand.class);
+
+                            OTTOBus.getInstance().getSearch_brands_bus().post(resBbSearchBrand);
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                            Log.i("실패", error.getMessage());
+                        }
+                    });
+            getRequestQueue(context).add(jsonObjectRequest);
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

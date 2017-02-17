@@ -80,7 +80,7 @@ public class totalfrag extends Fragment {
 
         @Override
         public int getCount() {
-            return 1;//resBbSearchItem.getBody().size();
+            return resBbSearchItem.getBody().size();
         }
 
         @Override

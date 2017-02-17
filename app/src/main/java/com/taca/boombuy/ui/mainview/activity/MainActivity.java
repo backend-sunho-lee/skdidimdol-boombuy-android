@@ -33,6 +33,8 @@ import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.database.StorageHelper;
 import com.taca.boombuy.net.Network;
 import com.taca.boombuy.netmodel.UpdateTokenModel;
+import com.taca.boombuy.singleton.item_single;
+import com.taca.boombuy.util.ImageProc;
 import com.taca.boombuy.vo.VO_Gift_Total_SendernReceiver;
 import com.taca.boombuy.vo.VO_from_friends_info;
 
@@ -42,6 +44,8 @@ import java.io.InputStream;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+
+import static android.R.attr.bitmap;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -197,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // 데이터의 개수
         @Override
         public int getItemCount() {
-            return Single_Value.getInstance().vo_giftitem_lists.size();
+            return item_single.getInstance().itemDTOArrayList.size();
         }
 
         // ViewHolder 생성
@@ -212,7 +216,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
             // 보이고자 하는 셀에 내용을 설정한다.
-            if (position == Single_Value.getInstance().vo_giftitem_lists.size() - 1) { // 제일 마지막일때는 버튼을 씌움
+            if (position == item_single.getInstance().itemDTOArrayList.size() - 1) { // 제일 마지막일때는 버튼을 씌움
                 ((Main_PostHolder) holder).bindOnPost(
                         1,
                         Single_Value.getInstance().vo_giftitem_lists.get(position).getProduct_imageView_cell(),
@@ -410,7 +414,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         }
 
-        public void bindOnPost(int type, Bitmap bitmap, String text, String text2) {
+        public void bindOnPost(int type, String image, String pname, int pprice) {
             if (type == 1) { // 제일 마지막 버튼 씌울 때
                 cell_basic.setVisibility(View.INVISIBLE);
                 btn_add_gift_list.setVisibility(View.VISIBLE);
@@ -418,21 +422,21 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 cell_basic.setVisibility(View.VISIBLE);
                 btn_add_gift_list.setVisibility(View.INVISIBLE);
             }
-            product_imageView_cell.setImageBitmap(bitmap);
-            product_title_cell.setText(text);
-            product_price_cell.setText(text2);
+            ImageProc.getInstance().drawImage(image, product_imageView_cell);
+            product_title_cell.setText(pname);
+            product_price_cell.setText(pprice+"");
 
-            final String tmp_text = text;
+            final String tmp_text = pname;
             btn_remove_gift.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     int i = 0;
-                    for (i = 0; i < Single_Value.getInstance().vo_giftitem_lists.size(); i++) {
-                        if (Single_Value.getInstance().vo_giftitem_lists.get(i).getProduct_title_cell() == tmp_text) {
+                    for (i = 0; i < item_single.getInstance().itemDTOArrayList.size(); i++) {
+                        if (item_single.getInstance().itemDTOArrayList.get(i).getName() == tmp_text) {
                             break;
                         }
                     }
-                    Single_Value.getInstance().vo_giftitem_lists.remove(i);
+                    item_single.getInstance().itemDTOArrayList.remove(i);
 
                     refreshMainView();
                 }

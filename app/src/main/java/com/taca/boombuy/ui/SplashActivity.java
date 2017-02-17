@@ -10,6 +10,7 @@ import android.os.Handler;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.ui.sign.SignInActivity;
+import com.taca.boombuy.util.ImageProc;
 import com.taca.boombuy.vo.VO_giftitem_list;
 
 import java.util.ArrayList;
@@ -23,6 +24,7 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        ImageProc.getInstance().getImageLoader(this);
         Single_Value.getInstance().vo_gift_total_member = new ArrayList<>();
 
         Single_Value.getInstance().vo_giftitem_lists.clear();

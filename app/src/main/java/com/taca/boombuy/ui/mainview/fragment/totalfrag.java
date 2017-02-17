@@ -19,10 +19,16 @@ import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 import com.taca.boombuy.R;
+import com.taca.boombuy.Single_Value;
+import com.taca.boombuy.dto.itemDTO;
 import com.taca.boombuy.evt.OTTOBus;
 import com.taca.boombuy.model.ResBbSearchItemBody;
 import com.taca.boombuy.net.Network;
 import com.taca.boombuy.netmodel.ResBbSearchItem;
+import com.taca.boombuy.singleton.item_single;
+import com.taca.boombuy.util.ImageProc;
+
+import java.util.Collections;
 
 public class totalfrag extends Fragment {
 
@@ -35,6 +41,7 @@ public class totalfrag extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
 
         final View rootView = inflater.inflate(R.layout.activity_totalfrag, container, false);
 
@@ -117,10 +124,10 @@ public class totalfrag extends Fragment {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-
             Log.i("IMAGE URL", getItem(position).getLocation());
 
-            //ImageProc.getInstance().drawImage(getItem(position).getLocation(), holder.lv_imageview);
+            ImageProc.getInstance().drawImage(getItem(position).getLocation(), holder.lv_imageview);
+
             holder.lv_pname.setText(getItem(position).getName());
             // pcontent
             holder.lv_pprice.setText(getItem(position).getPrice()+"");
@@ -128,17 +135,31 @@ public class totalfrag extends Fragment {
             holder.lv_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-/*
                     if (isChecked) {
-                        Collections.reverse(Single_Value.getInstance().vo_giftitem_lists); // 새로운 데이터를 리스트의 앞에 추가 해야하므로 리버스한 후 추가 후 다시 리버스
+                        Collections.reverse(item_single.getInstance().itemDTOArrayList); // 새로운 데이터를 리스트의 앞에 추가 해야하므로 리버스한 후 추가 후 다시 리버스
 
+                        item_single.getInstance().itemDTO = new itemDTO(
+                                getItem(position).getId(),
+                                getItem(position).getBid(),
+                                getItem(position).getName(),
+                                getItem(position).getPrice(),
+                                getItem(position).getDetail(),
+                                getItem(position).getLocation()
+                        );
+
+                        item_single.getInstance().itemDTOArrayList.add(item_single.getInstance().itemDTO);
+
+                        Collections.reverse(item_single.getInstance().itemDTOArrayList);
+/*
+*//*
                         Single_Value.getInstance().vo_giftitem_list = new VO_giftitem_list();
                         Single_Value.getInstance().vo_giftitem_list.setProduct_imageView_cell(getItem(position).getProduct_imageView_cell());
                         Single_Value.getInstance().vo_giftitem_list.setProduct_title_cell(getItem(position).getProduct_title_cell());
                         Single_Value.getInstance().vo_giftitem_list.setProduct_price_cell(getItem(position).getProduct_price_cell());
                         Single_Value.getInstance().vo_giftitem_lists.add(Single_Value.getInstance().vo_giftitem_list);
+*//*
 
-                        Collections.reverse(Single_Value.getInstance().vo_giftitem_lists);
+                        Collections.reverse(Single_Value.getInstance().vo_giftitem_lists);*/
 
                         // 준범]] giftStorage 파트
                         // 체크한것들은 저장해야지
@@ -151,9 +172,8 @@ public class totalfrag extends Fragment {
                     } else {
                         Single_Value.getInstance().vo_giftitem_lists.remove(getItem(position));
 
-
                         Toast.makeText(getActivity(), position + "번째 선택 취소", Toast.LENGTH_SHORT).show();
-                    }*/
+                    }
                 }
             });
 

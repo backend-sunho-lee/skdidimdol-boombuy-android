@@ -23,32 +23,8 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-<<<<<<< HEAD
         Single_Value.getInstance().vo_gift_total_member = new ArrayList<>();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            request_permission();
-        } else {
-            new Handler().postDelayed(new Runnable() {
-                @Override
-                public void run() {
-                    Intent intent = new Intent(SplashActivity.this, SignInActivity.class);
-                    startActivity(intent);
-                    finish();
-                }
-            }, SPLASH_TIME_OUT);
-        }
-        /*new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(SplashActivity.this, SignInActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        }, SPLASH_TIME_OUT);*/
-
-=======
->>>>>>> 4c0ae3d33b392b75d19e7c70e381e3e114492601
         Single_Value.getInstance().vo_giftitem_lists.clear();
         Bitmap icon = BitmapFactory.decodeResource(this.getResources(), R.mipmap.ic_launcher);
         Single_Value.getInstance().vo_giftitem_list = new VO_giftitem_list();

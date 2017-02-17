@@ -46,14 +46,9 @@
             android:name=".ui.mainview.activity.GiftManageActivity"
             android:label="@string/title_activity_gift_manage"
             android:theme="@style/AppTheme.NoActionBar" />
-<<<<<<< HEAD
         <activity android:name=".ui.mainview.activity.SignUpTermsActivity" />
 
-        <!-- FCM 메시징 수신 서비스 -->
-=======
-        <activity android:name=".ui.mainview.activity.SignUpTermsActivity"></activity>
         <!--FCM 메시징 수신 서비스-->
->>>>>>> 4c0ae3d33b392b75d19e7c70e381e3e114492601
         <service android:name=".fcm.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
@@ -65,7 +60,6 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-<<<<<<< HEAD
 
         <activity
             android:name=".ui.mainview.activity.GiftDetailInfoActivity"
@@ -74,8 +68,6 @@
         <!--android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.Dialog"-->
 
-=======
->>>>>>> 4c0ae3d33b392b75d19e7c70e381e3e114492601
     </application>
 
 </manifest>

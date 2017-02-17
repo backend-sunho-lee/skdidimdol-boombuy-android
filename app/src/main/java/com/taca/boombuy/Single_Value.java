@@ -1,12 +1,10 @@
 package com.taca.boombuy;
 
-<<<<<<< HEAD
+
 import com.taca.boombuy.vo.VO_Gift_Total_SendernReceiver;
-=======
 import com.taca.boombuy.netmodel.LonInModel;
 import com.taca.boombuy.netmodel.SignUpModel;
 import com.taca.boombuy.netmodel.UpdateTokenModel;
->>>>>>> 4c0ae3d33b392b75d19e7c70e381e3e114492601
 import com.taca.boombuy.vo.VO_from_friends_info;
 import com.taca.boombuy.vo.VO_from_friends_local_list;
 import com.taca.boombuy.vo.VO_giftitem_list;

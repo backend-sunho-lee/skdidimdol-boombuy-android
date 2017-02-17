@@ -30,14 +30,10 @@ import android.widget.TextView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Single_Value;
-<<<<<<< HEAD
-import com.taca.boombuy.vo.VO_Gift_Total_SendernReceiver;
-=======
 import com.taca.boombuy.database.StorageHelper;
 import com.taca.boombuy.net.Network;
-import com.taca.boombuy.netmodel.FCMModel;
 import com.taca.boombuy.netmodel.UpdateTokenModel;
->>>>>>> 4c0ae3d33b392b75d19e7c70e381e3e114492601
+import com.taca.boombuy.vo.VO_Gift_Total_SendernReceiver;
 import com.taca.boombuy.vo.VO_from_friends_info;
 
 import java.io.FileNotFoundException;

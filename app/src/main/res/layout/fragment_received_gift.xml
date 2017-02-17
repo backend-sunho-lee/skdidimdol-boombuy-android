@@ -1,16 +1,19 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.taca.boombuy.ui.mainview.fragment.ReceivedGift">
 
-    <ExpandableListView
-        android:id="@+id/expandable_listview"
+    <Button
+        android:id="@+id/restartBtn"
+        android:text="초기화면 돌아가기"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:groupIndicator="@null"
-        >
+        android:layout_height="wrap_content" />
 
-    </ExpandableListView>
+    <ListView
+        android:id="@+id/received_gift_listview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
 
-</FrameLayout>
+</LinearLayout>

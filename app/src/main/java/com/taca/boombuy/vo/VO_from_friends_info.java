@@ -13,10 +13,7 @@ public class VO_from_friends_info {
 
     @Override
     public String toString() {
-        return "VO_from_friends_info{" +
-                "name='" + name + '\'' +
-                ", phone_num='" + phone_num + '\'' +
-                '}';
+        return name + " ";
     }
 
     public VO_from_friends_info(String name, String phone_num) {

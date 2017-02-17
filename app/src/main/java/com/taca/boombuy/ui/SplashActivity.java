@@ -17,6 +17,8 @@ import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.ui.sign.SignInActivity;
 import com.taca.boombuy.vo.VO_giftitem_list;
 
+import java.util.ArrayList;
+
 public class SplashActivity extends Activity {
 
     private int SPLASH_TIME_OUT = 2000;
@@ -25,6 +27,8 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+
+        Single_Value.getInstance().vo_gift_total_member = new ArrayList<>();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             request_permission();

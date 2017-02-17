@@ -1,68 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:orientation="horizontal">
+    android:layout_height="wrap_content"
+    >
 
     <LinearLayout
-        android:layout_weight="11"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="80dp">
 
-        <LinearLayout
+        <ImageView
+            android:id="@+id/received_gift_cell_buyer_profile"
+            android:src="@drawable/img_basic_profile"
             android:layout_weight="2"
+            android:layout_gravity="center"
+            android:layout_height="70dp"
+            android:layout_width="70dp" />
+
+        <TextView
+            android:id="@+id/received_gift_cell_sendName"
+            android:text="이름"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_weight="4"
             android:layout_width="0dp"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:src="@drawable/img_basic_profile" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_weight="3"
+        <TextView
+            android:id="@+id/received_gift_cell_sendPrice"
+            android:text="가격"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:layout_weight="4"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent" />
 
-            <TextView
-                android:id="@+id/received_gift_cell_child_sendName"
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="김지민" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_weight="3"
+        <ImageButton
+            android:id="@+id/received_gift_cell_sendPayBtn"
+            android:layout_weight="4"
             android:layout_width="0dp"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/received_gift_cell_child_sendPrice"
-
-                android:textSize="20dp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="30000원" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_weight="3"
-            android:layout_width="0dp"
-            android:layout_height="match_parent">
-
-            <ImageButton
-                android:id="@+id/received_gift_cell_child_sendPayBtn"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-        </LinearLayout>
+            android:layout_height="match_parent" />
     </LinearLayout>
 
 </LinearLayout>

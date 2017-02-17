@@ -251,6 +251,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="200">
+
             <TextView
                 android:id="@+id/tv_devided_master"
                 android:textSize="17dp"

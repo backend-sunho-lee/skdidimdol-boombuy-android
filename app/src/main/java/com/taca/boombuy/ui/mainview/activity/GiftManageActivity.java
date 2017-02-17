@@ -9,10 +9,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.taca.boombuy.R;
+import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.ui.mainview.fragment.ReceivedGift;
 import com.taca.boombuy.ui.mainview.fragment.SentGift;
 
@@ -37,6 +39,8 @@ SentGift.OnFragmentInteractionListener{
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Log.i("TOTAL PRODUCT", Single_Value.getInstance().vo_gift_total_member.toString());
 
         //viewPager = (ViewPager) findViewById(R.id.viewpager);
         mViewPager = (ViewPager) findViewById(R.id.container);

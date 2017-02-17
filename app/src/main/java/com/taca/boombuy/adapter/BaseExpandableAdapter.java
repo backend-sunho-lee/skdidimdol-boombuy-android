@@ -1,32 +1,11 @@
 package com.taca.boombuy.adapter;
 
-import android.app.Activity;
-import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-
-import com.taca.boombuy.R;
-import com.taca.boombuy.vo.VO_giftitem_group_info;
-import com.taca.boombuy.vo.VO_giftitem_list;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
-
 /**
  * Created by Tacademy on 2017-02-09.
  */
 
-public class BaseExpandableAdapter extends BaseExpandableListAdapter {
-
+public class BaseExpandableAdapter {
+/*
     Activity context;
 
     ArrayList<VO_giftitem_group_info> parent;
@@ -137,7 +116,7 @@ public class BaseExpandableAdapter extends BaseExpandableListAdapter {
 
         childViewHolder.received_gift_cell_child_product_name.setText(getChild(groupPosition, childPosition).getProduct_title_cell());
         childViewHolder.received_gift_cell_child_product_price.setText(getChild(groupPosition, childPosition).getProduct_price_cell());
-/*
+*//*
         childViewHolder.received_gift_cell_child_sendName.setText(getChild(groupPosition, childPosition).getProduct_title_cell());
         childViewHolder.received_gift_cell_child_sendPrice.setText(getChild(groupPosition, childPosition).get());
         childViewHolder.received_gift_cell_child_sendPayBtn.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +126,7 @@ public class BaseExpandableAdapter extends BaseExpandableListAdapter {
                 Toast.makeText(context, "개별 결제 모듈로 이동", Toast.LENGTH_SHORT).show();
 
             }
-        });*/
+        });*//*
 
         return null;
     }
@@ -171,5 +150,5 @@ public class BaseExpandableAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return false;
-    }
+    }*/
 }

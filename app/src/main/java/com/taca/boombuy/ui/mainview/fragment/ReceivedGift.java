@@ -1,32 +1,34 @@
 package com.taca.boombuy.ui.mainview.fragment;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseExpandableListAdapter;
-import android.widget.ExpandableListView;
+import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.taca.boombuy.R;
 import com.taca.boombuy.Single_Value;
-import com.taca.boombuy.adapter.BaseExpandableAdapter;
-import com.taca.boombuy.vo.VO_from_friends_info;
-import com.taca.boombuy.vo.VO_giftitem_group_info;
-import com.taca.boombuy.vo.VO_giftitem_list;
+import com.taca.boombuy.ui.mainview.activity.GiftDetailInfoActivity;
+import com.taca.boombuy.ui.mainview.activity.MainActivity;
+import com.taca.boombuy.vo.VO_Gift_Total_SendernReceiver;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class ReceivedGift extends Fragment {
 
-    BaseExpandableListAdapter baseExpandableListAdapter;
-    ExpandableListView expandableListView;
 
-    ArrayList<VO_giftitem_group_info> parent;
-    HashMap<VO_giftitem_group_info, ArrayList<VO_giftitem_list>> child;
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -57,66 +59,124 @@ public class ReceivedGift extends Fragment {
         }
     }
 
+    LayoutInflater inflater;
+    MyListAdapter mylistAdapter;
+    ListView listView;
+    Button restartBtn;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        this.inflater = inflater;
         View view = inflater.inflate(R.layout.fragment_received_gift, container, false);
-        expandableListView = (ExpandableListView) view.findViewById(R.id.expandable_listview);
 
+        restartBtn = (Button) view.findViewById(R.id.restartBtn);
 
-        prepareData();
-
-        baseExpandableListAdapter = new BaseExpandableAdapter(getActivity(), parent, child);
-        expandableListView.setAdapter(baseExpandableListAdapter);
-        expandableListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            int lastClickedPosition = 0;
-
+        restartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
+            public void onClick(View v) {
 
-                // 선택 한 groupPosition의 펼침/닫힘 상태 체크
-                Boolean isExpand = (!expandableListView.isGroupExpanded(groupPosition));
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
 
-                // 이 전에 열려있던 group 닫기
-                expandableListView.collapseGroup(lastClickedPosition);
-
-                if (isExpand) {
-                    expandableListView.expandGroup(groupPosition);
-                }
-                lastClickedPosition = groupPosition;
-                return true;
+                getActivity().finish();
             }
         });
 
+
+        Log.i("MYTEST", Single_Value.getInstance().vo_gift_total_member.toString());
+
+        listView = (ListView) view.findViewById(R.id.received_gift_listview);
+
+        mylistAdapter = new MyListAdapter();
+        listView.setAdapter(mylistAdapter);
 
         return view;
     }
 
 
-    public void prepareData() {
-        ArrayList<VO_from_friends_info> sendPeople;
-        parent = new ArrayList<VO_giftitem_group_info>();
-        child = new HashMap<VO_giftitem_group_info, ArrayList<VO_giftitem_list>>();
-        VO_giftitem_group_info parentTemp = new VO_giftitem_group_info();
+    class ListViewHolder {
 
-        // 날짜
-        parentTemp.setDate("2017-02-09");
-        // 받는 사람
-        parentTemp.setReceivedPerson(Single_Value.getInstance().vo_to_friend_infos.get(0).getName());
-        parentTemp.setSendPeople(Single_Value.getInstance().vo_from_friends_infos);
-        // 보내는 상품 목록 정보
-        parentTemp.setTotalProductInfo(Single_Value.getInstance().vo_giftitem_lists);
-        parentTemp.setPay_state("승인");
+        @BindView(R.id.received_gift_cell_tv_date)
+        TextView received_gift_cell_tv_date;
 
+        @BindView(R.id.received_gift_cell_payment_state)
+        ImageButton received_gift_cell_payment_state;
 
-        parent.add(parentTemp);
+        @BindView(R.id.gift_sendPeople)
+        TextView gift_sendPeople;
 
-        ArrayList<VO_giftitem_list> childTemp = new ArrayList<VO_giftitem_list>();
-        childTemp.addAll(Single_Value.getInstance().vo_giftitem_lists);
-        child.put(parentTemp, childTemp);
+        @BindView(R.id.gift_receivedPerson)
+        TextView gift_receivedPerson;
 
+        // 여기까지가 리스트에 해당하는 view 들
+        public ListViewHolder(View itemView) {
+            ButterKnife.bind(this, itemView);
+        }
     }
 
+    class MyListAdapter extends BaseAdapter{
+
+        @Override
+        public int getCount() {
+            return Single_Value.getInstance().vo_gift_total_member.size();
+        }
+
+        @Override
+        public VO_Gift_Total_SendernReceiver getItem(int position) {
+            return Single_Value.getInstance().vo_gift_total_member.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(final int position, View convertView, ViewGroup parent) {
+
+            ListViewHolder holder;
+
+            if(convertView == null){
+                convertView = inflater.inflate(R.layout.custom_receivedgift_cell, parent, false);
+                holder = new ListViewHolder(convertView);
+                convertView.setTag(holder);
+
+            }else{
+                holder = (ListViewHolder) convertView.getTag();
+            }
+
+            holder.received_gift_cell_tv_date.setText("2017. 02. 17");
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_progress);
+            holder.received_gift_cell_payment_state.setImageBitmap(bitmap);
+
+            Log.i("SEND PEOPLE", Single_Value.getInstance().toString(position));
+
+            String temp ="";
+            for(int i =0; i<getItem(position).getVo_from_friends_local_list().size(); i++)
+            {
+                if(i == getItem(position).getVo_from_friends_local_list().size()-1){
+                    temp += getItem(position).getVo_from_friends_local_list().get(i).toString();
+                }else{
+                    temp += getItem(position).getVo_from_friends_local_list().get(i).getName()+ ",";
+                }
+            }
+
+            holder.gift_sendPeople.setText(temp);
+            holder.gift_receivedPerson.setText(getItem(position).getVo_to_friend_info().getName());
+
+            convertView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(getActivity(), GiftDetailInfoActivity.class);
+                    startActivity(intent);
+                }
+            });
+
+            return convertView;
+        }
+
+    }
 
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
@@ -145,6 +205,8 @@ public class ReceivedGift extends Fragment {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+
 
 
 }

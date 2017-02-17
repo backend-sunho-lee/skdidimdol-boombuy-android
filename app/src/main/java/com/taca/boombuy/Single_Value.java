@@ -1,5 +1,6 @@
 package com.taca.boombuy;
 
+import com.taca.boombuy.vo.VO_Gift_Total_SendernReceiver;
 import com.taca.boombuy.vo.VO_from_friends_info;
 import com.taca.boombuy.vo.VO_from_friends_local_list;
 import com.taca.boombuy.vo.VO_giftitem_list;
@@ -29,16 +30,27 @@ public class Single_Value {
     public ArrayList<VO_to_friend_info> vo_to_friend_infos = new ArrayList<VO_to_friend_info>();
     public VO_to_friend_info vo_to_friend_info;
 
-
-
     // 선물 보낼 사람들 전화번호부 총 리스트, VO
     public ArrayList<VO_from_friends_local_list> vo_from_friends_local_lists = new ArrayList<VO_from_friends_local_list>();
     public VO_from_friends_local_list vo_from_friends_local_list;
 
+
+    // 보낸사람 받는사람 한틀에 모아논 리스트
+    public ArrayList<VO_Gift_Total_SendernReceiver> vo_gift_total_member = new ArrayList<VO_Gift_Total_SendernReceiver>();
+    public VO_Gift_Total_SendernReceiver SenderNReceiver;
+
+
+    public String toString(int position) {
+        return "Single_Value{" +
+                "vo_gift_total_member=" + vo_gift_total_member.get(position).getVo_from_friends_local_list().toString() +
+                '}';
+    }
+
+
     @Override
     public String toString() {
         return "Single_Value{" +
-                "vo_from_friends_local_list=" + vo_from_friends_local_list.toString() +
+                "vo_gift_total_member=" + vo_gift_total_member +
                 '}';
     }
 
@@ -50,6 +62,7 @@ public class Single_Value {
     // 선택한 선물 리스트 VO
     public ArrayList<VO_giftitem_list> vo_giftitem_lists = new ArrayList<VO_giftitem_list>();
     public VO_giftitem_list vo_giftitem_list;
+
 
 
 
@@ -92,4 +105,5 @@ public class Single_Value {
         devided_price = total / (Single_Value.getInstance().vo_from_friends_infos.size() + 1);
         return devided_price;
     }
+
 }

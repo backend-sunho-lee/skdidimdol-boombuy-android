@@ -93,6 +93,15 @@ public class ToFriendListActivity extends AppCompatActivity {
             Single_Value.getInstance().vo_to_friend_info.setPhone_num(Single_Value.getInstance().vo_to_friend_local_lists.get(pos).getTv_to_friend_local_number().toString());
             Single_Value.getInstance().vo_to_friend_infos.add(Single_Value.getInstance().vo_to_friend_info);
 
+            //Single_Value.getInstance().SenderNReceiver = new VO_Gift_Total_SendernReceiver();
+
+
+            // 받는사람 정보 담았어
+            Single_Value.getInstance().SenderNReceiver.setVo_to_friend_info(Single_Value.getInstance().vo_to_friend_info);
+
+
+
+
             finish();
         }
     };

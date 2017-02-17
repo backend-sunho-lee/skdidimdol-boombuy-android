@@ -30,13 +30,11 @@ import android.widget.TextView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Single_Value;
-import com.taca.boombuy.net.Network;
-import com.taca.boombuy.netmodel.FCMModel;
+import com.taca.boombuy.vo.VO_Gift_Total_SendernReceiver;
 import com.taca.boombuy.vo.VO_from_friends_info;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -83,6 +81,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        Single_Value.getInstance().SenderNReceiver = new VO_Gift_Total_SendernReceiver();
+
+
 
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -151,16 +153,27 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void onMovePaymentActivity(View view) {
-        /*Intent intent = new Intent(MainActivity.this, GiftManageActivity.class);
-        startActivity(intent);*/
+        Intent intent = new Intent(MainActivity.this, GiftManageActivity.class);
+        startActivity(intent);
+        finish();
 
-        ArrayList<FCMModel> fcmModels = new ArrayList<FCMModel>();
+        Log.i("TOTAL TEST", Single_Value.getInstance().SenderNReceiver.toString());
+
+        Single_Value.getInstance().vo_gift_total_member.add(Single_Value.getInstance().SenderNReceiver);
+        Log.i("TOTAL TEST2", Single_Value.getInstance().vo_gift_total_member.toString());
+        Log.i("TOTAL TEST2 SIZE", Single_Value.getInstance().vo_gift_total_member.size() + "");
+
+        //Single_Value.getInstance().SenderNReceiver = new VO_Gift_Total_SendernReceiver();
+        Log.i("After TEST", Single_Value.getInstance().SenderNReceiver.toString());
+
+
+        /*ArrayList<FCMModel> fcmModels = new ArrayList<FCMModel>();
         FCMModel fcmModel = new FCMModel();
         fcmModel.setToken(FirebaseInstanceId.getInstance().getToken());
         //fcmModel.setToken("ccGKhTjloXU:APA91bHbJgKGr88hvP3_0uZ_-3xpaAyyLqWLcnro8ukQVu2FU3RVYpMEmV0wD5c934VbSjgqqLNegNgWVb3kmzYXM2F_KWgyfx5B0AhDdkNy3nZioD_mU-WqVt4FHNJTGcNYvSAJggbG");
         fcmModel.setContent("Send!!!!!!!!!!!!!!!!!");
         fcmModels.add(fcmModel);
-        Network.getInstance().sendFcm(getApplicationContext(), fcmModels);
+        Network.getInstance().sendFcm(getApplicationContext(), fcmModels);*/
     }
 
     public void onAdd(View view) {
@@ -324,6 +337,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public void onBackPressed() {
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {

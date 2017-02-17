@@ -14,10 +14,12 @@ import com.taca.boombuy.evt.OTTOBus;
 import com.taca.boombuy.netmodel.FCMModel;
 import com.taca.boombuy.netmodel.LonInModel;
 import com.taca.boombuy.netmodel.ReqBbLogIn;
+import com.taca.boombuy.netmodel.ReqBbSearchItem;
 import com.taca.boombuy.netmodel.ReqBbSignUp;
 import com.taca.boombuy.netmodel.ReqHeader;
 import com.taca.boombuy.netmodel.ReqSendFcm;
 import com.taca.boombuy.netmodel.ReqUpdateToken;
+import com.taca.boombuy.netmodel.ResBbSearchItem;
 import com.taca.boombuy.netmodel.SignUpModel;
 import com.taca.boombuy.netmodel.UpdateTokenModel;
 
@@ -196,5 +198,52 @@ public class Network {
         } catch (Exception e) {
 
         }
+    }
+
+    public void bb_search_items(Context context){
+
+        ReqBbSearchItem reqBbSearchItem = new ReqBbSearchItem();
+        ReqHeader header = new ReqHeader();
+        header.setCode("아이템 총 출력");
+        reqBbSearchItem.setHeader(header);
+
+        try {
+            JSONObject json = new JSONObject(new Gson().toJson(reqBbSearchItem));
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.POST,
+                    "http://ec2-35-165-170-210.us-west-2.compute.amazonaws.com:3000/bb_Search_Items",
+                    json,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+
+                            Log.i("RESULT" , response.toString());
+
+                            ResBbSearchItem resBbSearchItem = new Gson().fromJson(response.toString(), ResBbSearchItem.class);
+
+                            Log.i("RESULT RES", resBbSearchItem.toString() );
+
+                            OTTOBus.getInstance().getSearch_items_bus().post(resBbSearchItem);
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                            Log.i("RESULT FAIL", "실패:");
+                        }
+                    }
+            );
+
+            getRequestQueue(context).add(jsonObjectRequest);
+        } catch(Exception e){
+
+            e.printStackTrace();
+        }
+
+
     }
 }

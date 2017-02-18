@@ -15,6 +15,7 @@ public class OTTOBus {
     Bus sign_in_bus = new Bus();
 
     Bus search_items_bus = new Bus();
+    Bus search_brands_bus = new Bus();
 
     public Bus getSign_up_bus() {
         return sign_up_bus;
@@ -38,5 +39,13 @@ public class OTTOBus {
 
     public void setSearch_items_bus(Bus search_items_bus) {
         this.search_items_bus = search_items_bus;
+    }
+
+    public Bus getSearch_brands_bus() {
+        return search_brands_bus;
+    }
+
+    public void setSearch_brands_bus(Bus search_brands_bus) {
+        this.search_brands_bus = search_brands_bus;
     }
 }

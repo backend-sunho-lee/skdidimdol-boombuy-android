@@ -7,6 +7,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -91,6 +92,49 @@ public class ReceivedGift extends Fragment {
         listView.setAdapter(mylistAdapter);
 
         return view;
+    }
+
+
+    class ViewHolder extends RecyclerView.ViewHolder{
+
+
+        @BindView(R.id.received_gift_cell_tv_date)
+        TextView received_gift_cell_tv_date;
+
+        @BindView(R.id.received_gift_cell_payment_state)
+        ImageButton received_gift_cell_payment_state;
+
+        @BindView(R.id.gift_sendPeople)
+        TextView gift_sendPeople;
+
+        @BindView(R.id.gift_receivedPerson)
+        TextView gift_receivedPerson;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+    }
+
+    class ReceivedRecyclerAdapter extends RecyclerView.Adapter<ViewHolder>{
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
+            View view = inflater.inflate(R.layout.custom_receivedgift_cell, parent, false);
+            return new ViewHolder(view);
+        }
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+
+
+        }
+
+        @Override
+        public int getItemCount() {
+            return Single_Value.getInstance().vo_gift_total_member.size();
+        }
     }
 
 

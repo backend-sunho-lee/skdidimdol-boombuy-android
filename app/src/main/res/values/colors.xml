@@ -4,11 +4,20 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <!--앱 칼라-->
+    <color name="appColor">#7448ef </color>
+
     <!--커스텀칼라-->
     <color name="translate">#ffffff </color>
 
     <!--테두리 색깔-->
     <color name="boderColor">#5b5b5b</color>
+
+    <!--테두리 색깔-->
+    <color name="insertWindowColor">#e6e6e6</color>
+
+    <!--테두리 색깔-->
+    <color name="letterColor">#616161</color>
 
     <!--팝업창 바깥 블러 칼라-->
     <color name="popup_blur_Color">#00000000</color>
@@ -17,5 +26,7 @@
     <color name="basic_white">#FFFFFF</color>
     <!--기본 검은색-->
     <color name="basic_black">#000000</color>
+
+
 
 </resources>

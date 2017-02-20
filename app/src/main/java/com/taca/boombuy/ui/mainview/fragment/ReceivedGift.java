@@ -190,7 +190,7 @@ public class ReceivedGift extends Fragment {
             }
 
             holder.received_gift_cell_tv_date.setText("2017. 02. 17");
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_progress);
+            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_progress);
             holder.received_gift_cell_payment_state.setImageBitmap(bitmap);
 
             Log.i("SEND PEOPLE", Single_Value.getInstance().toString(position));

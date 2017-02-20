@@ -46,6 +46,9 @@ public class Network {
     private Network() {
     }
 
+    //String url = "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/"; // 준범 서버
+    String url = "http://ec2-35-165-170-210.us-west-2.compute.amazonaws.com:3000/"; // 지민 서버
+
     ///////////////////////////////////////////////////////////////////////////
     // 통신 큐
     RequestQueue requestQueue;
@@ -56,7 +59,7 @@ public class Network {
         return requestQueue;
     }
 
-    public ArrayList<itemDTO> bb_search_item_Id(Context context, int id){
+    public ArrayList<itemDTO> bb_search_item_Id(Context context, int id) {
 
         ReqBbSearchItemId reqBbSearchItemId = new ReqBbSearchItemId();
         ReqHeader header = new ReqHeader();
@@ -71,21 +74,20 @@ public class Network {
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
 
                     Request.Method.POST,
-                    "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/bb_search_item_Id",
+                    url + "bb_search_item_Id",
                     json,
-                    new Response.Listener<JSONObject>(){
+                    new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
 
-                            Log.i("RESPONSE :" , response.toString());
+                            Log.i("RESPONSE :", response.toString());
                             ResBbSearchItemId resBbSearchItemId = new Gson().fromJson(response.toString(), ResBbSearchItemId.class);
                             Log.i("SELECT FROM ID : ", resBbSearchItemId.toString());
 
 
-
                         }
                     },
-                    new Response.ErrorListener(){
+                    new Response.ErrorListener() {
 
                         @Override
                         public void onErrorResponse(VolleyError error) {
@@ -121,7 +123,7 @@ public class Network {
             JsonObjectRequest jsonObjectRequest =
                     new JsonObjectRequest(
                             Request.Method.POST,
-                            "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/sendFcm",
+                            url + "sendFcm",
                             new JSONObject(new Gson().toJson(reqSendFcm)),
                             new Response.Listener<JSONObject>() {
                                 @Override
@@ -157,7 +159,7 @@ public class Network {
             JsonObjectRequest jsonObjectRequest =
                     new JsonObjectRequest(
                             Request.Method.POST,
-                            "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/bb_Signup",
+                            url + "bb_Signup",
                             new JSONObject(new Gson().toJson(reqBbSignUp)),
                             new Response.Listener<JSONObject>() {
                                 @Override
@@ -195,7 +197,7 @@ public class Network {
             JsonObjectRequest jsonObjectRequest =
                     new JsonObjectRequest(
                             Request.Method.POST,
-                            "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/bb_Login",
+                            url + "bb_Login",
                             new JSONObject(new Gson().toJson(reqBbLogIn)),
                             new Response.Listener<JSONObject>() {
                                 @Override
@@ -233,7 +235,7 @@ public class Network {
             JsonObjectRequest jsonObjectRequest =
                     new JsonObjectRequest(
                             Request.Method.POST,
-                            "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/bb_Update_token",
+                            url + "bb_Update_token",
                             new JSONObject(new Gson().toJson(reqUpdateToken)),
                             new Response.Listener<JSONObject>() {
                                 @Override
@@ -267,7 +269,7 @@ public class Network {
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST,
-                    "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/bb_Search_Items",
+                    url + "bb_Search_Items",
                     json,
                     new Response.Listener<JSONObject>() {
                         @Override
@@ -314,7 +316,7 @@ public class Network {
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST,
-                    "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/bb_Search_Brands",
+                    url + "bb_Search_Brands",
                     json,
                     new Response.Listener<JSONObject>() {
                         @Override

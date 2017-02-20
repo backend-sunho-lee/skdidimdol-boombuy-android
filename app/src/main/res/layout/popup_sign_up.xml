@@ -31,7 +31,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="200" />
+                android:layout_weight="170" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -39,24 +39,26 @@
                 android:layout_weight="300">
 
                 <TextView
+                    android:textColor="@color/letterColor"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:text="축하합니다\n가입이 안료되었습니다."
-                    android:textSize="18dp" />
+                    android:text="축하합니다.\n가입이 안료되었습니다."
+                    android:textSize="16dp" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="200" />
+                android:layout_weight="180" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="300">
+                android:layout_weight="350">
 
                 <ImageButton
+                    android:background="@drawable/btn_popup_ok"
                     android:onClick="okSignUpPopup"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent" />

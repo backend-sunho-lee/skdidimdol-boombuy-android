@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     // 헤더 푸터 뷰
-    View header_content_main, footer_content_main, a;
+    //View header_content_main, footer_content_main;
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,10 +96,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // test
-
-        Log.i("value Test : " , item_single.getInstance().itemDTOArrayList.size() + "");
-        //
+        /*UI 색깔 변경*/
+        // 상단 바
+        toolbar.setBackgroundColor(getResources().getColor(R.color.appColor));
+        // 그냥 화면
+        //drawer.setBackgroundColor(getResources().getColor(R.color.appColor));
+        // 네비게이션 하단 화면
+        //navigationView.setBackgroundColor(getResources().getColor(R.color.appColor));
 
         Single_Value.getInstance().SenderNReceiver = new VO_Gift_Total_SendernReceiver();
 
@@ -114,8 +117,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         
         // 헤더 푸터 뷰
-        header_content_main = getLayoutInflater().inflate(R.layout.header_content_main, null);
-        footer_content_main = getLayoutInflater().inflate(R.layout.footer_content_main, null);
+        /*header_content_main = getLayoutInflater().inflate(R.layout.header_content_main, null);
+        footer_content_main = getLayoutInflater().inflate(footer_content_main, null);*/
 
 
 

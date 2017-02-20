@@ -77,11 +77,11 @@ public class Network {
                             @Override
                             public void onResponse(JSONObject response) {
 
-
-
                                 Log.i("RESPONSE :" , response.toString());
                                 ResBbSearchItemId resBbSearchItemId = new Gson().fromJson(response.toString(), ResBbSearchItemId.class);
                                 Log.i("SELECT FROM ID : ", resBbSearchItemId.toString());
+
+
 
                             }
                         },
@@ -292,6 +292,7 @@ public class Network {
                         }
                     }
             );
+
 
             getRequestQueue(context).add(jsonObjectRequest);
         } catch (Exception e) {

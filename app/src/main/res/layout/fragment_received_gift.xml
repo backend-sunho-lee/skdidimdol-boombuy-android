@@ -1,19 +1,25 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.taca.boombuy.ui.mainview.fragment.ReceivedGift">
 
-    <Button
-        android:id="@+id/restartBtn"
-        android:text="초기화면 돌아가기"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
 
-    <ListView
-        android:id="@+id/received_gift_listview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"></ListView>
+        <Button
+            android:id="@+id/restartBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="초기화면 돌아가기" />
 
-</LinearLayout>
+        <ListView
+            android:id="@+id/received_gift_listview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"></ListView>
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

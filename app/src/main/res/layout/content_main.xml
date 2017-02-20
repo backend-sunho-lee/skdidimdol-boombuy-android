@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_main"
@@ -9,11 +9,28 @@
     tools:context="com.taca.boombuy.ui.mainview.activity.MainActivity"
     tools:showIn="@layout/app_bar_main">
 
-
-    <ListView
-        android:id="@+id/lv_from_name_list"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true" />
-</RelativeLayout>
+        android:layout_height="match_parent">
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            layout="@layout/header_content_main"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_from_name_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true">
+        </android.support.v7.widget.RecyclerView>
+
+        <include
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            layout="@layout/footer_content_main"/>
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>

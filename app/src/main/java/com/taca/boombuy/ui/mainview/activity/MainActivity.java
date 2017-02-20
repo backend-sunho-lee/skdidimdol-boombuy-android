@@ -24,7 +24,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
@@ -47,38 +46,48 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     // 기본 UI 틀
     Toolbar toolbar;
     DrawerLayout drawer;
     NavigationView navigationView;
-
     // 프로필 사진
     CircleImageView iv_profile;
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     // 보낼 사람 리스트뷰
-    ListView lv_from_name_list;
-    // 보낼 사람 어댑터
-    FromListAdapter fromListAdapter;
+    // 보낼 사람 어댑터       // 개개인별 사진, 이름, 금액 나눌 부분 RecyclerView 만들어야함
+    RecyclerView rv_from_name_list;
+    SenderRecyclerAdapter fromRecycleAdapter;
+    LinearLayoutManager SenderLinearLayoutManager;
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
 
     // 헤더 푸터 뷰
-    View header_content_main, footer_content_main;
+    View header_content_main, footer_content_main, a;
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     // 상품 선택 리싸이클 뷰
     RecyclerView recyclerview;
-
-    RecycleAdapter recycleAdapter = new RecycleAdapter();
+    //RecycleAdapter recycleAdapter = new RecycleAdapter();
+    RecycleAdater2 recycleAdapter = new RecycleAdater2();
     LinearLayoutManager linearLayoutManager;
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     // 받을 사람 이름 텍스트뷰
     TextView tv_to_friend_name;
     // 보낼 사람들 이름 텍스트뷰
     TextView tv_from_friends_name;
-
     // 내가 결제할 금액 텍스트뷰
     TextView tv_devided_master;
-
     // 총 결제 금액 텍스트 뷰
     TextView tv_total_price;
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,79 +96,73 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        // test
+
+        Log.i("value Test : " , item_single.getInstance().itemDTOArrayList.size() + "");
+        //
+
         Single_Value.getInstance().SenderNReceiver = new VO_Gift_Total_SendernReceiver();
 
-
+        // 네비게이션 //////////////////////////////////////////////////////////////////////////////////
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        ///////////////////////////////////////////////////////////////////////////////////////////////
 
+        
         // 헤더 푸터 뷰
         header_content_main = getLayoutInflater().inflate(R.layout.header_content_main, null);
         footer_content_main = getLayoutInflater().inflate(R.layout.footer_content_main, null);
 
-        // 보낼 사람 리스트뷰 초기화
-        lv_from_name_list = (ListView) findViewById(R.id.lv_from_name_list);
-        fromListAdapter = new FromListAdapter();
-        lv_from_name_list.setAdapter(fromListAdapter);
 
-        lv_from_name_list.addHeaderView(header_content_main);
-        lv_from_name_list.addFooterView(footer_content_main);
 
+
+        // 상품 추가버튼 부분 //////////////////////////////////////////////////////////////////////////
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
+        linearLayoutManager = new LinearLayoutManager(this);
+        linearLayoutManager.setOrientation(OrientationHelper.HORIZONTAL);
+        recyclerview.setLayoutManager(linearLayoutManager);
+        // 데이터 공급원 아답터 연결
+        recyclerview.setAdapter(recycleAdapter);
+        ///////////////////////////////////////////////////////////////////////////////////////////////
 
+        // 보낼 사람 리스트뷰 초기화
+        SenderLinearLayoutManager = new LinearLayoutManager(this);
+        SenderLinearLayoutManager.setOrientation(OrientationHelper.VERTICAL);
+
+        rv_from_name_list = (RecyclerView) findViewById(R.id.rv_from_name_list);
+        fromRecycleAdapter = new SenderRecyclerAdapter();
+        rv_from_name_list.setLayoutManager(SenderLinearLayoutManager);
+        rv_from_name_list.setAdapter(fromRecycleAdapter);
+
+        /*
+        rv_from_name_list.addHeaderView(header_content_main);
+        rv_from_name_list.addFooterView(footer_content_main);*/
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////
         tv_to_friend_name = (TextView) findViewById(R.id.tv_to_friend_name);
         tv_from_friends_name = (TextView) findViewById(R.id.tv_from_friends_name);
-
         // 내가 결제할 금액 텍스트뷰
         tv_devided_master = (TextView) findViewById(R.id.tv_devided_master);
-
         // 총 결제 금액 텍스트 뷰
         tv_total_price = (TextView) findViewById(R.id.tv_total_price);
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        // 개인 토큰 저장 //////////////////////////////////////////////////////////////////////////////
         String token = FirebaseInstanceId.getInstance().getToken();
         Log.i("토큰 확인 / 전송 : ", token);
         Single_Value.getInstance().updateTokenModel = new UpdateTokenModel();
         Single_Value.getInstance().updateTokenModel.setPhone(StorageHelper.getInstance().getString(getApplicationContext(), "my_phone_number"));
         Single_Value.getInstance().updateTokenModel.setToken(token);
         Network.getInstance().bb_Update_token(getApplicationContext(), Single_Value.getInstance().updateTokenModel);
-        // 토큰이 바뀌면 쉐어드프리퍼런스에 저장
         StorageHelper.getInstance().setString(getApplicationContext(), "my_token", token);
+        ///////////////////////////////////////////////////////////////////////////////////////////////
 
-        //임시 나중엔 sharedpreference나 디비에 연동---------------------
-        //iv_profile.setImageResource(R.mipmap.ic_launcher);
-        //---------------------------------------------------------------
-
-        /*UI 색깔 변경*/
-        // 상단 바
-        //toolbar.setBackgroundColor(getResources().getColor(R.color.basic_white));
-        // 그냥 화면
-        //drawer.setBackgroundColor(getResources().getColor(R.color.boderColor));
-        // 네비게이션 하단 화면
-        //navigationView.setBackgroundColor(getResources().getColor(R.color.boderColor));
-
-
-        // 뷰의 스타일(매니저) 정의 , 선형, 그리드형, 높이가 불규칙한 그리드형
-        // 선형
-        linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(OrientationHelper.HORIZONTAL);
-        recyclerview.setLayoutManager(linearLayoutManager);
-
-        /*// 고정크기 그리드
-        gridLayoutManager = new GridLayoutManager(this, 2);
-        gridLayoutManager.setOrientation(OrientationHelper.HORIZONTAL);
-        //recyclerview.setLayoutManager(gridLayoutManager);
-
-        // 가변 그리드
-        staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, OrientationHelper.VERTICAL);
-        //recyclerview.setLayoutManager(staggeredGridLayoutManager);*/
-
-
-        // 데이터 공급원 아답터 연결
-        recyclerview.setAdapter(recycleAdapter);
 
     }
 
@@ -193,7 +196,39 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
     }
 
-    // 아답터
+    class RecycleAdater2 extends RecyclerView.Adapter<Main_PostHolder> {
+
+        @Override
+        public Main_PostHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.cell_cardview_layout, parent, false);
+            return new Main_PostHolder(itemView);
+        }
+
+        @Override
+        public void onBindViewHolder(Main_PostHolder holder, int position) {
+            if (position == item_single.getInstance().itemDTOArrayList.size() - 1) { // 제일 마지막일때는 버튼을 씌움
+                holder.bindOnPost(
+                        1,
+                        item_single.getInstance().itemDTOArrayList.get(position).getLocation(),
+                        "",
+                        10000);
+            } else { // 아닐 때는 아이템 보여줌
+                holder.bindOnPost(
+                        2,
+                        item_single.getInstance().itemDTOArrayList.get(position).getLocation(),
+                        item_single.getInstance().itemDTOArrayList.get(position).getName(),
+                        item_single.getInstance().itemDTOArrayList.get(position).getPrice()
+                );
+            }
+        }
+
+        @Override
+        public int getItemCount() {
+            return item_single.getInstance().itemDTOArrayList.size();
+        }
+    }
+/*
+    // 상품 추가 아답터 ////////////////////////////////////////////////////////////////////////////
     class RecycleAdapter extends RecyclerView.Adapter {
         // 데이터의 개수
         @Override
@@ -228,14 +263,68 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 );
             }
         }
+    }*/
+
+    // 상품 추가시 담을 홀더
+    public class Main_PostHolder extends RecyclerView.ViewHolder {
+
+        LinearLayout cell_basic;
+        ImageButton btn_add_gift_list;
+
+        TextView product_title_cell, product_price_cell;
+        ImageView product_imageView_cell;
+        Button btn_remove_gift;
+
+        // 뷰로부터 컴포넌트를 획득
+        public Main_PostHolder(View itemView) {
+            super(itemView);
+            cell_basic = (LinearLayout) itemView.findViewById(R.id.cell_basic);
+            btn_add_gift_list = (ImageButton) itemView.findViewById(R.id.btn_add_gift_list);
+
+            product_imageView_cell = (ImageView) itemView.findViewById(R.id.product_imageView_cell);
+            product_title_cell = (TextView) itemView.findViewById(R.id.product_title_cell);
+            btn_remove_gift = (Button) itemView.findViewById(R.id.btn_remove_gift);
+            product_price_cell = (TextView) itemView.findViewById(R.id.product_price_cell);
+
+        }
+
+        public void bindOnPost(int type, String image, String pname, int pprice) {
+            if (type == 1) { // 제일 마지막 버튼 씌울 때
+                cell_basic.setVisibility(View.INVISIBLE);
+                btn_add_gift_list.setVisibility(View.VISIBLE);
+            } else {
+                cell_basic.setVisibility(View.VISIBLE);
+                btn_add_gift_list.setVisibility(View.INVISIBLE);
+            }
+            ImageProc.getInstance().drawImage(image, product_imageView_cell);
+            product_title_cell.setText(pname);
+            product_price_cell.setText(pprice + "");
+
+            final String tmp_text = pname;
+            btn_remove_gift.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    int i = 0;
+                    for (i = 0; i < item_single.getInstance().itemDTOArrayList.size(); i++) {
+                        if (item_single.getInstance().itemDTOArrayList.get(i).getName() == tmp_text) {
+                            break;
+                        }
+                    }
+                    item_single.getInstance().itemDTOArrayList.remove(i);
+
+                    refreshMainView();
+                }
+            });
+        }
+
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    /*
-     * 보낼 사람 리스트뷰 설정----------------------------------------------------------------------------------------------
-     */
 
-    // 반복되는 cell의 구성 콤포넌트를 최초 cell 생성시 획득하여 설정하는 클래스
-    class ViewHolder {
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+    // 같이 구매하는 사람들 틀 홀더
+    class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.iv_from_profile_cell)
         ImageView iv_from_profile_cell;
         @BindView(R.id.tv_from_name_cell)
@@ -244,8 +333,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         TextView tv_divided_cell;
 
         public ViewHolder(View view) {
-            // cell 뷰를 바인딩한다.
+            super(view);
             ButterKnife.bind(this, view);
+        }
+    }
+
+    class SenderRecyclerAdapter extends RecyclerView.Adapter<ViewHolder> {
+
+        @Override
+        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_cell_with_friends, parent, false);
+            return new ViewHolder(itemView);
+        }
+
+
+        @Override
+        public void onBindViewHolder(ViewHolder holder, int position) {
+            // 데이터 설정
+            //holder.iv_from_profile_cell.setImageBitmap();
+            holder.tv_from_name_cell.setText(Single_Value.getInstance().vo_from_friends_infos.get(position).getName());
+            holder.tv_divided_cell.setText(Single_Value.getInstance().devided_non_master() + "원");
+        }
+
+        @Override
+        public int getItemCount() {
+
+            if (Single_Value.getInstance().vo_from_friends_infos == null) {
+                return 0;
+            }
+            return Single_Value.getInstance().vo_from_friends_infos.size();
         }
     }
 
@@ -306,13 +422,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             return convertView;
         }
     }
-    /*
-     * --------------------------------------------------------------------------------------------------------------------------------
-     */
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    /*
-     * 네비게이션 프로필 사진 변경 작업----------------------------------------------------------------------------------------------
-     */
+
+    // 네비게이션 프로필 사진 변경 작업 //////////////////////////////////////////////////////
     // 네비게이션의 프로필 이미지를 눌렀을 때 앨범으로 이동
     public void onChangeProfile(View view) {
         iv_profile = (CircleImageView) findViewById(R.id.iv_profile);
@@ -342,9 +455,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
         }
     }
-    /*
-     * --------------------------------------------------------------------------------------------------------------------------------
-     */
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
     // 네비게이션 백버튼 눌렀을 때 이벤트
     @Override
@@ -379,6 +490,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    // 보내는사람, 받는사람 설정하는 버튼이벤트 ////////////////////////////////////////////////////
 
     public void onMoveToFriendListActivity(View view) {
         Intent intent = new Intent(MainActivity.this, ToFriendListActivity.class);
@@ -389,66 +504,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Intent intent = new Intent(MainActivity.this, FromFriendsListActivity.class);
         startActivity(intent);
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    public class Main_PostHolder extends RecyclerView.ViewHolder {
 
-        LinearLayout cell_basic;
-        ImageButton btn_add_gift_list;
-
-        TextView product_title_cell, product_price_cell;
-        ImageView product_imageView_cell;
-        Button btn_remove_gift;
-
-        // 뷰로부터 컴포넌트를 획득
-        public Main_PostHolder(View itemView) {
-            super(itemView);
-            cell_basic = (LinearLayout) itemView.findViewById(R.id.cell_basic);
-            btn_add_gift_list = (ImageButton) itemView.findViewById(R.id.btn_add_gift_list);
-
-            product_imageView_cell = (ImageView) itemView.findViewById(R.id.product_imageView_cell);
-            product_title_cell = (TextView) itemView.findViewById(R.id.product_title_cell);
-            btn_remove_gift = (Button) itemView.findViewById(R.id.btn_remove_gift);
-            product_price_cell = (TextView) itemView.findViewById(R.id.product_price_cell);
-
-        }
-
-        public void bindOnPost(int type, String image, String pname, int pprice) {
-            if (type == 1) { // 제일 마지막 버튼 씌울 때
-                cell_basic.setVisibility(View.INVISIBLE);
-                btn_add_gift_list.setVisibility(View.VISIBLE);
-            } else {
-                cell_basic.setVisibility(View.VISIBLE);
-                btn_add_gift_list.setVisibility(View.INVISIBLE);
-            }
-            ImageProc.getInstance().drawImage(image, product_imageView_cell);
-            product_title_cell.setText(pname);
-            product_price_cell.setText(pprice + "");
-
-            final String tmp_text = pname;
-            btn_remove_gift.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    int i = 0;
-                    for (i = 0; i < item_single.getInstance().itemDTOArrayList.size(); i++) {
-                        if (item_single.getInstance().itemDTOArrayList.get(i).getName() == tmp_text) {
-                            break;
-                        }
-                    }
-                    item_single.getInstance().itemDTOArrayList.remove(i);
-
-                    refreshMainView();
-                }
-            });
-        }
-
-    }
-
+    ///////////////////////////////////////////////////////////////////////////////////////////////
     @Override
     public void onResume() {
         super.onResume();
         refreshMainView();
     }
 
+    // 프레그 넘어가고 다시돌아왔을때 다시 데이터 설정하는 메소드 onResume 에서 사용할 부분
     public void refreshMainView() {
         if (Single_Value.getInstance().vo_to_friend_infos.size() != 0) {
             tv_to_friend_name.setText(Single_Value.getInstance().vo_to_friend_infos.get(0).getName());
@@ -465,15 +531,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             tv_from_friends_name.setText(full_selected);
 
             //////////////////////////////////////////////메인 리스트뷰
-            lv_from_name_list.setAdapter(fromListAdapter);
+            rv_from_name_list.setAdapter(fromRecycleAdapter);
         }
         // 내가 결제할 금액 세팅
         tv_devided_master.setText(Single_Value.getInstance().devided_master() + "원");
 
         // 총 결제 금액 세팅
         tv_total_price.setText(Single_Value.getInstance().getTotalPrice() + "원");
-
         // 리싸이클뷰
         recyclerview.setAdapter(recycleAdapter);
     }
+
+
+    ///////////////////////////////////////////////////////////////////////////////////////////////
 }

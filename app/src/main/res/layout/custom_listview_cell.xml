@@ -20,6 +20,8 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
         android:layout_width="0dp"
         android:layout_height="100dp"
         android:layout_weight="250">
@@ -36,7 +38,7 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="100dp"
-        android:layout_weight="450"
+        android:layout_weight="650"
         android:orientation="vertical">
 
         <LinearLayout
@@ -45,6 +47,7 @@
             android:layout_weight="2">
 
             <TextView
+                android:layout_marginLeft="10dp"
                 android:id="@+id/lv_pname"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -56,51 +59,31 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
 
             <TextView
-                android:id="@+id/lv_pcontent"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center|left"
-                android:text="상품 정보"
-                android:textSize="15dp"
-                android:textStyle="bold" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
-            <TextView
+                android:layout_weight="2"
+                android:layout_marginLeft="10dp"
                 android:id="@+id/lv_pprice"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:gravity="center|left"
                 android:text="상품 가격"
                 android:textSize="15dp"
                 android:textStyle="bold" />
 
+            <Button
+                android:layout_weight="1"
+                android:id="@+id/lv_detailinfo"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@mipmap/ic_progress" />
+
         </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_weight="200">
-
-        <ImageButton
-            android:id="@+id/lv_arrowbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@mipmap/ic_progress" />
 
     </LinearLayout>
 

@@ -1,12 +1,14 @@
-package com.taca.boombuy.netmodel;
+package com.taca.boombuy.modelReq;
+
+import com.taca.boombuy.netmodel.LonInModel;
 
 /**
  * Created by jimin on 2017-02-13.
  */
 
-public class ReqUpdateToken {
+public class ReqBbLogIn {
     ReqHeader header;
-    UpdateTokenModel body;
+    LonInModel body;
 
     public ReqHeader getHeader() {
         return header;
@@ -16,11 +18,11 @@ public class ReqUpdateToken {
         this.header = header;
     }
 
-    public UpdateTokenModel getBody() {
+    public LonInModel getBody() {
         return body;
     }
 
-    public void setBody(UpdateTokenModel body) {
+    public void setBody(LonInModel body) {
         this.body = body;
     }
 }

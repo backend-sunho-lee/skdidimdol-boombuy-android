@@ -1,6 +1,7 @@
 package com.taca.boombuy.ui.mainview.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -22,10 +24,11 @@ import com.taca.boombuy.R;
 import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.dto.itemDTO;
 import com.taca.boombuy.evt.OTTOBus;
-import com.taca.boombuy.model.ResBbSearchItemBody;
+import com.taca.boombuy.modelRes.ResBbSearchItemBody;
 import com.taca.boombuy.net.Network;
-import com.taca.boombuy.netmodel.ResBbSearchItem;
+import com.taca.boombuy.modelRes.ResBbSearchItem;
 import com.taca.boombuy.singleton.item_single;
+import com.taca.boombuy.ui.mainview.activity.GiftSelectDetailInfoActivity;
 import com.taca.boombuy.util.ImageProc;
 
 import java.util.Collections;
@@ -37,6 +40,7 @@ public class totalfrag extends Fragment {
 
     CustomListAdapter listAdapter;
     ListView listView;
+    boolean ottoFlag = false;
 
     @Nullable
     @Override
@@ -47,7 +51,11 @@ public class totalfrag extends Fragment {
 
         Network.getInstance().bb_search_items(getActivity().getApplicationContext());
 
-        OTTOBus.getInstance().getSearch_items_bus().register(this);
+        if(!ottoFlag){
+            OTTOBus.getInstance().getSearch_items_bus().register(this);
+            ottoFlag = true;
+        }
+
 
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -71,8 +79,8 @@ public class totalfrag extends Fragment {
         CheckBox lv_checkbox;
         ImageView lv_imageview;
         TextView lv_pname;
-        TextView lv_pcontent;
         TextView lv_pprice;
+        Button lv_detailinfo;
     }
 
 
@@ -115,8 +123,8 @@ public class totalfrag extends Fragment {
                 holder.lv_checkbox = (CheckBox) convertView.findViewById(R.id.lv_checkbox);
                 holder.lv_imageview = (ImageView) convertView.findViewById(R.id.lv_imageview);
                 holder.lv_pname = (TextView) convertView.findViewById(R.id.lv_pname);
-                holder.lv_pcontent = (TextView) convertView.findViewById(R.id.lv_pcontent);
                 holder.lv_pprice = (TextView) convertView.findViewById(R.id.lv_pprice);
+                holder.lv_detailinfo = (Button) convertView.findViewById(R.id.lv_detailinfo);
 
                 convertView.setTag(holder);
 
@@ -176,6 +184,16 @@ public class totalfrag extends Fragment {
                 }
             });
 
+            holder.lv_detailinfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(getActivity(), GiftSelectDetailInfoActivity.class);
+                    intent.putExtra("id", getItem(position).getId());
+                    startActivity(intent);
+                }
+            });
+
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -194,6 +212,6 @@ public class totalfrag extends Fragment {
 
         resBbSearchItem = data;
         listView.setAdapter(listAdapter);
-        //((totalfrag.CustomListAdapter)listView.getAdapter()).notifyDataSetChanged();
+        ((totalfrag.CustomListAdapter)listView.getAdapter()).notifyDataSetChanged();
     }
 }

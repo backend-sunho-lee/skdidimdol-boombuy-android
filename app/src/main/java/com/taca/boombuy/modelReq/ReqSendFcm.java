@@ -1,4 +1,6 @@
-package com.taca.boombuy.netmodel;
+package com.taca.boombuy.modelReq;
+
+import com.taca.boombuy.netmodel.FCMModel;
 
 import java.util.ArrayList;
 

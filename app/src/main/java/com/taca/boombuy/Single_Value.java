@@ -1,6 +1,7 @@
 package com.taca.boombuy;
 
 
+import com.taca.boombuy.singleton.item_single;
 import com.taca.boombuy.vo.VO_Gift_Total_SendernReceiver;
 import com.taca.boombuy.netmodel.LonInModel;
 import com.taca.boombuy.netmodel.SignUpModel;
@@ -68,9 +69,6 @@ public class Single_Value {
     public VO_giftitem_list vo_giftitem_list;
 
 
-
-
-
     // 전체 선물 리스트 VO
     public ArrayList<VO_giftitem_list> item_arraylist = new ArrayList<VO_giftitem_list>();
 
@@ -88,37 +86,31 @@ public class Single_Value {
     public UpdateTokenModel updateTokenModel;
 
 
-
-    public int getTotalPrice(){
+    public int getTotalPrice() {
         int total = 0;
-        for (int i = 0; i < Single_Value.getInstance().vo_giftitem_lists.size(); i++) {
-            // 글자 "원"을 제거한 후 인트형으로 바꿔서 토탈 금액을 구함
-            total += Integer.parseInt((Single_Value.getInstance().vo_giftitem_lists.get(i).getProduct_price_cell()).replace(",", "").replace("원", ""));
+        for (int i = 0; i < item_single.getInstance().itemDTOArrayList.size(); i++) {
+            total += item_single.getInstance().itemDTOArrayList.get(i).getPrice();
         }
         return total;
     }
 
     public int devided_master() {
-        int total = 0;
+        int total = getTotalPrice();
         int master_price = 0;
         int devided_price = 0;
-        for (int i = 0; i < Single_Value.getInstance().vo_giftitem_lists.size(); i++) {
-            // 글자 "원"을 제거한 후 인트형으로 바꿔서 토탈 금액을 구함
-            total += Integer.parseInt((Single_Value.getInstance().vo_giftitem_lists.get(i).getProduct_price_cell()).replace(",", "").replace("원", ""));
-        }
+
         devided_price = total / (Single_Value.getInstance().vo_from_friends_infos.size() + 1);
         master_price = total - (devided_price * Single_Value.getInstance().vo_from_friends_infos.size());
+
         return master_price;
     }
 
     public int devided_non_master() {
-        int total = 0;
+        int total = getTotalPrice();
         int devided_price = 0;
-        for (int i = 0; i < Single_Value.getInstance().vo_giftitem_lists.size(); i++) {
-            // 글자 "원"을 제거한 후 인트형으로 바꿔서 토탈 금액을 구함
-            total += Integer.parseInt((Single_Value.getInstance().vo_giftitem_lists.get(i).getProduct_price_cell()).replace(",", "").replace("원", ""));
-        }
+
         devided_price = total / (Single_Value.getInstance().vo_from_friends_infos.size() + 1);
+
         return devided_price;
     }
 

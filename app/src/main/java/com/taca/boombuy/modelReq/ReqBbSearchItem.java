@@ -1,4 +1,4 @@
-package com.taca.boombuy.netmodel;
+package com.taca.boombuy.modelReq;
 
 /**
  * Created by Tacademy on 2017-02-17.

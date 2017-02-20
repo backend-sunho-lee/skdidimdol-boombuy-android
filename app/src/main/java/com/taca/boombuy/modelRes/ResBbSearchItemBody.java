@@ -1,4 +1,4 @@
-package com.taca.boombuy.model;
+package com.taca.boombuy.modelRes;
 
 /**
  * Created by Tacademy on 2017-02-17.

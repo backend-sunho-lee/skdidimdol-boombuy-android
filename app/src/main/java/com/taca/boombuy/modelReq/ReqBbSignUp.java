@@ -1,12 +1,14 @@
-package com.taca.boombuy.netmodel;
+package com.taca.boombuy.modelReq;
+
+import com.taca.boombuy.netmodel.SignUpModel;
 
 /**
  * Created by jimin on 2017-02-13.
  */
 
-public class ReqBbLogIn {
+public class ReqBbSignUp {
     ReqHeader header;
-    LonInModel body;
+    SignUpModel body;
 
     public ReqHeader getHeader() {
         return header;
@@ -16,11 +18,11 @@ public class ReqBbLogIn {
         this.header = header;
     }
 
-    public LonInModel getBody() {
+    public SignUpModel getBody() {
         return body;
     }
 
-    public void setBody(LonInModel body) {
+    public void setBody(SignUpModel body) {
         this.body = body;
     }
 }

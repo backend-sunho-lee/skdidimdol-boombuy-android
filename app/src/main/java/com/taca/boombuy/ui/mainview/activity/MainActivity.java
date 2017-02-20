@@ -90,7 +90,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         Single_Value.getInstance().SenderNReceiver = new VO_Gift_Total_SendernReceiver();
 
 
-
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
@@ -423,7 +422,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             ImageProc.getInstance().drawImage(image, product_imageView_cell);
             product_title_cell.setText(pname);
-            product_price_cell.setText(pprice+"");
+            product_price_cell.setText(pprice + "");
 
             final String tmp_text = pname;
             btn_remove_gift.setOnClickListener(new View.OnClickListener() {
@@ -468,14 +467,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //////////////////////////////////////////////메인 리스트뷰
             lv_from_name_list.setAdapter(fromListAdapter);
         }
-        // 내가 결제할 금액
+        // 내가 결제할 금액 세팅
         tv_devided_master.setText(Single_Value.getInstance().devided_master() + "원");
 
-        // 총 결제 금액
+        // 총 결제 금액 세팅
         tv_total_price.setText(Single_Value.getInstance().getTotalPrice() + "원");
 
         // 리싸이클뷰
         recyclerview.setAdapter(recycleAdapter);
     }
-
 }

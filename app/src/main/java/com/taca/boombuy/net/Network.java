@@ -10,21 +10,25 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.taca.boombuy.dto.itemDTO;
 import com.taca.boombuy.evt.OTTOBus;
-import com.taca.boombuy.model.ReqBbSearchBrand;
-import com.taca.boombuy.model.ResBbSearchBrand;
+import com.taca.boombuy.modelReq.ReqBbLogIn;
+import com.taca.boombuy.modelReq.ReqBbSearchBrand;
+import com.taca.boombuy.modelReq.ReqBbSearchItem;
+import com.taca.boombuy.modelReq.ReqBbSearchItemId;
+import com.taca.boombuy.modelReq.ReqBbSignUp;
+import com.taca.boombuy.modelReq.ReqHeader;
+import com.taca.boombuy.modelReq.ReqSendFcm;
+import com.taca.boombuy.modelReq.ReqUpdateToken;
+import com.taca.boombuy.modelRes.ResBbSearchBrand;
+import com.taca.boombuy.modelRes.ResBbSearchItem;
+import com.taca.boombuy.modelRes.ResBbSearchItemId;
 import com.taca.boombuy.netmodel.FCMModel;
 import com.taca.boombuy.netmodel.LonInModel;
-import com.taca.boombuy.netmodel.ReqBbLogIn;
-import com.taca.boombuy.netmodel.ReqBbSearchItem;
-import com.taca.boombuy.netmodel.ReqBbSignUp;
-import com.taca.boombuy.netmodel.ReqHeader;
-import com.taca.boombuy.netmodel.ReqSendFcm;
-import com.taca.boombuy.netmodel.ReqUpdateToken;
-import com.taca.boombuy.netmodel.ResBbSearchItem;
 import com.taca.boombuy.netmodel.SignUpModel;
 import com.taca.boombuy.netmodel.UpdateTokenModel;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -50,6 +54,55 @@ public class Network {
         if (requestQueue == null)
             requestQueue = Volley.newRequestQueue(context);
         return requestQueue;
+    }
+
+    public ArrayList<itemDTO> bb_search_item_Id(Context context, int id){
+
+        ReqBbSearchItemId reqBbSearchItemId = new ReqBbSearchItemId();
+        ReqHeader header = new ReqHeader();
+
+        header.setCode("상품 Id 값으로 상품정보 검색");
+        reqBbSearchItemId.setHeader(header);
+        reqBbSearchItemId.setBody(id);
+
+        try {
+            JSONObject json = new JSONObject(new Gson().toJson(reqBbSearchItemId));
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+
+                        Request.Method.POST,
+                        "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/bb_search_item_Id",
+                        json,
+                        new Response.Listener<JSONObject>(){
+                            @Override
+                            public void onResponse(JSONObject response) {
+
+
+
+                                Log.i("RESPONSE :" , response.toString());
+                                ResBbSearchItemId resBbSearchItemId = new Gson().fromJson(response.toString(), ResBbSearchItemId.class);
+                                Log.i("SELECT FROM ID : ", resBbSearchItemId.toString());
+
+                            }
+                        },
+                        new Response.ErrorListener(){
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                                error.printStackTrace();
+                                Log.i("SELECT FROM ID 위치", "실패" + error.getMessage());
+                            }
+                        }
+            );
+
+            getRequestQueue(context).add(jsonObjectRequest);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // 전역변수에 형태 정해주고 return list
+        return null;
     }
 
     ///////////////////////////////////////////////////////////////////////////

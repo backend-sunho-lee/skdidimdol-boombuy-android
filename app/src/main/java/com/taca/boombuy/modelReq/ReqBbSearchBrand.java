@@ -1,6 +1,4 @@
-package com.taca.boombuy.model;
-
-import com.taca.boombuy.netmodel.ReqHeader;
+package com.taca.boombuy.modelReq;
 
 /**
  * Created by Tacademy on 2017-02-17.

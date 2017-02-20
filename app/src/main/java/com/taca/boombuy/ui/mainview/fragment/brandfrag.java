@@ -1,6 +1,7 @@
 package com.taca.boombuy.ui.mainview.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -10,14 +11,15 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 import com.taca.boombuy.R;
 import com.taca.boombuy.evt.OTTOBus;
-import com.taca.boombuy.model.ResBbSearchBrand;
-import com.taca.boombuy.model.ResBbSearchBrandBody;
+import com.taca.boombuy.modelRes.ResBbSearchBrand;
+import com.taca.boombuy.modelRes.ResBbSearchBrandBody;
 import com.taca.boombuy.net.Network;
+import com.taca.boombuy.ui.mainview.activity.GiftSelectDetailInfoActivity;
 import com.taca.boombuy.util.ImageProc;
 
 import butterknife.BindView;
@@ -49,6 +51,8 @@ public class brandfrag extends Fragment {
 
     ResBbSearchBrand resBbSearchBrand;
 
+    boolean ottoFlag = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,8 +60,11 @@ public class brandfrag extends Fragment {
         View view = inflater.inflate(R.layout.fragment_brandfrag, container, false);
 
         Network.getInstance().bb_search_brands(getActivity().getApplicationContext());
-        OTTOBus.getInstance().getSearch_brands_bus().register(this);
 
+        if(!ottoFlag){
+            OTTOBus.getInstance().getSearch_brands_bus().register(this);
+            ottoFlag = true;
+        }
 
         gridView = (GridView) view.findViewById(R.id.gridview);
         gridView.setNumColumns(3);
@@ -70,13 +77,8 @@ public class brandfrag extends Fragment {
 
     class ViewHolder{
 
-        @BindView(R.id.brandname)
-        TextView brandname;
-
         @BindView(R.id.brandimg)
         ImageView brandimg;
-
-
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -101,7 +103,7 @@ public class brandfrag extends Fragment {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
 
             ViewHolder holder;
             convertView = inflater.inflate(R.layout.cell_grid_layout, parent, false);
@@ -109,7 +111,18 @@ public class brandfrag extends Fragment {
             holder = new ViewHolder(convertView);
 
             ImageProc.getInstance().drawImage(getItem(position).getLocation(), holder.brandimg);
-            holder.brandname.setText(getItem(position).getName());
+
+            holder.brandimg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+
+                    Toast.makeText(getActivity(), getItem(position).getName(), Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getActivity(), GiftSelectDetailInfoActivity.class);
+                    startActivity(intent);
+
+                }
+            });
 
             return convertView;
         }
@@ -162,6 +175,6 @@ public class brandfrag extends Fragment {
 
         resBbSearchBrand = data;
         gridView.setAdapter(myAdapter);
-        //((totalfrag.CustomListAdapter)listView.getAdapter()).notifyDataSetChanged();
+        ((brandfrag.GridViewAdapter)gridView.getAdapter()).notifyDataSetChanged();
     }
 }

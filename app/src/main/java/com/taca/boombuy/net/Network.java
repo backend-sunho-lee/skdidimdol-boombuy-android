@@ -57,6 +57,36 @@ public class Network {
     }
 
 
+<<<<<<< HEAD
+=======
+                                Log.i("RESPONSE :" , response.toString());
+                                ResBbSearchItemId resBbSearchItemId = new Gson().fromJson(response.toString(), ResBbSearchItemId.class);
+                                Log.i("SELECT FROM ID : ", resBbSearchItemId.toString());
+
+
+
+                            }
+                        },
+                        new Response.ErrorListener(){
+
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                                error.printStackTrace();
+                                Log.i("SELECT FROM ID 위치", "실패" + error.getMessage());
+                            }
+                        }
+            );
+
+            getRequestQueue(context).add(jsonObjectRequest);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // 전역변수에 형태 정해주고 return list
+        return null;
+    }
+>>>>>>> 0b6c6065a371b36b5f7642590ed483373c705bcd
 
     ///////////////////////////////////////////////////////////////////////////
     // FCM 전송
@@ -245,6 +275,7 @@ public class Network {
                         }
                     }
             );
+
 
             getRequestQueue(context).add(jsonObjectRequest);
         } catch (Exception e) {

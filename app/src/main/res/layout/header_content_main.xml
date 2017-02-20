@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="500dp"
-    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:weightSum="780"
     tools:context=".ui.mainview.activity.MainActivity">
@@ -27,17 +27,17 @@
 
     <!--가로 줄-->
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="154.5dp"
-        android:layout_weight="309">
+        android:layout_weight="309"
+        android:orientation="vertical">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"
-            tools:listitem="@layout/cell_cardview_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="vertical" />
+            android:scrollbars="vertical"
+            tools:listitem="@layout/cell_cardview_layout" />
     </LinearLayout>
 
     <LinearLayout
@@ -79,9 +79,9 @@
             android:layout_weight="70">
 
             <ImageButton
-                android:onClick="onMoveToFriendListActivity"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:onClick="onMoveToFriendListActivity" />
         </LinearLayout>
 
         <LinearLayout
@@ -142,9 +142,9 @@
             android:layout_weight="70">
 
             <ImageButton
-                android:onClick="onMoveFromFriendsListActivity"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:onClick="onMoveFromFriendsListActivity" />
         </LinearLayout>
 
         <LinearLayout
@@ -216,35 +216,37 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="20"/>
+            android:layout_weight="20" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="150">
+
             <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@drawable/img_basic_profile"
                 app:civ_border_color="@color/boderColor"
-                app:civ_border_width="0.5dp"
-                android:background="@drawable/img_basic_profile"/>
+                app:civ_border_width="0.5dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="30"/>
+            android:layout_weight="30" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="350">
+
             <TextView
-                android:textSize="17dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="내가 결제할 금액" />
+                android:text="내가 결제할 금액"
+                android:textSize="17dp" />
         </LinearLayout>
 
         <LinearLayout
@@ -254,21 +256,22 @@
 
             <TextView
                 android:id="@+id/tv_devided_master"
-                android:textSize="17dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
-                android:text="" />
+                android:text=""
+                android:textSize="17dp" />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="250">
 
             <ImageButton
-                android:onClick="onMovePaymentActivity"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="match_parent"
+                android:onClick="onMovePaymentActivity" />
         </LinearLayout>
     </LinearLayout>
 
@@ -278,5 +281,6 @@
         android:layout_height="0.5dp"
         android:layout_weight="1"
         android:background="@color/boderColor" />
+
 
 </LinearLayout>

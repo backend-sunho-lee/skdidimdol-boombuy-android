@@ -70,30 +70,30 @@ public class Network {
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
 
-                        Request.Method.POST,
-                        "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/bb_search_item_Id",
-                        json,
-                        new Response.Listener<JSONObject>(){
-                            @Override
-                            public void onResponse(JSONObject response) {
+                    Request.Method.POST,
+                    "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/bb_search_item_Id",
+                    json,
+                    new Response.Listener<JSONObject>(){
+                        @Override
+                        public void onResponse(JSONObject response) {
 
-                                Log.i("RESPONSE :" , response.toString());
-                                ResBbSearchItemId resBbSearchItemId = new Gson().fromJson(response.toString(), ResBbSearchItemId.class);
-                                Log.i("SELECT FROM ID : ", resBbSearchItemId.toString());
+                            Log.i("RESPONSE :" , response.toString());
+                            ResBbSearchItemId resBbSearchItemId = new Gson().fromJson(response.toString(), ResBbSearchItemId.class);
+                            Log.i("SELECT FROM ID : ", resBbSearchItemId.toString());
 
 
 
-                            }
-                        },
-                        new Response.ErrorListener(){
-
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-
-                                error.printStackTrace();
-                                Log.i("SELECT FROM ID 위치", "실패" + error.getMessage());
-                            }
                         }
+                    },
+                    new Response.ErrorListener(){
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                            error.printStackTrace();
+                            Log.i("SELECT FROM ID 위치", "실패" + error.getMessage());
+                        }
+                    }
             );
 
             getRequestQueue(context).add(jsonObjectRequest);

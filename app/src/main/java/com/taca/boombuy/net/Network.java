@@ -56,54 +56,7 @@ public class Network {
         return requestQueue;
     }
 
-    public ArrayList<itemDTO> bb_search_item_Id(Context context, int id){
 
-        ReqBbSearchItemId reqBbSearchItemId = new ReqBbSearchItemId();
-        ReqHeader header = new ReqHeader();
-
-        header.setCode("상품 Id 값으로 상품정보 검색");
-        reqBbSearchItemId.setHeader(header);
-        reqBbSearchItemId.setBody(id);
-
-        try {
-            JSONObject json = new JSONObject(new Gson().toJson(reqBbSearchItemId));
-
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-
-                        Request.Method.POST,
-                        "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/bb_search_item_Id",
-                        json,
-                        new Response.Listener<JSONObject>(){
-                            @Override
-                            public void onResponse(JSONObject response) {
-
-
-
-                                Log.i("RESPONSE :" , response.toString());
-                                ResBbSearchItemId resBbSearchItemId = new Gson().fromJson(response.toString(), ResBbSearchItemId.class);
-                                Log.i("SELECT FROM ID : ", resBbSearchItemId.toString());
-
-                            }
-                        },
-                        new Response.ErrorListener(){
-
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-
-                                error.printStackTrace();
-                                Log.i("SELECT FROM ID 위치", "실패" + error.getMessage());
-                            }
-                        }
-            );
-
-            getRequestQueue(context).add(jsonObjectRequest);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        // 전역변수에 형태 정해주고 return list
-        return null;
-    }
 
     ///////////////////////////////////////////////////////////////////////////
     // FCM 전송
@@ -121,7 +74,7 @@ public class Network {
             JsonObjectRequest jsonObjectRequest =
                     new JsonObjectRequest(
                             Request.Method.POST,
-                            "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/sendFcm",
+                            "http://ec2-35-165-170-210.us-west-2.compute.amazonaws.com:3000/sendFcm",
                             new JSONObject(new Gson().toJson(reqSendFcm)),
                             new Response.Listener<JSONObject>() {
                                 @Override
@@ -157,7 +110,7 @@ public class Network {
             JsonObjectRequest jsonObjectRequest =
                     new JsonObjectRequest(
                             Request.Method.POST,
-                            "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/bb_Signup",
+                            "http://ec2-35-165-170-210.us-west-2.compute.amazonaws.com:3000/bb_Signup",
                             new JSONObject(new Gson().toJson(reqBbSignUp)),
                             new Response.Listener<JSONObject>() {
                                 @Override
@@ -195,7 +148,7 @@ public class Network {
             JsonObjectRequest jsonObjectRequest =
                     new JsonObjectRequest(
                             Request.Method.POST,
-                            "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/bb_Login",
+                            "http://ec2-35-165-170-210.us-west-2.compute.amazonaws.com:3000/bb_Login",
                             new JSONObject(new Gson().toJson(reqBbLogIn)),
                             new Response.Listener<JSONObject>() {
                                 @Override
@@ -233,7 +186,7 @@ public class Network {
             JsonObjectRequest jsonObjectRequest =
                     new JsonObjectRequest(
                             Request.Method.POST,
-                            "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/bb_Update_token",
+                            "http://ec2-35-165-170-210.us-west-2.compute.amazonaws.com:3000/bb_Update_token",
                             new JSONObject(new Gson().toJson(reqUpdateToken)),
                             new Response.Listener<JSONObject>() {
                                 @Override
@@ -267,7 +220,7 @@ public class Network {
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST,
-                    "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/bb_Search_Items",
+                    "http://ec2-35-165-170-210.us-west-2.compute.amazonaws.com:3000/bb_Search_Items",
                     json,
                     new Response.Listener<JSONObject>() {
                         @Override
@@ -313,7 +266,7 @@ public class Network {
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST,
-                    "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/bb_Search_Brands",
+                    "http://ec2-35-165-170-210.us-west-2.compute.amazonaws.com:3000/bb_Search_Brands",
                     json,
                     new Response.Listener<JSONObject>() {
                         @Override
@@ -338,7 +291,53 @@ public class Network {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    public ArrayList<itemDTO> bb_search_item_Id(Context context, int id){
+
+        ReqBbSearchItemId reqBbSearchItemId = new ReqBbSearchItemId();
+        ReqHeader header = new ReqHeader();
+
+        header.setCode("상품 Id 값으로 상품정보 검색");
+        reqBbSearchItemId.setHeader(header);
+        reqBbSearchItemId.setBody(id);
+
+        try {
+            JSONObject json = new JSONObject(new Gson().toJson(reqBbSearchItemId));
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+
+                    Request.Method.POST,
+                    "http://ec2-35-165-170-210.us-west-2.compute.amazonaws.com:3000/bb_search_item_Id",
+                    json,
+                    new Response.Listener<JSONObject>(){
+                        @Override
+                        public void onResponse(JSONObject response) {
 
 
+
+                            Log.i("RESPONSE :" , response.toString());
+                            ResBbSearchItemId resBbSearchItemId = new Gson().fromJson(response.toString(), ResBbSearchItemId.class);
+                            Log.i("SELECT FROM ID : ", resBbSearchItemId.toString());
+
+                        }
+                    },
+                    new Response.ErrorListener(){
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                            error.printStackTrace();
+                            Log.i("SELECT FROM ID 위치", "실패" + error.getMessage());
+                        }
+                    }
+            );
+
+            getRequestQueue(context).add(jsonObjectRequest);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        // 전역변수에 형태 정해주고 return list
+        return null;
     }
 }

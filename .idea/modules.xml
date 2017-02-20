@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/BoomBuy_android_team.iml" filepath="$PROJECT_DIR$/BoomBuy_android_team.iml" />
-=======
->>>>>>> fea0ed774f62e353f1e0417f4a8920ec87178e4e
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/boombuy_android_team.iml" filepath="$PROJECT_DIR$/boombuy_android_team.iml" />
     </modules>
   </component>
 </project>

@@ -4,12 +4,4 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ListView
-        android:id="@+id/gift_detail_product_listview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-    </ListView>
-
 </android.support.v4.widget.NestedScrollView>

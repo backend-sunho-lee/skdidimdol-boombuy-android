@@ -46,7 +46,6 @@ public class totalfrag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-
         final View rootView = inflater.inflate(R.layout.activity_totalfrag, container, false);
 
         Network.getInstance().bb_search_items(getActivity().getApplicationContext());

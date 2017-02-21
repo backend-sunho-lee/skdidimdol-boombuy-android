@@ -10,11 +10,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
+import com.squareup.otto.Subscribe;
 import com.taca.boombuy.R;
+import com.taca.boombuy.evt.OTTOBus;
+import com.taca.boombuy.modelRes.ResBbSearchItemBody;
+import com.taca.boombuy.modelRes.ResBbSearchItemId;
 import com.taca.boombuy.net.Network;
 import com.taca.boombuy.ui.mainview.fragment.GiftSelectProductDetailFrag;
 import com.taca.boombuy.ui.mainview.fragment.GiftSelectProductMatterFrag;
+import com.taca.boombuy.util.ImageProc;
 
 public class GiftSelectDetailInfoActivity extends AppCompatActivity {
 
@@ -23,20 +29,26 @@ public class GiftSelectDetailInfoActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 
     // 상품번호 담아올 변수
-    int id;
+
+    ImageView selected_gift_imageview;
+    ResBbSearchItemId reqBbSearchItemId;
+
+    boolean ottoFlag = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gift_select_detail_info);
 
-        id = getIntent().getIntExtra("id", 0);
-        Log.i("FROM INTENT ID : ", id+"");
+        ResBbSearchItemBody item = (ResBbSearchItemBody)getIntent().getSerializableExtra("item");
+        Log.i("ITEM DATA", item.toString());
 
-        Network.getInstance().bb_search_item_Id(this, id);
+        Network.getInstance().bb_search_item_Id(this, item.getId());
+        OTTOBus.getInstance().getSelected_item_detail_bus().register(this);
+
+        selected_gift_imageview = (ImageView) findViewById(R.id.selected_gift_imageview);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
@@ -97,5 +109,11 @@ public class GiftSelectDetailInfoActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    @Subscribe
+    public void FinishLoad(ResBbSearchItemId data){
+        reqBbSearchItemId = data;
+        ImageProc.getInstance().drawImage(reqBbSearchItemId.getBody().getLocation() , selected_gift_imageview);
     }
 }

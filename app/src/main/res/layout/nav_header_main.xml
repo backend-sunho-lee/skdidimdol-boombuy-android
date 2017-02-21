@@ -6,6 +6,7 @@
     android:gravity="bottom"
     android:orientation="vertical"
     android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:background="@color/appColor"
     android:weightSum="1000">
 
     <LinearLayout
@@ -65,7 +66,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:text="김지민 님"
-                android:textColor="@color/basic_black"
+                android:textColor="@color/basic_white"
                 android:textSize="25dp" />
         </LinearLayout>
     </LinearLayout>

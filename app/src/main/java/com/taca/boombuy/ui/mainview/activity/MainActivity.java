@@ -66,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
     // 헤더 푸터 뷰
-    View header_content_main, footer_content_main, a;
+    //View header_content_main, footer_content_main;
 
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -96,10 +96,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // test
-
-        Log.i("value Test : " , item_single.getInstance().itemDTOArrayList.size() + "");
-        //
+        /*UI 색깔 변경*/
+        // 상단 바
+        toolbar.setBackgroundColor(getResources().getColor(R.color.appColor));
+        // 그냥 화면
+        //drawer.setBackgroundColor(getResources().getColor(R.color.appColor));
+        // 네비게이션 하단 화면
+        //navigationView.setBackgroundColor(getResources().getColor(R.color.appColor));
 
         Single_Value.getInstance().SenderNReceiver = new VO_Gift_Total_SendernReceiver();
 
@@ -114,8 +117,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         
         // 헤더 푸터 뷰
-        header_content_main = getLayoutInflater().inflate(R.layout.header_content_main, null);
-        footer_content_main = getLayoutInflater().inflate(R.layout.footer_content_main, null);
+        /*header_content_main = getLayoutInflater().inflate(R.layout.header_content_main, null);
+        footer_content_main = getLayoutInflater().inflate(footer_content_main, null);*/
 
 
 
@@ -153,14 +156,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ///////////////////////////////////////////////////////////////////////////////////////////////
 
 
-        // 개인 토큰 저장 //////////////////////////////////////////////////////////////////////////////
+        // 토큰 다르면 업데이트 ///////////////////////////////////////////////////////////////////////
         String token = FirebaseInstanceId.getInstance().getToken();
-        Log.i("토큰 확인 / 전송 : ", token);
-        Single_Value.getInstance().updateTokenModel = new UpdateTokenModel();
-        Single_Value.getInstance().updateTokenModel.setPhone(StorageHelper.getInstance().getString(getApplicationContext(), "my_phone_number"));
-        Single_Value.getInstance().updateTokenModel.setToken(token);
-        Network.getInstance().bb_Update_token(getApplicationContext(), Single_Value.getInstance().updateTokenModel);
-        StorageHelper.getInstance().setString(getApplicationContext(), "my_token", token);
+        if(!(StorageHelper.getInstance().getString(MainActivity.this, "my_token").equals(token))) {
+            Log.i("토큰 확인 / 전송 : ", token);
+            Single_Value.getInstance().updateTokenModel = new UpdateTokenModel();
+            Single_Value.getInstance().updateTokenModel.setPhone(StorageHelper.getInstance().getString(getApplicationContext(), "my_phone_number"));
+            Single_Value.getInstance().updateTokenModel.setToken(token);
+            Network.getInstance().bb_Update_token(getApplicationContext(), Single_Value.getInstance().updateTokenModel);
+            StorageHelper.getInstance().setString(getApplicationContext(), "my_token", token);
+        }
         ///////////////////////////////////////////////////////////////////////////////////////////////
 
 

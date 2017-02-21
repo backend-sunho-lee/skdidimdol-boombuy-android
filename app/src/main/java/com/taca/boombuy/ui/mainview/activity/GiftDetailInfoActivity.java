@@ -113,7 +113,7 @@ public class GiftDetailInfoActivity extends AppCompatActivity {
 
             holder.received_gift_cell_sendName.setText(Single_Value.getInstance().SenderNReceiver.getVo_from_friends_local_list().get(position).getName());
 
-            Bitmap imgbtn = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_progress);
+            Bitmap imgbtn = BitmapFactory.decodeResource(getResources(), R.drawable.ic_progress);
 
             holder.received_gift_cell_sendPayBtn.setImageBitmap(imgbtn);
         }

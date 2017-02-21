@@ -3,16 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/img_signin_main"
+    android:background="@drawable/login_bg"
     tools:context="com.taca.boombuy.ui.sign.SignInActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/my_custom_outter_layout_border"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingLeft="25dp"
+        android:paddingRight="25dp"
         android:paddingTop="@dimen/activity_vertical_margin">
 
         <LinearLayout
@@ -24,12 +23,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="400" />
+                android:layout_weight="420" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="100"
+                android:layout_weight="90"
                 android:background="@drawable/my_custom_inner_layout_border"
                 android:orientation="horizontal"
                 android:weightSum="1000">
@@ -41,7 +40,9 @@
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/id_login_33dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -53,8 +54,10 @@
                         android:id="@+id/et_signin_id"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint=" 휴대폰 번호"
-                        android:inputType="number"/>
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/letterColor"
+                        android:hint=" ID"
+                        android:inputType="number" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -66,7 +69,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="100"
+                android:layout_weight="90"
                 android:background="@drawable/my_custom_inner_layout_border"
                 android:orientation="horizontal"
                 android:weightSum="1000">
@@ -78,7 +81,9 @@
 
                     <ImageView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent" />
+                        android:layout_height="match_parent"
+                        android:layout_margin="5dp"
+                        android:background="@drawable/pw_login_33dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -90,7 +95,9 @@
                         android:id="@+id/et_signin_password"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:hint=" 비밀번호"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/letterColor"
+                        android:hint=" PASSWORD"
                         android:inputType="textPassword" />
                 </LinearLayout>
             </LinearLayout>
@@ -103,19 +110,19 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="100"
-                android:background="@drawable/my_custom_inner_layout_border">
+                android:layout_weight="90">
 
                 <ImageButton
                     android:id="@+id/btn_auto_signin"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:background="@drawable/btn_auto_login" />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="30" />
+                android:layout_weight="20" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -126,15 +133,16 @@
                     android:id="@+id/btn_signup"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:textColor="@color/letterColor"
                     android:gravity="center"
                     android:text="회원가입"
-                    android:textSize="25dp" />/>
+                    android:textSize="17dp" />/>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="130" />
+                android:layout_weight="140" />
 
         </LinearLayout>
 

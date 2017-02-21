@@ -1,10 +1,16 @@
 package com.taca.boombuy.modelRes;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import java.io.Serializable;
+
 /**
  * Created by Tacademy on 2017-02-17.
  */
 
-public class ResBbSearchItemBody {
+public class ResBbSearchItemBody implements Serializable {
+
 
     int id;
     int bid;
@@ -72,4 +78,7 @@ public class ResBbSearchItemBody {
                 ", location='" + location + '\'' +
                 '}';
     }
+
+
+
 }

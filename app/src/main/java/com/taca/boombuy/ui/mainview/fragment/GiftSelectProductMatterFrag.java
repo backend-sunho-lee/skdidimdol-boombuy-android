@@ -14,11 +14,9 @@ import com.taca.boombuy.R;
  */
 public class GiftSelectProductMatterFrag extends Fragment {
 
-
     public GiftSelectProductMatterFrag() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

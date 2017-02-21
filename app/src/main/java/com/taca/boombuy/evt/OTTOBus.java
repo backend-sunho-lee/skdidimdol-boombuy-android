@@ -16,6 +16,16 @@ public class OTTOBus {
 
     Bus search_items_bus = new Bus();
     Bus search_brands_bus = new Bus();
+    Bus selected_item_detail_bus = new Bus();
+
+
+    public Bus getSelected_item_detail_bus() {
+        return selected_item_detail_bus;
+    }
+
+    public void setSelected_item_detail_bus(Bus selected_item_detail_bus) {
+        this.selected_item_detail_bus = selected_item_detail_bus;
+    }
 
     public Bus getSign_up_bus() {
         return sign_up_bus;

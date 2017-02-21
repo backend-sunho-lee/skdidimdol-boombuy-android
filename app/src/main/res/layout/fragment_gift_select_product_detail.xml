@@ -6,8 +6,10 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
+
+        android:id="@+id/selected_detail_textView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:text="상세설명 기본 데이터없음" />
 
 </FrameLayout>

@@ -46,8 +46,8 @@ public class Network {
     private Network() {
     }
 
-    //String url = "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/"; // 준범 서버
-    String url = "http://ec2-35-165-170-210.us-west-2.compute.amazonaws.com:3000/"; // 지민 서버
+    String url = "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/"; // 준범 서버
+    //String url = "http://ec2-35-165-170-210.us-west-2.compute.amazonaws.com:3000/"; // 지민 서버
 
     ///////////////////////////////////////////////////////////////////////////
     // 통신 큐
@@ -83,6 +83,8 @@ public class Network {
                             Log.i("RESPONSE :", response.toString());
                             ResBbSearchItemId resBbSearchItemId = new Gson().fromJson(response.toString(), ResBbSearchItemId.class);
                             Log.i("SELECT FROM ID : ", resBbSearchItemId.toString());
+
+                            OTTOBus.getInstance().getSelected_item_detail_bus().post(resBbSearchItemId);
 
 
                         }

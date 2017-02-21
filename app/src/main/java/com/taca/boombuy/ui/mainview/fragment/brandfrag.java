@@ -48,7 +48,6 @@ public class brandfrag extends Fragment {
     LayoutInflater inflater;
     GridView gridView;
     GridViewAdapter myAdapter;
-
     ResBbSearchBrand resBbSearchBrand;
 
     boolean ottoFlag = false;
@@ -58,6 +57,7 @@ public class brandfrag extends Fragment {
                              Bundle savedInstanceState) {
         this.inflater = inflater;
         View view = inflater.inflate(R.layout.fragment_brandfrag, container, false);
+
 
         Network.getInstance().bb_search_brands(getActivity().getApplicationContext());
 
@@ -116,9 +116,10 @@ public class brandfrag extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-
                     Toast.makeText(getActivity(), getItem(position).getName(), Toast.LENGTH_SHORT).show();
+
                     Intent intent = new Intent(getActivity(), GiftSelectDetailInfoActivity.class);
+
                     startActivity(intent);
 
                 }

@@ -188,7 +188,10 @@ public class totalfrag extends Fragment {
                 public void onClick(View v) {
 
                     Intent intent = new Intent(getActivity(), GiftSelectDetailInfoActivity.class);
-                    intent.putExtra("id", getItem(position).getId());
+
+                    ResBbSearchItemBody item = getItem(position);
+                    intent.putExtra("item", item);
+
                     startActivity(intent);
                 }
             });

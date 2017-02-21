@@ -4,19 +4,15 @@
     <group android:checkableBehavior="none">
         <item
             android:id="@+id/nav_boombuy_shop"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_shop_33dp"
             android:title="BOOMBUY SHOP" />
         <item
             android:id="@+id/nav_gift_manage"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@drawable/ic_gift_33dp"
             android:title="선물관리" />
         <item
-            android:id="@+id/nav_giftbox"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="선물함" />
-        <item
             android:id="@+id/nav_setting"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_setting_33dp"
             android:title="설정" />
     </group>
 

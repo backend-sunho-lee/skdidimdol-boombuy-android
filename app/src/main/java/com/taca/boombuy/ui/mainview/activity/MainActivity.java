@@ -53,6 +53,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     // 프로필 사진
     CircleImageView iv_profile;
+    // 프로필 이름
+    TextView tv_profile_name;
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -96,13 +98,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*UI 색깔 변경*/
-        // 상단 바
-        toolbar.setBackgroundColor(getResources().getColor(R.color.appColor));
-        // 그냥 화면
-        //drawer.setBackgroundColor(getResources().getColor(R.color.appColor));
-        // 네비게이션 하단 화면
-        //navigationView.setBackgroundColor(getResources().getColor(R.color.appColor));
+        /*tv_from_friends_name = (TextView) findViewById(R.id.tv_profile_name);
+        tv_from_friends_name.setText(StorageHelper.getInstance().getString(MainActivity.this, "user_name") + " 님");*/
 
         Single_Value.getInstance().SenderNReceiver = new VO_Gift_Total_SendernReceiver();
 
@@ -115,12 +112,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         ///////////////////////////////////////////////////////////////////////////////////////////////
 
-        
+
         // 헤더 푸터 뷰
         /*header_content_main = getLayoutInflater().inflate(R.layout.header_content_main, null);
         footer_content_main = getLayoutInflater().inflate(footer_content_main, null);*/
-
-
 
 
         // 상품 추가버튼 부분 //////////////////////////////////////////////////////////////////////////
@@ -158,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // 토큰 다르면 업데이트 ///////////////////////////////////////////////////////////////////////
         String token = FirebaseInstanceId.getInstance().getToken();
-        if(!(StorageHelper.getInstance().getString(MainActivity.this, "my_token").equals(token))) {
+        if (!(StorageHelper.getInstance().getString(MainActivity.this, "my_token").equals(token))) {
             Log.i("토큰 확인 / 전송 : ", token);
             Single_Value.getInstance().updateTokenModel = new UpdateTokenModel();
             Single_Value.getInstance().updateTokenModel.setPhone(StorageHelper.getInstance().getString(getApplicationContext(), "my_phone_number"));
@@ -169,6 +164,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ///////////////////////////////////////////////////////////////////////////////////////////////
 
 
+    }
+
+    public void onGoHome(View view) {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     public void onMovePaymentActivity(View view) {
@@ -484,8 +489,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         if (id == R.id.nav_boombuy_shop) {
             // Handle the camera action
         } else if (id == R.id.nav_gift_manage) {
-
-        } else if (id == R.id.nav_giftbox) {
 
         } else if (id == R.id.nav_setting) {
 

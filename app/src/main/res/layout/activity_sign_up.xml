@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/join_bg"
+    android:background="@drawable/login_bg"
     tools:context="com.taca.boombuy.ui.sign.SignUpActivity">
 
     <LinearLayout
@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="200"
+            android:layout_weight="250"
             android:orientation="horizontal"
             android:visibility="invisible"
             android:weightSum="1000">

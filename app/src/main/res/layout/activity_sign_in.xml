@@ -23,12 +23,12 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="400" />
+                android:layout_weight="420" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="100"
+                android:layout_weight="90"
                 android:background="@drawable/my_custom_inner_layout_border"
                 android:orientation="horizontal"
                 android:weightSum="1000">
@@ -69,7 +69,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="100"
+                android:layout_weight="90"
                 android:background="@drawable/my_custom_inner_layout_border"
                 android:orientation="horizontal"
                 android:weightSum="1000">
@@ -110,7 +110,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="100">
+                android:layout_weight="90">
 
                 <ImageButton
                     android:id="@+id/btn_auto_signin"

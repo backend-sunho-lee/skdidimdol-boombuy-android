@@ -156,14 +156,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ///////////////////////////////////////////////////////////////////////////////////////////////
 
 
-        // 개인 토큰 저장 //////////////////////////////////////////////////////////////////////////////
+        // 토큰 다르면 업데이트 ///////////////////////////////////////////////////////////////////////
         String token = FirebaseInstanceId.getInstance().getToken();
-        Log.i("토큰 확인 / 전송 : ", token);
-        Single_Value.getInstance().updateTokenModel = new UpdateTokenModel();
-        Single_Value.getInstance().updateTokenModel.setPhone(StorageHelper.getInstance().getString(getApplicationContext(), "my_phone_number"));
-        Single_Value.getInstance().updateTokenModel.setToken(token);
-        Network.getInstance().bb_Update_token(getApplicationContext(), Single_Value.getInstance().updateTokenModel);
-        StorageHelper.getInstance().setString(getApplicationContext(), "my_token", token);
+        if(!(StorageHelper.getInstance().getString(MainActivity.this, "my_token").equals(token))) {
+            Log.i("토큰 확인 / 전송 : ", token);
+            Single_Value.getInstance().updateTokenModel = new UpdateTokenModel();
+            Single_Value.getInstance().updateTokenModel.setPhone(StorageHelper.getInstance().getString(getApplicationContext(), "my_phone_number"));
+            Single_Value.getInstance().updateTokenModel.setToken(token);
+            Network.getInstance().bb_Update_token(getApplicationContext(), Single_Value.getInstance().updateTokenModel);
+            StorageHelper.getInstance().setString(getApplicationContext(), "my_token", token);
+        }
         ///////////////////////////////////////////////////////////////////////////////////////////////
 
 

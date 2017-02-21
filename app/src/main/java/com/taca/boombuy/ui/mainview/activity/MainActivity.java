@@ -20,7 +20,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -53,6 +52,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     // 프로필 사진
     CircleImageView iv_profile;
+    // 프로필 이름
+    TextView tv_profile_name;
+    // 선택한 상품 개수
+    TextView tv_selected_count;
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -96,13 +99,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        /*UI 색깔 변경*/
-        // 상단 바
-        toolbar.setBackgroundColor(getResources().getColor(R.color.appColor));
-        // 그냥 화면
-        //drawer.setBackgroundColor(getResources().getColor(R.color.appColor));
-        // 네비게이션 하단 화면
-        //navigationView.setBackgroundColor(getResources().getColor(R.color.appColor));
+        /*tv_from_friends_name = (TextView) findViewById(R.id.tv_profile_name);
+        tv_from_friends_name.setText(StorageHelper.getInstance().getString(MainActivity.this, "user_name") + " 님");*/
 
         Single_Value.getInstance().SenderNReceiver = new VO_Gift_Total_SendernReceiver();
 
@@ -115,12 +113,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         ///////////////////////////////////////////////////////////////////////////////////////////////
 
-        
+
         // 헤더 푸터 뷰
         /*header_content_main = getLayoutInflater().inflate(R.layout.header_content_main, null);
         footer_content_main = getLayoutInflater().inflate(footer_content_main, null);*/
-
-
 
 
         // 상품 추가버튼 부분 //////////////////////////////////////////////////////////////////////////
@@ -158,7 +154,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // 토큰 다르면 업데이트 ///////////////////////////////////////////////////////////////////////
         String token = FirebaseInstanceId.getInstance().getToken();
-        if(!(StorageHelper.getInstance().getString(MainActivity.this, "my_token").equals(token))) {
+        if (!(StorageHelper.getInstance().getString(MainActivity.this, "my_token").equals(token))) {
             Log.i("토큰 확인 / 전송 : ", token);
             Single_Value.getInstance().updateTokenModel = new UpdateTokenModel();
             Single_Value.getInstance().updateTokenModel.setPhone(StorageHelper.getInstance().getString(getApplicationContext(), "my_phone_number"));
@@ -169,6 +165,16 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ///////////////////////////////////////////////////////////////////////////////////////////////
 
 
+    }
+
+    public void onGoHome(View view) {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
     public void onMovePaymentActivity(View view) {
@@ -278,7 +284,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         TextView product_title_cell, product_price_cell;
         ImageView product_imageView_cell;
-        Button btn_remove_gift;
+        ImageButton btn_remove_gift;
 
         // 뷰로부터 컴포넌트를 획득
         public Main_PostHolder(View itemView) {
@@ -288,7 +294,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             product_imageView_cell = (ImageView) itemView.findViewById(R.id.product_imageView_cell);
             product_title_cell = (TextView) itemView.findViewById(R.id.product_title_cell);
-            btn_remove_gift = (Button) itemView.findViewById(R.id.btn_remove_gift);
+            btn_remove_gift = (ImageButton) itemView.findViewById(R.id.btn_remove_gift);
             product_price_cell = (TextView) itemView.findViewById(R.id.product_price_cell);
 
         }
@@ -303,7 +309,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             ImageProc.getInstance().drawImage(image, product_imageView_cell);
             product_title_cell.setText(pname);
-            product_price_cell.setText(pprice + "");
+            product_price_cell.setText(pprice + "원");
 
             final String tmp_text = pname;
             btn_remove_gift.setOnClickListener(new View.OnClickListener() {
@@ -485,8 +491,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // Handle the camera action
         } else if (id == R.id.nav_gift_manage) {
 
-        } else if (id == R.id.nav_giftbox) {
-
         } else if (id == R.id.nav_setting) {
 
         }
@@ -545,6 +549,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tv_total_price.setText(Single_Value.getInstance().getTotalPrice() + "원");
         // 리싸이클뷰
         recyclerview.setAdapter(recycleAdapter);
+
+        // 선택한 상품 개수 카운드
+        tv_selected_count = (TextView) findViewById(R.id.tv_selected_count);
+        tv_selected_count.setText(item_single.getInstance().itemDTOArrayList.size()-1+"개");
     }
 
 

@@ -104,7 +104,7 @@ public class brandfrag extends Fragment {
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-
+  //
             ViewHolder holder;
             convertView = inflater.inflate(R.layout.cell_grid_layout, parent, false);
 

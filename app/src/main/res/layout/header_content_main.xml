@@ -15,21 +15,41 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="24.5dp"
-        android:layout_weight="49">
+        android:layout_marginBottom="5dp"
+        android:layout_weight="49"
+        android:orientation="horizontal"
+        android:weightSum="1000">
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="500"
             android:gravity="center_vertical"
             android:text="     구매할 상품"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_selected_count"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="11dp"
+            android:layout_weight="500"
+            android:gravity="center_vertical"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/appColor" />
     </LinearLayout>
 
     <!--가로 줄-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="154.5dp"
-        android:layout_weight="309"
+        android:layout_height="0.5dp"
+        android:layout_weight="1"
+        android:background="@color/boderColor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="154dp"
+        android:layout_weight="308"
         android:orientation="vertical">
 
         <android.support.v7.widget.RecyclerView
@@ -79,6 +99,7 @@
             android:layout_weight="70">
 
             <ImageButton
+                android:background="@drawable/btn_add_39dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:onClick="onMoveToFriendListActivity" />
@@ -103,6 +124,7 @@
         android:layout_weight="79">
 
         <TextView
+            android:layout_marginLeft="20dp"
             android:id="@+id/tv_to_friend_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -142,6 +164,7 @@
             android:layout_weight="70">
 
             <ImageButton
+                android:background="@drawable/btn_add_39dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:onClick="onMoveFromFriendsListActivity" />
@@ -166,6 +189,7 @@
         android:layout_weight="79">
 
         <TextView
+            android:layout_marginLeft="20dp"
             android:id="@+id/tv_from_friends_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

@@ -7,6 +7,12 @@
     <!--앱 칼라-->
     <color name="appColor">#7448ef </color>
 
+    <!--상품추가버튼 색깔-->
+    <color name="addColor">#e5e5e5 </color>
+
+    <!--선택된 상품 가운데 투명 색깔-->
+    <color name="selectedColor">#555b5b5b </color>
+
     <!--커스텀칼라-->
     <color name="translate">#ffffff </color>
 

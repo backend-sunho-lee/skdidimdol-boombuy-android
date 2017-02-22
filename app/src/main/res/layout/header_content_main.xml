@@ -35,7 +35,6 @@
             android:layout_marginRight="11dp"
             android:layout_weight="500"
             android:gravity="center_vertical"
-            android:textAlignment="viewEnd"
             android:textColor="@color/appColor" />
     </LinearLayout>
 

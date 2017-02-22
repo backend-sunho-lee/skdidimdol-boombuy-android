@@ -22,6 +22,7 @@ import com.taca.boombuy.modelReq.ReqSendFcm;
 import com.taca.boombuy.modelReq.ReqUpdateToken;
 import com.taca.boombuy.modelRes.ResBbSearchBrand;
 import com.taca.boombuy.modelRes.ResBbSearchItem;
+import com.taca.boombuy.modelRes.ResBbSearchItemCoupon;
 import com.taca.boombuy.modelRes.ResBbSearchItemId;
 import com.taca.boombuy.netmodel.FCMModel;
 import com.taca.boombuy.netmodel.LonInModel;
@@ -49,6 +50,9 @@ public class Network {
     String url = "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/"; // 준범 서버
     //String url = "http://ec2-35-165-170-210.us-west-2.compute.amazonaws.com:3000/"; // 지민 서버
 
+
+
+
     ///////////////////////////////////////////////////////////////////////////
     // 통신 큐
     RequestQueue requestQueue;
@@ -59,6 +63,53 @@ public class Network {
         return requestQueue;
     }
 
+
+
+    public void bb_search_item_coupon(Context context, int bid){
+
+        ReqBbSearchItemId reqBbSearchItemCoupon = new ReqBbSearchItemId();
+        ReqHeader header = new ReqHeader();
+
+        header.setCode("상품 Bid 값으로 상품정보 검색");
+        reqBbSearchItemCoupon.setHeader(header);
+        reqBbSearchItemCoupon.setBody(bid);
+
+        try {
+            JSONObject json = new JSONObject(new Gson().toJson(reqBbSearchItemCoupon));
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                        Request.Method.POST,
+                        url + "bb_search_item_coupon",
+                        json,
+                        new Response.Listener<JSONObject>(){
+                            @Override
+                            public void onResponse(JSONObject response) {
+
+
+                                Log.i("COUPON RES" , response.toString());
+                                ResBbSearchItemCoupon resBbSearchItemCoupon = new Gson().fromJson(response.toString(), ResBbSearchItemCoupon.class);
+
+                                OTTOBus.getInstance().getSearch_items_coupon_bus().post(resBbSearchItemCoupon);
+
+                            }
+                        },
+                        new Response.ErrorListener(){
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                Log.i("COUPON RES FAIL", "why : " + error.getMessage());
+                            }
+                        });
+
+            getRequestQueue(context).add(jsonObjectRequest);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
+
+
+    // 상품번호를 통해 상품 하나의 상세정보 가져오는 volley
     public ArrayList<itemDTO> bb_search_item_Id(Context context, int id) {
 
         ReqBbSearchItemId reqBbSearchItemId = new ReqBbSearchItemId();

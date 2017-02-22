@@ -21,12 +21,11 @@ import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 import com.taca.boombuy.R;
-import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.dto.itemDTO;
 import com.taca.boombuy.evt.OTTOBus;
+import com.taca.boombuy.modelRes.ResBbSearchItem;
 import com.taca.boombuy.modelRes.ResBbSearchItemBody;
 import com.taca.boombuy.net.Network;
-import com.taca.boombuy.modelRes.ResBbSearchItem;
 import com.taca.boombuy.singleton.item_single;
 import com.taca.boombuy.ui.mainview.activity.GiftSelectDetailInfoActivity;
 import com.taca.boombuy.util.ImageProc;
@@ -36,7 +35,7 @@ import java.util.Collections;
 public class totalfrag extends Fragment {
 
 
-    ResBbSearchItem resBbSearchItem;
+    ResBbSearchItem resBbSearchItem = new ResBbSearchItem();
 
     CustomListAdapter listAdapter;
     ListView listView;
@@ -48,13 +47,15 @@ public class totalfrag extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.activity_totalfrag, container, false);
 
+
         Network.getInstance().bb_search_items(getActivity().getApplicationContext());
+
+
 
         if(!ottoFlag){
             OTTOBus.getInstance().getSearch_items_bus().register(this);
             ottoFlag = true;
         }
-
 
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -142,19 +143,18 @@ public class totalfrag extends Fragment {
             holder.lv_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                    item_single.getInstance().itemDTO = new itemDTO(
+                            getItem(position).getId(),
+                            getItem(position).getBid(),
+                            getItem(position).getName(),
+                            getItem(position).getPrice(),
+                            getItem(position).getDetail(),
+                            getItem(position).getLocation()
+                    );
                     if (isChecked) {
                         Collections.reverse(item_single.getInstance().itemDTOArrayList); // 새로운 데이터를 리스트의 앞에 추가 해야하므로 리버스한 후 추가 후 다시 리버스
-                        item_single.getInstance().itemDTO = new itemDTO(
-                                getItem(position).getId(),
-                                getItem(position).getBid(),
-                                getItem(position).getName(),
-                                getItem(position).getPrice(),
-                                getItem(position).getDetail(),
-                                getItem(position).getLocation()
-                        );
-
                         item_single.getInstance().itemDTOArrayList.add(item_single.getInstance().itemDTO);
-
                         Collections.reverse(item_single.getInstance().itemDTOArrayList);
 /*
 *//*
@@ -164,20 +164,17 @@ public class totalfrag extends Fragment {
                         Single_Value.getInstance().vo_giftitem_list.setProduct_price_cell(getItem(position).getProduct_price_cell());
                         Single_Value.getInstance().vo_giftitem_lists.add(Single_Value.getInstance().vo_giftitem_list);
 *//*
-
                         Collections.reverse(Single_Value.getInstance().vo_giftitem_lists);*/
 
                         // 준범]] giftStorage 파트
                         // 체크한것들은 저장해야지
 
-                        Single_Value.getInstance().SenderNReceiver.setVO_giftitem_total_list(Single_Value.getInstance().vo_giftitem_lists);
-
                         // 선택한 곳
                         Toast.makeText(getActivity(), "선택", Toast.LENGTH_SHORT).show();
 
                     } else {
-                        Single_Value.getInstance().vo_giftitem_lists.remove(getItem(position));
 
+                        item_single.getInstance().itemDTOArrayList.remove(item_single.getInstance().itemDTO);
                         Toast.makeText(getActivity(), position + "번째 선택 취소", Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -212,6 +209,7 @@ public class totalfrag extends Fragment {
     @Subscribe
     public void FinishLoad(ResBbSearchItem data){
 
+        //resBbSearchItem = new ResBbSearchItem();
         resBbSearchItem = data;
         listView.setAdapter(listAdapter);
         ((totalfrag.CustomListAdapter)listView.getAdapter()).notifyDataSetChanged();

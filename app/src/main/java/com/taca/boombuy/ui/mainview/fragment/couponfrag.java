@@ -3,15 +3,30 @@ package com.taca.boombuy.ui.mainview.fragment;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.squareup.otto.Subscribe;
 import com.taca.boombuy.R;
+import com.taca.boombuy.dto.itemDTO;
+import com.taca.boombuy.evt.OTTOBus;
+import com.taca.boombuy.modelRes.ResBbSearchItemCoupon;
+import com.taca.boombuy.modelRes.ResBbSearchItemCouponBody;
+import com.taca.boombuy.net.Network;
+import com.taca.boombuy.singleton.item_single;
+import com.taca.boombuy.util.ImageProc;
+
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -40,17 +55,36 @@ public class couponfrag extends Fragment {
 
     String []data = {"AAA","BBB","CCC"};
 
+    boolean ottoflag = false;
+
+    ResBbSearchItemCoupon resBbSearchItemCoupon;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
+
+
         this.inflater = inflater;
         View view =  inflater.inflate(R.layout.fragment_couponfrag, container, false);
 
+        couponAdapter = new CouponListViewAdapter();
+        Network.getInstance().bb_search_item_coupon(getActivity(), 28);
+        if(!ottoflag){
+            OTTOBus.getInstance().getSearch_items_coupon_bus().register(this);
+            ottoflag = true;
+        }
 
         listview = (ListView) view.findViewById(R.id.listview);
-        couponAdapter = new CouponListViewAdapter();
-        listview.setAdapter(couponAdapter);
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                getActivity().finish();
+            }
+        });
 
         return view;
     }
@@ -59,6 +93,17 @@ public class couponfrag extends Fragment {
 
         @BindView(R.id.lv_pname)
         TextView lv_pname;
+
+
+        @BindView(R.id.lv_checkbox)
+        CheckBox lv_checkbox;
+
+        @BindView(R.id.lv_imageview)
+        ImageView lv_imageview;
+
+        @BindView(R.id.lv_pprice)
+        TextView lv_pprice;
+
 
         public CouponViewHolder(View view) {
             ButterKnife.bind(this, view);
@@ -69,12 +114,12 @@ public class couponfrag extends Fragment {
 
         @Override
         public int getCount() {
-            return data.length;
+            return resBbSearchItemCoupon.getBody().size();
         }
 
         @Override
-        public String getItem(int position) {
-            return data[position];
+        public ResBbSearchItemCouponBody getItem(int position) {
+            return resBbSearchItemCoupon.getBody().get(position);
         }
 
         @Override
@@ -83,34 +128,55 @@ public class couponfrag extends Fragment {
         }
 
         @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        public View getView(final int position, View convertView, ViewGroup parent) {
             CouponViewHolder couponViewHolder;
             convertView = inflater.inflate(R.layout.custom_listview_cell, parent, false);
 
             couponViewHolder = new CouponViewHolder(convertView);
 
-            couponViewHolder.lv_pname.setText(getItem(position));
+            couponViewHolder.lv_pname.setText(getItem(position).getName());
+            ImageProc.getInstance().drawImage(getItem(position).getLocation(), couponViewHolder.lv_imageview);
+            couponViewHolder.lv_pprice.setText(getItem(position).getPrice()+"");
 
+
+            couponViewHolder.lv_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    item_single.getInstance().itemDTO = new itemDTO(
+                            getItem(position).getId(),
+                            getItem(position).getBid(),
+                            getItem(position).getName(),
+                            getItem(position).getPrice(),
+                            getItem(position).getDetail(),
+                            getItem(position).getLocation()
+                    );
+                    if (isChecked) {
+                        Collections.reverse(item_single.getInstance().itemDTOArrayList); // 새로운 데이터를 리스트의 앞에 추가 해야하므로 리버스한 후 추가 후 다시 리버스
+                        item_single.getInstance().itemDTOArrayList.add(item_single.getInstance().itemDTO);
+                        Collections.reverse(item_single.getInstance().itemDTOArrayList);
+
+                        // 선택한 곳
+                        Toast.makeText(getActivity(), "선택", Toast.LENGTH_SHORT).show();
+
+                    } else {
+                        item_single.getInstance().itemDTOArrayList.remove(item_single.getInstance().itemDTO);
+                        Toast.makeText(getActivity(), position + "번째 선택 취소", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
             return convertView;
         }
     }
 
 
+    @Subscribe
+    public void FinishLoad(ResBbSearchItemCoupon data){
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+        resBbSearchItemCoupon = data;
+        listview.setAdapter(couponAdapter);
+        ((couponfrag.CouponListViewAdapter)listview.getAdapter()).notifyDataSetChanged();
+    }
 
     public couponfrag() {
     }

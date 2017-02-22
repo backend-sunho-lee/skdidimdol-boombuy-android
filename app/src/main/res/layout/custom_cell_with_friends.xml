@@ -1,79 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="50dp">
+    android:layout_height="72dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="5dp"
-        android:orientation="horizontal"
-        android:weightSum="1000">
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/iv_from_profile_cell"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/img_basic_profile"
+            app:civ_border_color="@color/boderColor"
+            app:civ_border_width="0.5dp" />
+        <TextView
+            android:textSize="14sp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/tv_from_name_cell"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:layout_weight="30" />
-
-        <LinearLayout
-            android:layout_width="0dp"
+            android:gravity="center_vertical"
+            android:text="김지민" />
+        <TextView
+            android:gravity="center|end"
+            android:textStyle="bold"
+            android:textSize="14sp"
+            android:layout_marginRight="8dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/tv_divided_cell"
+            android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:layout_weight="110">
-
-            <ImageView
-                android:id="@+id/iv_from_profile_cell"
-                android:background="@mipmap/ic_launcher"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="30" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="300">
-
-            <TextView
-                android:id="@+id/tv_from_name_cell"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="김지민"
-                android:textSize="23dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="250">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="250">
-
-            <TextView
-                android:id="@+id/tv_divided_cell"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="30,000원"
-                android:textSize="17dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="30" />
-
+            android:text="0원" />
     </LinearLayout>
 </LinearLayout>

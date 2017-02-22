@@ -17,7 +17,7 @@
     <color name="translate">#ffffff </color>
 
     <!--테두리 색깔-->
-    <color name="boderColor">#5b5b5b</color>
+    <color name="boderColor">#e5e5e5</color>
 
     <!--테두리 색깔-->
     <color name="insertWindowColor">#e6e6e6</color>

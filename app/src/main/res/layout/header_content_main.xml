@@ -2,55 +2,55 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="500dp"
+    android:layout_height="514.9dp"
     android:orientation="vertical"
-    android:weightSum="780"
     tools:context=".ui.mainview.activity.MainActivity">
 
+    <!--가로 줄-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:layout_weight="10" />
+        android:layout_height="1.32dp"
+        android:background="@color/boderColor" />
 
+    <!--구매할 상품, 갯수 라인-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="24.5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_weight="49"
-        android:orientation="horizontal"
-        android:weightSum="1000">
+        android:layout_height="39dp"
+        android:orientation="horizontal">
 
         <TextView
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="500"
+            android:layout_marginLeft="16dp"
+            android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="     구매할 상품"
+            android:text="구매할 상품"
+            android:textSize="14sp"
             android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tv_selected_count"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginRight="11dp"
-            android:layout_weight="500"
-            android:gravity="center_vertical"
-            android:textAlignment="viewEnd"
-            android:textColor="@color/appColor" />
+            android:layout_marginRight="16dp"
+            android:layout_weight="1"
+            android:gravity="center|end"
+            android:text="0개"
+            android:textColor="@color/appColor"
+            android:textSize="14sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
     <!--가로 줄-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_weight="1"
+        android:layout_height="1.32dp"
         android:background="@color/boderColor" />
 
+    <!--선택한 상품 리싸이클러뷰-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="154dp"
-        android:layout_weight="308"
-        android:orientation="vertical">
+        android:layout_height="158.3dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"
@@ -60,251 +60,210 @@
             tools:listitem="@layout/cell_cardview_layout" />
     </LinearLayout>
 
-    <LinearLayout
+    <!--밑에 큰 틀(margin 주려고 묶음)-->
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_weight="1"
-        android:background="@color/boderColor" />
-
-    <!--가로 줄-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_weight="1"
-        android:background="@color/boderColor" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="24.5dp"
-        android:layout_weight="49"
-        android:orientation="horizontal"
-        android:weightSum="1000">
+        android:layout_height="242.96dp">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="900">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="     선물 받을 친구"
-                android:textStyle="bold" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="70">
-
-            <ImageButton
-                android:background="@drawable/btn_add_39dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:onClick="onMoveToFriendListActivity" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="30" />
-    </LinearLayout>
-
-    <!--가로 줄-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_weight="1"
-        android:background="@color/boderColor" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="39.5dp"
-        android:layout_weight="79">
-
-        <TextView
-            android:layout_marginLeft="20dp"
-            android:id="@+id/tv_to_friend_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_vertical" />
-    </LinearLayout>
+            android:background="@color/boderColor">
 
-    <!--가로 줄-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_weight="1"
-        android:background="@color/boderColor" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="24.5dp"
-        android:layout_weight="49"
-        android:orientation="horizontal"
-        android:weightSum="1000">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="900">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="     함께 선물할 친구"
-                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="70">
-
-            <ImageButton
-                android:background="@drawable/btn_add_39dp"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:onClick="onMoveFromFriendsListActivity" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="30" />
-    </LinearLayout>
-
-    <!--가로 줄-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_weight="1"
-        android:background="@color/boderColor" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="39.5dp"
-        android:layout_weight="79">
-
-        <TextView
-            android:layout_marginLeft="20dp"
-            android:id="@+id/tv_from_friends_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_vertical" />
-    </LinearLayout>
+            android:layout_marginBottom="1.32dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/basic_white"
+            android:orientation="vertical">
 
-    <!--가로 줄-->
-    <LinearLayout
+            <!--선물 받을 친구, 버튼 라인-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="선물 받을 친구"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="9"
+                    android:background="@drawable/btn_add_39dp"
+                    android:onClick="onMoveToFriendListActivity" />
+            </LinearLayout>
+
+            <!--가로 줄-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1.32dp"
+                android:background="@color/boderColor" />
+
+            <!--선물 받을 친구 출력 라인-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_to_friend_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:gravity="center_vertical"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!--굵은 가로줄-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/boderColor" />
+
+            <!--선물 보낼 친구들, 버튼 라인-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="함께 선물할 친구"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="9"
+                    android:background="@drawable/btn_add_39dp"
+                    android:onClick="onMoveFromFriendsListActivity" />
+            </LinearLayout>
+
+            <!--가로 줄-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1.32dp"
+                android:background="@color/boderColor" />
+
+            <!--선물 보낼 친구들 출력 라인-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_from_friends_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:gravity="center_vertical"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <!--굵은 가로줄-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="8dp"
+                android:background="@color/boderColor" />
+
+            <!--분할결제, 함꼐 보낼 선물 친구들 수 라인-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="39dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="8dp"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:text="분할결제"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:gravity="center|end"
+                    android:id="@+id/tv_from_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="8dp"
+                    android:layout_weight="1"
+                    android:text="0명"
+                    android:textColor="@color/appColor"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_weight="1"
-        android:background="@color/boderColor" />
+        android:layout_height="72dp"
+        android:background="@color/boderColor">
 
-    <!--구분선-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:layout_weight="10"
-        android:background="@color/boderColor" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="24.5dp"
-        android:layout_weight="49">
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="     분할결제"
-            android:textStyle="bold" />
-    </LinearLayout>
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:background="@color/basic_white">
 
-    <!--가로 줄-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_weight="1"
-        android:background="@color/boderColor" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="44.5dp"
-        android:layout_weight="89"
-        android:orientation="horizontal"
-        android:weightSum="1000">
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="20" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="150">
-
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/img_basic_profile"
-                app:civ_border_color="@color/boderColor"
-                app:civ_border_width="0.5dp" />
+                android:layout_margin="5dp"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/iv_from_profile_cell"
+                    android:layout_width="56dp"
+                    android:layout_height="56dp"
+                    android:background="@drawable/img_basic_profile"
+                    app:civ_border_color="@color/boderColor"
+                    app:civ_border_width="0.5dp" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="130dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:gravity="center_vertical"
+                    android:text="내가 결제할 금액"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:gravity="center|end"
+                    android:id="@+id/tv_devided_master"
+                    android:layout_width="150dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="8dp"
+                    android:text="0원"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="30" />
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="350">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text="내가 결제할 금액"
-                android:textSize="17dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="200">
-
-            <TextView
-                android:id="@+id/tv_devided_master"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:text=""
-                android:textSize="17dp" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="250">
-
-            <ImageButton
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:onClick="onMovePaymentActivity" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <!--가로 줄-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_weight="1"
-        android:background="@color/boderColor" />
+    </FrameLayout>
 
 
 </LinearLayout>

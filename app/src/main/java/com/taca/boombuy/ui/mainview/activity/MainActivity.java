@@ -90,6 +90,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView tv_devided_master;
     // 총 결제 금액 텍스트 뷰
     TextView tv_total_price;
+    // 총 몇명이 결제하는지
+    TextView tv_from_count;
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
@@ -149,6 +151,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tv_devided_master = (TextView) findViewById(R.id.tv_devided_master);
         // 총 결제 금액 텍스트 뷰
         tv_total_price = (TextView) findViewById(R.id.tv_total_price);
+        // 총 몇 명이 결제하는지
+        tv_from_count = (TextView) findViewById(R.id.tv_from_count);
         ///////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -553,6 +557,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // 선택한 상품 개수 카운드
         tv_selected_count = (TextView) findViewById(R.id.tv_selected_count);
         tv_selected_count.setText(item_single.getInstance().itemDTOArrayList.size()-1+"개");
+
+        // 결제하는 사람 카운트
+        tv_from_count = (TextView) findViewById(R.id.tv_from_count);
+        tv_from_count.setText(Single_Value.getInstance().vo_from_friends_infos.size()+1+"명");
     }
 
 

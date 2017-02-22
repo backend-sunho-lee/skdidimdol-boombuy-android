@@ -26,6 +26,12 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
+        /*Single_Value.getInstance().vo_from_friends_infos.clear();
+        Single_Value.getInstance().vo_from_friends_info = new VO_from_friends_info();
+        Single_Value.getInstance().vo_from_friends_info.setName("내가 결제할 금액");
+        Single_Value.getInstance().vo_from_friends_info.setPhone_num("");
+        Single_Value.getInstance().vo_from_friends_infos.add(Single_Value.getInstance().vo_from_friends_info);*/
+
         ImageProc.getInstance().getImageLoader(this);
         Single_Value.getInstance().vo_gift_total_member = new ArrayList<>();
 
@@ -38,7 +44,7 @@ public class SplashActivity extends Activity {
         Single_Value.getInstance().vo_giftitem_lists.add(Single_Value.getInstance().vo_giftitem_list);
 
         item_single.getInstance().itemDTO = new itemDTO(
-            0, 0, "", 0, "", ""
+                0, 0, "", 0, "", ""
         );
 
         item_single.getInstance().itemDTOArrayList.add(item_single.getInstance().itemDTO);
@@ -49,7 +55,7 @@ public class SplashActivity extends Activity {
         for (int i = 0; i < 5; i++) {
             Single_Value.getInstance().vo_giftitem_list = new VO_giftitem_list();
             Single_Value.getInstance().vo_giftitem_list.setProduct_imageView_cell(icon2);
-            Single_Value.getInstance().vo_giftitem_list.setProduct_title_cell("상품"+i);
+            Single_Value.getInstance().vo_giftitem_list.setProduct_title_cell("상품" + i);
             Single_Value.getInstance().vo_giftitem_list.setProduct_price_cell("30,001원");
             Single_Value.getInstance().item_arraylist.add(Single_Value.getInstance().vo_giftitem_list);
         }

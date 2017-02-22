@@ -14,6 +14,7 @@
 
     <!--구매할 상품, 갯수 라인-->
     <LinearLayout
+        android:background="@color/basic_white"
         android:layout_width="match_parent"
         android:layout_height="39dp"
         android:orientation="horizontal">
@@ -39,10 +40,6 @@
             android:textColor="@color/appColor"
             android:textSize="14sp"
             android:textStyle="bold" />
-        android:layout_marginRight="11dp"
-        android:layout_weight="500"
-        android:gravity="center_vertical"
-        android:textColor="@color/appColor" />
     </LinearLayout>
 
     <!--가로 줄-->
@@ -57,6 +54,7 @@
         android:layout_height="158.3dp">
 
         <android.support.v7.widget.RecyclerView
+            android:background="@color/basic_white"
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -205,12 +203,12 @@
                     android:textStyle="bold" />
 
                 <TextView
+                    android:gravity="center|end"
                     android:id="@+id/tv_from_count"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="8dp"
                     android:layout_weight="1"
-                    android:gravity="center|end"
                     android:text="0명"
                     android:textColor="@color/appColor"
                     android:textSize="14sp"
@@ -256,12 +254,12 @@
                     android:textSize="14sp" />
 
                 <TextView
+                    android:gravity="center|end"
                     android:id="@+id/tv_devided_master"
                     android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="8dp"
-                    android:gravity="center|end"
                     android:text="0원"
                     android:textSize="14sp"
                     android:textStyle="bold" />

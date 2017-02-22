@@ -17,7 +17,15 @@ public class OTTOBus {
     Bus search_items_bus = new Bus();
     Bus search_brands_bus = new Bus();
     Bus selected_item_detail_bus = new Bus();
+    Bus search_items_coupon_bus = new Bus();
 
+    public Bus getSearch_items_coupon_bus() {
+        return search_items_coupon_bus;
+    }
+
+    public void setSearch_items_coupon_bus(Bus search_items_coupon_bus) {
+        this.search_items_coupon_bus = search_items_coupon_bus;
+    }
 
     public Bus getSelected_item_detail_bus() {
         return selected_item_detail_bus;

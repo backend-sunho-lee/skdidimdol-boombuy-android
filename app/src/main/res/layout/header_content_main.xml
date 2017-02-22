@@ -32,7 +32,6 @@
             android:id="@+id/tv_selected_count"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-<<<<<<< HEAD
             android:layout_marginRight="16dp"
             android:layout_weight="1"
             android:gravity="center|end"
@@ -40,12 +39,10 @@
             android:textColor="@color/appColor"
             android:textSize="14sp"
             android:textStyle="bold" />
-=======
-            android:layout_marginRight="11dp"
-            android:layout_weight="500"
-            android:gravity="center_vertical"
-            android:textColor="@color/appColor" />
->>>>>>> eac33bcf63cb47582cc74b1aed6aee7ea17f8e59
+        android:layout_marginRight="11dp"
+        android:layout_weight="500"
+        android:gravity="center_vertical"
+        android:textColor="@color/appColor" />
     </LinearLayout>
 
     <!--가로 줄-->
@@ -208,12 +205,12 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:gravity="center|end"
                     android:id="@+id/tv_from_count"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="8dp"
                     android:layout_weight="1"
+                    android:gravity="center|end"
                     android:text="0명"
                     android:textColor="@color/appColor"
                     android:textSize="14sp"
@@ -259,12 +256,12 @@
                     android:textSize="14sp" />
 
                 <TextView
-                    android:gravity="center|end"
                     android:id="@+id/tv_devided_master"
                     android:layout_width="150dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="8dp"
+                    android:gravity="center|end"
                     android:text="0원"
                     android:textSize="14sp"
                     android:textStyle="bold" />

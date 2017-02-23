@@ -1,6 +1,6 @@
 package com.taca.boombuy.singleton;
 
-import com.taca.boombuy.dto.itemDTO;
+import com.taca.boombuy.dto.subdto.SelectedItemsDTO;
 
 import java.util.ArrayList;
 
@@ -17,6 +17,6 @@ public class item_single {
     private item_single() {
     }
 
-    public ArrayList<itemDTO> itemDTOArrayList = new ArrayList<>();
-    public itemDTO itemDTO;
+    public ArrayList<SelectedItemsDTO> itemDTOArrayList = new ArrayList<>();
+    public SelectedItemsDTO itemDTO;
 }

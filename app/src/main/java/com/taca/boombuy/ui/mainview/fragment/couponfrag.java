@@ -18,7 +18,7 @@ import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 import com.taca.boombuy.R;
-import com.taca.boombuy.dto.itemDTO;
+import com.taca.boombuy.dto.subdto.SelectedItemsDTO;
 import com.taca.boombuy.evt.OTTOBus;
 import com.taca.boombuy.modelRes.ResBbSearchItemCoupon;
 import com.taca.boombuy.modelRes.ResBbSearchItemCouponBody;
@@ -142,7 +142,7 @@ public class couponfrag extends Fragment {
             couponViewHolder.lv_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    item_single.getInstance().itemDTO = new itemDTO(
+                    item_single.getInstance().itemDTO = new SelectedItemsDTO(
                             getItem(position).getId(),
                             getItem(position).getBid(),
                             getItem(position).getName(),

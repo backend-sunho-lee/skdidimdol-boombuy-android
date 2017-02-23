@@ -159,6 +159,7 @@ public class FromFriendsListActivity extends AppCompatActivity {
             rv_selected_friends.setAdapter(recycleAdapter);
 
             refreshList();
+
         }
     };
     /*

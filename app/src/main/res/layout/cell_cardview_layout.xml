@@ -79,7 +79,6 @@
                             android:layout_height="0dp"
                             android:layout_weight="500"
                             android:paddingRight="7dp"
-                            android:text="sadfa"
                             android:textAlignment="viewEnd"
                             android:textColor="@color/basic_white" />
                     </LinearLayout>

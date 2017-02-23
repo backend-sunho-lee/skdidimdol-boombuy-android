@@ -19,7 +19,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="920"
+            android:layout_weight="900"
             android:orientation="vertical">
 
             <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
@@ -66,7 +66,7 @@
         <ImageButton
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="80"
+            android:layout_weight="100"
             android:background="@drawable/btn_pay"
             android:onClick="onMovePaymentActivity"
             android:orientation="vertical" />

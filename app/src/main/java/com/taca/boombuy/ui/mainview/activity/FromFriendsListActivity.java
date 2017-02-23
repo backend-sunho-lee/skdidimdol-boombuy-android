@@ -53,12 +53,17 @@ public class FromFriendsListActivity extends AppCompatActivity {
     FromFriendsListActivity.RecycleAdapter recycleAdapter = new FromFriendsListActivity.RecycleAdapter();
     LinearLayoutManager linearLayoutManager;
 
+    // 1/N 가격 텍스트뷰
+    TextView tv_devided_price;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_from_friends_list);
 
         request_read_contacts();
+
+        tv_devided_price = (TextView) findViewById(R.id.tv_devided_price);
 
         et_search_from_friends_name = (EditText) findViewById(R.id.et_search_from_friends_name);
         et_search_from_friends_name.addTextChangedListener(new TextWatcher() {
@@ -126,6 +131,8 @@ public class FromFriendsListActivity extends AppCompatActivity {
         lv_from_friends_local_list.setOnItemClickListener(itemClickListenerOfFromFriendsList);
         fromFriendsLocalListAdapter = new FromFriendsListActivity.FromFriendsLocalListAdapter();
         lv_from_friends_local_list.setAdapter(fromFriendsLocalListAdapter);
+
+        tv_devided_price.setText(Single_Value.getInstance().devided_non_master()+"원");
     }
 
     public void onSearchFromFrineds(View view) {
@@ -150,6 +157,8 @@ public class FromFriendsListActivity extends AppCompatActivity {
 
             // 데이터 공급원 아답터 연결
             rv_selected_friends.setAdapter(recycleAdapter);
+
+            refreshList();
         }
     };
     /*
@@ -297,9 +306,15 @@ public class FromFriendsListActivity extends AppCompatActivity {
                     }
                     Single_Value.getInstance().vo_from_friends_infos.remove(i);
                     rv_selected_friends.setAdapter(recycleAdapter);
+                    refreshList();
                 }
             });
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        refreshList();
+    }
 }

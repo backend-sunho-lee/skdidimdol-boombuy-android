@@ -10,26 +10,34 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="48dp"
         android:background="#dadada"
         android:orientation="horizontal">
-        <ImageButton
-            app:srcCompat="@android:drawable/ic_search_category_default"
-            android:layout_width="20dp"
+
+        <LinearLayout
+            android:background="@color/basic_white"
+            android:layout_margin="6dp"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#00000000"
-            android:onClick="onSearchToFrined" />
-        <EditText
-            android:id="@+id/et_search_to_friend_name"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#00000000"
-            android:ems="10"
-            android:hint="이름 입력"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp" />
+            android:orientation="horizontal">
+            <ImageButton
+                android:layout_gravity="center"
+                android:layout_width="39dp"
+                android:layout_height="39dp"
+                android:layout_weight="0"
+                android:background="@drawable/btn_search_39dp"
+                android:onClick="onSearchToFrined" />
+            <EditText
+                android:background="@android:color/transparent"
+                android:textSize="14dp"
+                android:layout_gravity="center_vertical"
+                android:id="@+id/et_search_to_friend_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp" />
+
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout

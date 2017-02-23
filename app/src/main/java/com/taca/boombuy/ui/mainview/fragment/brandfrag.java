@@ -67,7 +67,7 @@ public class brandfrag extends Fragment {
         }
 
         gridView = (GridView) view.findViewById(R.id.gridview);
-        gridView.setNumColumns(3);
+        //gridView.setNumColumns(3);
 
         myAdapter = new GridViewAdapter();
 

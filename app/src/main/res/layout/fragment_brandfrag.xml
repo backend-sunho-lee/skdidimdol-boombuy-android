@@ -5,7 +5,8 @@
     tools:context="com.taca.boombuy.ui.mainview.fragment.brandfrag">
 
     <GridView
-
+        android:numColumns="3"
+        android:horizontalSpacing="-10dp"
         android:gravity="center"
         android:layout_gravity="center"
         android:id="@+id/gridview"

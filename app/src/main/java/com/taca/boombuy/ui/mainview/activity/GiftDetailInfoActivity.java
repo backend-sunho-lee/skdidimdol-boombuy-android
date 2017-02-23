@@ -1,7 +1,5 @@
 package com.taca.boombuy.ui.mainview.activity;
 
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -10,14 +8,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.taca.boombuy.R;
 import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.singleton.item_single;
-import com.taca.boombuy.vo.VO_from_friends_info;
+import com.taca.boombuy.util.ImageProc;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -123,47 +121,11 @@ public class GiftDetailInfoActivity extends AppCompatActivity {
         }
     }
 
-    class DetailMemberListAdapter extends BaseAdapter {
-
-
-        @Override
-        public int getCount() {
-            return Single_Value.getInstance().SenderNReceiver.getVo_from_friends_local_list().size();
-        }
-
-        @Override
-        public VO_from_friends_info getItem(int position) {
-            return Single_Value.getInstance().SenderNReceiver.getVo_from_friends_local_list().get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            MemberViewHolder holder;
-            if (convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.custom_receivedgift_cell_buyer_listview_cell, null);
-                holder = new MemberViewHolder(convertView);
-
-                convertView.setTag(holder);
-            } else {
-                holder = (MemberViewHolder) convertView.getTag();
-            }
-
-
-            holder.received_gift_cell_sendName.setText(getItem(position).getName());
-
-            return convertView;
-        }
-    }
-
 
     class ProductViewHolder extends RecyclerView.ViewHolder{
 
+        @BindView(R.id.received_gift_cell_layout)
+        LinearLayout received_gift_cell_layout;
 
         @BindView(R.id.received_gift_cell_product_img)
         ImageView received_gift_cell_product_img;
@@ -192,58 +154,16 @@ public class GiftDetailInfoActivity extends AppCompatActivity {
         @Override
         public void onBindViewHolder(ProductViewHolder holder, int position) {
 
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.product_icon);
-
-            holder.received_gift_cell_product_img.setImageBitmap(bitmap);
+            ImageProc.getInstance().drawImage(item_single.getInstance().itemDTOArrayList.get(position).getLocation(), holder.received_gift_cell_product_img);
             holder.received_gift_cell_product_name.setText(item_single.getInstance().itemDTOArrayList.get(position).getName());
             holder.received_gift_cell_product_price.setText(item_single.getInstance().itemDTOArrayList.get(position).getPrice()+"" );
+
         }
 
         @Override
         public int getItemCount() {
-            return item_single.getInstance().itemDTOArrayList.size();
+            return item_single.getInstance().itemDTOArrayList.size()-1;
         }
     }
 
-    /*class DetailProductListAdapter extends BaseAdapter {
-
-        @Override
-        public int getCount() {
-            return Single_Value.getInstance().SenderNReceiver.getVO_giftitem_total_list().size();
-        }
-
-        @Override
-        public VO_giftitem_list getItem(int position) {
-            return Single_Value.getInstance().SenderNReceiver.getVO_giftitem_total_list().get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-
-            ProductViewHolder holder;
-
-            if(convertView == null){
-                convertView = getLayoutInflater().inflate(R.layout.custom_receivedgift_cell_productinfo_cell, null);
-                holder = new ProductViewHolder(convertView);
-                convertView.setTag(holder);
-            }else{
-
-                holder = (ProductViewHolder)convertView.getTag();
-            }
-
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.product_icon);
-
-            holder.received_gift_cell_product_img.setImageBitmap(bitmap);
-            holder.received_gift_cell_product_name.setText(getItem(position).getProduct_title_cell());
-            holder.received_gift_cell_product_price.setText(getItem(position).getProduct_price_cell());
-
-            return convertView;
-
-        }
-    }*/
 }

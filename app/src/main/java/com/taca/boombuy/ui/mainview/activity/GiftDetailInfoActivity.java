@@ -4,19 +4,20 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.OrientationHelper;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.taca.boombuy.R;
 import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.singleton.item_single;
+import com.taca.boombuy.vo.VO_from_friends_info;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -32,8 +33,8 @@ public class GiftDetailInfoActivity extends AppCompatActivity {
     DetailProductRecycleAdapter detailProductRecycleAdapter;
 
 
-    LinearLayoutManager memberlinearLayoutManager;
-    LinearLayoutManager productLinearLayoutManager;
+    GridLayoutManager memberlinearLayoutManager;
+    GridLayoutManager productLinearLayoutManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,19 +55,16 @@ public class GiftDetailInfoActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_gift_detail_info);
 
-        //gift_detail_footer = getLayoutInflater().inflate(R.layout.activity_gift_detail_footer, null);
-
         gift_detail_member_recyclerview = (RecyclerView) findViewById(R.id.gift_detail_member_recyclerview);
         gift_detail_product_recyclerview = (RecyclerView) findViewById(R.id.gift_detail_product_recyclerview);
 
-        memberlinearLayoutManager = new LinearLayoutManager(this);
-        memberlinearLayoutManager.setOrientation(OrientationHelper.VERTICAL);
 
-        productLinearLayoutManager = new LinearLayoutManager(this);
-        productLinearLayoutManager.setOrientation(OrientationHelper.VERTICAL);
+        memberlinearLayoutManager = new GridLayoutManager(this, 1);
+        productLinearLayoutManager = new GridLayoutManager(this , 1);
 
         gift_detail_member_recyclerview.setLayoutManager(memberlinearLayoutManager);
         gift_detail_product_recyclerview.setLayoutManager(productLinearLayoutManager);
+
 
         detailMemberRecycleAdaper = new DetailMemberRecycleAdaper();
         detailProductRecycleAdapter = new DetailProductRecycleAdapter();
@@ -87,8 +85,8 @@ public class GiftDetailInfoActivity extends AppCompatActivity {
         @BindView(R.id.received_gift_cell_sendPrice)
         TextView received_gift_cell_sendPrice;
 
-        @BindView(R.id.received_gift_cell_sendPayBtn)
-        ImageButton received_gift_cell_sendPayBtn;
+        @BindView(R.id.received_gift_cell_sendPayState)
+        ImageView received_gift_cell_sendPayState;
 
         public MemberViewHolder(View view) {
             super(view);
@@ -101,21 +99,22 @@ public class GiftDetailInfoActivity extends AppCompatActivity {
         @Override
         public MemberViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
-            View view = getLayoutInflater().inflate(R.layout.custom_receivedgift_cell_buyer_listview_cell, null);
+            View itemView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.recyclerview_custom_buyer_cell, null);
+
+            View view = getLayoutInflater().inflate(R.layout.recyclerview_custom_buyer_cell, null);
             return new MemberViewHolder(view);
         }
 
         @Override
         public void onBindViewHolder(MemberViewHolder holder, int position) {
 
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.img_basic_profile);
-            holder.received_gift_cell_buyer_profile.setImageBitmap(bitmap);
-
             holder.received_gift_cell_sendName.setText(Single_Value.getInstance().SenderNReceiver.getVo_from_friends_local_list().get(position).getName());
 
-            Bitmap imgbtn = BitmapFactory.decodeResource(getResources(), R.drawable.ic_progress);
+            //Bitmap imgbtn = BitmapFactory.decodeResource(getResources(), R.drawable.ic_progress);
 
-            holder.received_gift_cell_sendPayBtn.setImageBitmap(imgbtn);
+            //holder.received_gift_cell_sendPayBtn.setBackgroundResource(R.drawable.ic_progress);
+
+
         }
 
         @Override
@@ -123,7 +122,7 @@ public class GiftDetailInfoActivity extends AppCompatActivity {
             return Single_Value.getInstance().SenderNReceiver.getVo_from_friends_local_list().size();
         }
     }
-/*
+
     class DetailMemberListAdapter extends BaseAdapter {
 
 
@@ -155,18 +154,12 @@ public class GiftDetailInfoActivity extends AppCompatActivity {
                 holder = (MemberViewHolder) convertView.getTag();
             }
 
-            Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.img_basic_profile);
-            holder.received_gift_cell_buyer_profile.setImageBitmap(bitmap);
 
             holder.received_gift_cell_sendName.setText(getItem(position).getName());
 
-            Bitmap imgbtn = BitmapFactory.decodeResource(getResources(), R.mipmap.ic_progress);
-
-            holder.received_gift_cell_sendPayBtn.setImageBitmap(imgbtn);
-
             return convertView;
         }
-    }*/
+    }
 
 
     class ProductViewHolder extends RecyclerView.ViewHolder{

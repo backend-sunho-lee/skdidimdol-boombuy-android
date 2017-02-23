@@ -22,7 +22,7 @@
             android:id="@+id/tv_from_name_cell"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:text="김지민" />
         <TextView
             android:gravity="center|end"

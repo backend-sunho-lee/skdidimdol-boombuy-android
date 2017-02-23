@@ -81,10 +81,8 @@ public class Network {
                             @Override
                             public void onResponse(JSONObject response) {
 
-
                                 Log.i("COUPON RES" , response.toString());
                                 ResBbSearchItemCoupon resBbSearchItemCoupon = new Gson().fromJson(response.toString(), ResBbSearchItemCoupon.class);
-
                                 OTTOBus.getInstance().getSearch_items_coupon_bus().post(resBbSearchItemCoupon);
 
                             }
@@ -92,7 +90,7 @@ public class Network {
                         new Response.ErrorListener(){
                             @Override
                             public void onErrorResponse(VolleyError error) {
-                                Log.i("COUPON RES FAIL", "why : " + error.getMessage());
+
                             }
                         });
 

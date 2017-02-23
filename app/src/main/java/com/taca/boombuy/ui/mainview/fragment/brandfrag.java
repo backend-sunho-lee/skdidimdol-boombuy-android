@@ -118,6 +118,8 @@ public class brandfrag extends Fragment {
 
                     Toast.makeText(getActivity(), getItem(position).getName(), Toast.LENGTH_SHORT).show();
 
+
+
                     Intent intent = new Intent(getActivity(), GiftSelectDetailInfoActivity.class);
 
                     startActivity(intent);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="514.9dp"
@@ -14,12 +15,13 @@
 
     <!--구매할 상품, 갯수 라인-->
     <LinearLayout
-        android:background="@color/basic_white"
         android:layout_width="match_parent"
         android:layout_height="39dp"
+        android:background="@color/basic_white"
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="16dp"
@@ -54,10 +56,10 @@
         android:layout_height="158.3dp">
 
         <android.support.v7.widget.RecyclerView
-            android:background="@color/basic_white"
             android:id="@+id/recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@color/basic_white"
             android:scrollbars="vertical"
             tools:listitem="@layout/cell_cardview_layout" />
     </LinearLayout>
@@ -94,7 +96,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="8dp"
-                    android:layout_weight="1"
+                    android:layout_weight="1.3"
                     android:gravity="center_vertical"
                     android:text="선물 받을 친구"
                     android:textSize="14sp"
@@ -145,7 +147,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="8dp"
-                    android:layout_weight="1"
+                    android:layout_weight="1.3"
                     android:gravity="center_vertical"
                     android:text="함께 선물할 친구"
                     android:textSize="14sp"
@@ -203,12 +205,12 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:gravity="center|end"
                     android:id="@+id/tv_from_count"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginRight="8dp"
                     android:layout_weight="1"
+                    android:gravity="center|end"
                     android:text="0명"
                     android:textColor="@color/appColor"
                     android:textSize="14sp"
@@ -218,7 +220,7 @@
         </LinearLayout>
     </FrameLayout>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="72dp"
         android:background="@color/boderColor">
@@ -228,44 +230,44 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:background="@color/basic_white">
+            android:background="@color/listColor"
+            android:orientation="horizontal">
 
-            <LinearLayout
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_my_profile_cell"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="7.7dp"
+                android:layout_marginTop="8dp"
+                android:layout_weight="0"
+                android:background="@drawable/img_basic_profile"
+                app:civ_border_color="@color/boderColor"
+                app:civ_border_width="0.5dp" />
+
+            <TextView
+                android:id="@+id/textView"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="5dp"
-                android:orientation="horizontal">
+                android:layout_marginLeft="8dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:text="내가 결제할 금액"
+                android:textSize="14sp" />
 
-                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                    android:id="@+id/iv_from_profile_cell"
-                    android:layout_width="56dp"
-                    android:layout_height="56dp"
-                    android:background="@drawable/img_basic_profile"
-                    app:civ_border_color="@color/boderColor"
-                    app:civ_border_width="0.5dp" />
-
-                <TextView
-                    android:id="@+id/textView"
-                    android:layout_width="130dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:gravity="center_vertical"
-                    android:text="내가 결제할 금액"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:gravity="center|end"
-                    android:id="@+id/tv_devided_master"
-                    android:layout_width="150dp"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="8dp"
-                    android:text="0원"
-                    android:textSize="14sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_devided_master"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="8dp"
+                android:layout_weight="1"
+                android:gravity="center|end"
+                android:text="0원"
+                android:textSize="14sp"
+                android:textStyle="bold" />
         </LinearLayout>
-    </FrameLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

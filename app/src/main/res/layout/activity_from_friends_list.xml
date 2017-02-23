@@ -10,67 +10,95 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="48dp"
         android:background="#dadada"
         android:orientation="horizontal">
 
-        <ImageButton
-            android:layout_width="20dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#00000000"
-            android:onClick="onSearchFromFrineds"
-            app:srcCompat="@android:drawable/ic_search_category_default" />
+            android:layout_margin="6dp"
+            android:background="@color/basic_white"
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/et_search_from_friends_name"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="#00000000"
-            android:ems="10"
-            android:hint="이름 입력"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp" />
+            <ImageButton
+                android:layout_width="39dp"
+                android:layout_height="39dp"
+                android:layout_gravity="center"
+                android:layout_weight="0"
+                android:background="@drawable/btn_search_39dp"
+                android:onClick="onSearchFromFrineds" />
+
+            <EditText
+                android:id="@+id/et_search_from_friends_name"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="@android:color/transparent"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"
+                android:textSize="14dp" />
+
+        </LinearLayout>
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:weightSum="1000">
+        android:layout_weight="1">
+
+        <ListView
+            android:id="@+id/lv_from_friends_local_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true" />
+    </LinearLayout>
+
+    <!--가로줄-->
+    <!--<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/boderColor" />-->
+
+    <LinearLayout
+        android:layout_weight="0"
+        android:layout_width="match_parent"
+        android:layout_height="159.7dp"
+        android:background="@color/basic_white"
+        android:orientation="vertical">
 
         <LinearLayout
+            android:layout_weight="2"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="839">
-
-            <ListView
-                android:id="@+id/lv_from_friends_local_list"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:textStyle="bold"
+                android:textSize="15sp"
+                android:gravity="center"
+                android:text="1/N 금액"
+                android:layout_weight="3"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true" />
+                android:layout_height="match_parent" />
+            <TextView
+                android:gravity="center|left"
+                android:id="@+id/tv_devided_price"
+                android:textColor="@color/appColor"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
         </LinearLayout>
 
-        <!--가로줄-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
+        <android.support.v7.widget.RecyclerView
             android:layout_weight="1"
-            android:background="@color/boderColor" />
-
-        <LinearLayout
+            android:background="@color/basic_transparent"
+            android:id="@+id/rv_selected_friends"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="160">
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/rv_selected_friends"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scrollbars="vertical"
-                tools:listitem="@layout/cell_cardview_selected_layout" />
-        </LinearLayout>
+            android:layout_height="match_parent"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/cell_cardview_selected_layout" />
     </LinearLayout>
 </LinearLayout>

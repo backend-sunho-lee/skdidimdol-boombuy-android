@@ -4,6 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
 
+    <!--친구리스트뷰 칼라-->
+    <color name="listColor">#fafafa </color>
+
     <!--앱 칼라-->
     <color name="appColor">#7448ef </color>
 
@@ -34,5 +37,7 @@
     <color name="basic_black">#000000</color>
 
 
+    <!--기본 투명색-->
+    <color name="basic_transparent">#00ff0000</color>
 
 </resources>

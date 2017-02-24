@@ -18,11 +18,11 @@ import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 import com.taca.boombuy.R;
-import com.taca.boombuy.dto.subdto.SelectedItemsDTO;
-import com.taca.boombuy.evt.OTTOBus;
+import com.taca.boombuy.evt.OTTOBusTEST;
 import com.taca.boombuy.modelRes.ResBbSearchItemCoupon;
 import com.taca.boombuy.modelRes.ResBbSearchItemCouponBody;
-import com.taca.boombuy.net.Network;
+import com.taca.boombuy.net.NetworkTEST;
+import com.taca.boombuy.networkmodel.ItemDTO;
 import com.taca.boombuy.singleton.item_single;
 import com.taca.boombuy.util.ImageProc;
 
@@ -69,9 +69,9 @@ public class couponfrag extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_couponfrag, container, false);
 
         couponAdapter = new CouponListViewAdapter();
-        Network.getInstance().bb_search_item_coupon(getActivity(), 28);
+        NetworkTEST.getInstance().bb_search_item_coupon(getActivity(), 28);
         if(!ottoflag){
-            OTTOBus.getInstance().getSearch_items_coupon_bus().register(this);
+            OTTOBusTEST.getInstance().getSearch_items_coupon_bus().register(this);
             ottoflag = true;
         }
 
@@ -142,7 +142,7 @@ public class couponfrag extends Fragment {
             couponViewHolder.lv_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    item_single.getInstance().itemDTO = new SelectedItemsDTO(
+                    item_single.getInstance().itemDTO = new ItemDTO(
                             getItem(position).getId(),
                             getItem(position).getBid(),
                             getItem(position).getName(),

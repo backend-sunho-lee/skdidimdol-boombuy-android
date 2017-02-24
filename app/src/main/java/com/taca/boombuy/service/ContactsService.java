@@ -90,7 +90,7 @@ public class ContactsService extends Service {
                 // 10개 되었냐??
                 if (cc.size() == BUFFER_MAX_CNT) {
                     // 서버 전송@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-                    //Network.getInstance().sendAddress(this, cc);
+                    //NetworkTEST.getInstance().sendAddress(this, cc);
                     // 버퍼 비우기
                     cc.clear();
                 }
@@ -106,7 +106,7 @@ public class ContactsService extends Service {
         // 수집 활동이 끝났는데 버퍼에 8개가 남은 것 같다 -> 서버 전송 -> 비운다
         if (cc.size() > 0) {
             // 서버 전송@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-            //Network.getInstance().sendAddress(this, cc);
+            //NetworkTEST.getInstance().sendAddress(this, cc);
             // 버퍼 비우기
             cc.clear();
         }

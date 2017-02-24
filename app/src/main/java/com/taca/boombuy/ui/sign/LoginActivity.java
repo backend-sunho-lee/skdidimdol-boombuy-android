@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -17,15 +16,17 @@ import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 import com.taca.boombuy.R;
+import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.database.StorageHelper;
-import com.taca.boombuy.evt.OTTOBus;
-import com.taca.boombuy.net.Network;
-import com.taca.boombuy.netmodel.LonInModel;
+import com.taca.boombuy.evt.OTTOBusTEST;
+import com.taca.boombuy.evt.OttoBus;
+import com.taca.boombuy.net.NetworkTEST;
+import com.taca.boombuy.netmodel.LoginModel;
 import com.taca.boombuy.ui.mainview.activity.MainActivity;
 import com.taca.boombuy.util.U;
 
-public class SignInActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     // 버튼
     ImageButton btn_auto_signin;
@@ -40,20 +41,20 @@ public class SignInActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_in);
 
         // 이벤트 받을 녀석(회원가입 완료 메시지)
-        OTTOBus.getInstance().getSign_in_bus().register(this);
+        OttoBus.getInstance().getLogin_Bus().register(this);
 
         et_signin_id = (EditText) findViewById(R.id.et_signin_id);
         et_signin_password = (EditText) findViewById(R.id.et_signin_password);
 
         // 자동로그인 후
-       if (StorageHelper.getInstance().getBoolean(SignInActivity.this, "auto_login")) {
-            et_signin_id.setText(StorageHelper.getInstance().getString(SignInActivity.this, "my_phone_number"));
-            et_signin_password.setText(StorageHelper.getInstance().getString(SignInActivity.this, "auto_login_password"));
+       if (StorageHelper.getInstance().getBoolean(LoginActivity.this, "auto_login")) {
+            et_signin_id.setText(StorageHelper.getInstance().getString(LoginActivity.this, "my_phone_number"));
+            et_signin_password.setText(StorageHelper.getInstance().getString(LoginActivity.this, "auto_login_password"));
             // 서버로부터 로그인
-            Single_Value.getInstance().lonInModel = new LonInModel();
-            Single_Value.getInstance().lonInModel.setPhone(StorageHelper.getInstance().getString(SignInActivity.this, "my_phone_number"));
-            Single_Value.getInstance().lonInModel.setPassword(StorageHelper.getInstance().getString(SignInActivity.this, "auto_login_password"));
-            Network.getInstance().bb_Login(getApplicationContext(), Single_Value.getInstance().lonInModel);
+            Single_Value.getInstance().lonInModel = new LoginModel();
+            Single_Value.getInstance().lonInModel.setPhone(StorageHelper.getInstance().getString(LoginActivity.this, "my_phone_number"));
+            Single_Value.getInstance().lonInModel.setPassword(StorageHelper.getInstance().getString(LoginActivity.this, "auto_login_password"));
+            NetworkTEST.getInstance().bb_Login(getApplicationContext(), Single_Value.getInstance().lonInModel);
         }
 
         // 버튼 매칭 및 클릭리스너
@@ -62,10 +63,10 @@ public class SignInActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 서버로부터 로그인
-                Single_Value.getInstance().lonInModel = new LonInModel();
+                Single_Value.getInstance().lonInModel = new LoginModel();
                 Single_Value.getInstance().lonInModel.setPhone(et_signin_id.getText().toString());
                 Single_Value.getInstance().lonInModel.setPassword(et_signin_password.getText().toString());
-                Network.getInstance().bb_Login(getApplicationContext(), Single_Value.getInstance().lonInModel);
+                NetworkTEST.getInstance().bb_Login(getApplicationContext(), Single_Value.getInstance().lonInModel);
             }
         });
 
@@ -77,8 +78,8 @@ public class SignInActivity extends AppCompatActivity {
                     request_READ_PHONE_STATE_permission();
                 } else {
                     // my_phone_number 쉐어드프리퍼런스에 내 전화번호 저장
-                    StorageHelper.getInstance().setString(SignInActivity.this, "my_phone_number", U.getInstance().getMyPhoneNum(SignInActivity.this));
-                    Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
+                    StorageHelper.getInstance().setString(LoginActivity.this, "my_phone_number", U.getInstance().getMyPhoneNum(LoginActivity.this));
+                    Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
                     startActivity(intent);
                 }
             }
@@ -86,21 +87,37 @@ public class SignInActivity extends AppCompatActivity {
     }
 
     // 오토버스 이벤트 도착
+
+    ResBasic resBasic;
     @Subscribe
-    public void FinishLoad(String data) {
-        Log.i("OTTO", data);
-        if (data.contains("성공")) {
-            StorageHelper.getInstance().setBoolean(SignInActivity.this, "auto_login", true);
-            StorageHelper.getInstance().setString(SignInActivity.this, "auto_login_password", et_signin_password.getText().toString());
-            Intent intent = new Intent(SignInActivity.this, MainActivity.class);
+    public void FinishLoad(ResBasic data) {
+
+        resBasic = data;
+        if (resBasic.getResult() != null) {
+            StorageHelper.getInstance().setBoolean(LoginActivity.this, "auto_login", true);
+            StorageHelper.getInstance().setString(LoginActivity.this, "auto_login_password", et_signin_password.getText().toString());
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             // 오토버스 썼으면 등록해제
-            OTTOBus.getInstance().getSign_in_bus().unregister(this);
+            OTTOBusTEST.getInstance().getSign_in_bus().unregister(this);
             startActivity(intent);
             finish();
         } else {
-            Toast.makeText(SignInActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+            Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
         }
+
+        /*if (data.contains("성공")) {
+            StorageHelper.getInstance().setBoolean(LoginActivity.this, "auto_login", true);
+            StorageHelper.getInstance().setString(LoginActivity.this, "auto_login_password", et_signin_password.getText().toString());
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            // 오토버스 썼으면 등록해제
+            OTTOBusTEST.getInstance().getSign_in_bus().unregister(this);
+            startActivity(intent);
+            finish();
+        } else {
+            Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
+        }*/
     }
 
     @Override
@@ -110,8 +127,8 @@ public class SignInActivity extends AppCompatActivity {
             case 1: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // my_phone_number 쉐어드프리퍼런스에 내 전화번호 저장
-                    StorageHelper.getInstance().setString(SignInActivity.this, "my_phone_number", U.getInstance().getMyPhoneNum(SignInActivity.this));
-                    Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
+                    StorageHelper.getInstance().setString(LoginActivity.this, "my_phone_number", U.getInstance().getMyPhoneNum(LoginActivity.this));
+                    Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
                     startActivity(intent);
                 } else {
                     // 사용자가 권한 동의를 안하므로 종료
@@ -136,8 +153,8 @@ public class SignInActivity extends AppCompatActivity {
             }
         } else {
             // my_phone_number 쉐어드프리퍼런스에 내 전화번호 저장
-            StorageHelper.getInstance().setString(SignInActivity.this, "my_phone_number", U.getInstance().getMyPhoneNum(SignInActivity.this));
-            Intent intent = new Intent(SignInActivity.this, SignUpActivity.class);
+            StorageHelper.getInstance().setString(LoginActivity.this, "my_phone_number", U.getInstance().getMyPhoneNum(LoginActivity.this));
+            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
             startActivity(intent);
         }
     }

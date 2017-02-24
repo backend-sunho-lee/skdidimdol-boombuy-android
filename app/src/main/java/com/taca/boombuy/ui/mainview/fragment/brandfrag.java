@@ -15,10 +15,10 @@ import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 import com.taca.boombuy.R;
-import com.taca.boombuy.evt.OTTOBus;
+import com.taca.boombuy.evt.OTTOBusTEST;
 import com.taca.boombuy.modelRes.ResBbSearchBrand;
 import com.taca.boombuy.modelRes.ResBbSearchBrandBody;
-import com.taca.boombuy.net.Network;
+import com.taca.boombuy.net.NetworkTEST;
 import com.taca.boombuy.ui.mainview.activity.GiftSelectDetailInfoActivity;
 import com.taca.boombuy.util.ImageProc;
 
@@ -59,10 +59,10 @@ public class brandfrag extends Fragment {
         View view = inflater.inflate(R.layout.fragment_brandfrag, container, false);
 
 
-        Network.getInstance().bb_search_brands(getActivity().getApplicationContext());
+        NetworkTEST.getInstance().bb_search_brands(getActivity().getApplicationContext());
 
         if(!ottoFlag){
-            OTTOBus.getInstance().getSearch_brands_bus().register(this);
+            OTTOBusTEST.getInstance().getSearch_brands_bus().register(this);
             ottoFlag = true;
         }
 

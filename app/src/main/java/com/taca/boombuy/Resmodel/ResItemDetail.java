@@ -7,10 +7,10 @@ import com.taca.boombuy.networkmodel.ItemDTO;
  */
 
 
-public class ResItem {
+public class ResItemDetail {
 
     ItemDTO result;
-    String error;
+    ResError error;
 
 
     public ItemDTO getResult() {
@@ -21,19 +21,19 @@ public class ResItem {
         this.result = result;
     }
 
-    public String getError() {
+    public ResError getError() {
         return error;
     }
 
-    public void setError(String error) {
+    public void setError(ResError error) {
         this.error = error;
     }
 
     @Override
     public String toString() {
-        return "ResItem{" +
+        return "ResItemDetail{" +
                 "result=" + result +
-                ", error='" + error + '\'' +
+                ", error=" + error +
                 '}';
     }
 }

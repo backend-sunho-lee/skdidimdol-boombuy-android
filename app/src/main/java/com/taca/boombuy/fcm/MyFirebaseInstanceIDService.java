@@ -7,7 +7,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.database.StorageHelper;
-import com.taca.boombuy.net.Network;
+import com.taca.boombuy.net.NetworkTEST;
 import com.taca.boombuy.netmodel.UpdateTokenModel;
 
 /**
@@ -33,7 +33,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         Single_Value.getInstance().updateTokenModel = new UpdateTokenModel();
         Single_Value.getInstance().updateTokenModel.setPhone(StorageHelper.getInstance().getString(getApplicationContext(), "my_phone_number"));
         Single_Value.getInstance().updateTokenModel.setToken(token);
-        Network.getInstance().bb_Update_token(getApplicationContext(), Single_Value.getInstance().updateTokenModel);
+        NetworkTEST.getInstance().bb_Update_token(getApplicationContext(), Single_Value.getInstance().updateTokenModel);
 
         // 토큰이 바뀌면 쉐어드프리퍼런스에 저장
         StorageHelper.getInstance().setString(getApplicationContext(), "my_token", token);

@@ -8,10 +8,10 @@ import java.util.ArrayList;
  * Created by jimin on 2017-02-24.
  */
 
-public class ResTotalBrands {
+public class ResSearchBrands {
 
     ArrayList<BrandDTO> result;
-    String error;
+    ResError error;
 
     public ArrayList<BrandDTO> getResult() {
         return result;
@@ -21,19 +21,19 @@ public class ResTotalBrands {
         this.result = result;
     }
 
-    public String getError() {
+    public ResError getError() {
         return error;
     }
 
-    public void setError(String error) {
+    public void setError(ResError error) {
         this.error = error;
     }
 
     @Override
     public String toString() {
-        return "ResTotalBrands{" +
+        return "ResSearchBrands{" +
                 "result=" + result +
-                ", error='" + error + '\'' +
+                ", error=" + error +
                 '}';
     }
 }

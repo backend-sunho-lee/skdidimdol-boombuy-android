@@ -7,7 +7,7 @@ package com.taca.boombuy.Resmodel;
 public class ResBasic {
 
     String result;
-    String error;
+    ResError error;
 
     public String getResult() {
         return result;
@@ -17,12 +17,12 @@ public class ResBasic {
         this.result = result;
     }
 
-    public String getError() {
+
+    public ResError getError() {
         return error;
     }
 
-    public void setError(String error) {
+    public void setError(ResError error) {
         this.error = error;
     }
-
 }

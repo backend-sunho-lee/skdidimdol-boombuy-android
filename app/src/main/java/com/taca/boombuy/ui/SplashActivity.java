@@ -9,9 +9,9 @@ import android.os.Handler;
 
 import com.taca.boombuy.R;
 import com.taca.boombuy.Single_Value;
-import com.taca.boombuy.dto.subdto.SelectedItemsDTO;
+import com.taca.boombuy.networkmodel.ItemDTO;
 import com.taca.boombuy.singleton.item_single;
-import com.taca.boombuy.ui.sign.SignInActivity;
+import com.taca.boombuy.ui.sign.LoginActivity;
 import com.taca.boombuy.util.ImageProc;
 import com.taca.boombuy.vo.VO_giftitem_list;
 
@@ -43,7 +43,7 @@ public class SplashActivity extends Activity {
         Single_Value.getInstance().vo_giftitem_list.setProduct_price_cell("0");
         Single_Value.getInstance().vo_giftitem_lists.add(Single_Value.getInstance().vo_giftitem_list);
 
-        item_single.getInstance().itemDTO = new SelectedItemsDTO(
+        item_single.getInstance().itemDTO = new ItemDTO(
                 0, 0, "", 0, "", ""
         );
 
@@ -63,7 +63,7 @@ public class SplashActivity extends Activity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent(SplashActivity.this, SignInActivity.class);
+                Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }

@@ -14,10 +14,10 @@ import android.widget.ImageView;
 
 import com.squareup.otto.Subscribe;
 import com.taca.boombuy.R;
-import com.taca.boombuy.evt.OTTOBus;
+import com.taca.boombuy.evt.OTTOBusTEST;
 import com.taca.boombuy.modelRes.ResBbSearchItemBody;
 import com.taca.boombuy.modelRes.ResBbSearchItemId;
-import com.taca.boombuy.net.Network;
+import com.taca.boombuy.net.NetworkTEST;
 import com.taca.boombuy.ui.mainview.fragment.GiftSelectProductDetailFrag;
 import com.taca.boombuy.ui.mainview.fragment.GiftSelectProductMatterFrag;
 import com.taca.boombuy.util.ImageProc;
@@ -43,8 +43,8 @@ public class GiftSelectDetailInfoActivity extends AppCompatActivity {
         ResBbSearchItemBody item = (ResBbSearchItemBody)getIntent().getSerializableExtra("item");
         Log.i("ITEM DATA", item.toString());
 
-        Network.getInstance().bb_search_item_Id(this, item.getId());
-        OTTOBus.getInstance().getSelected_item_detail_bus().register(this);
+        NetworkTEST.getInstance().bb_search_item_Id(this, item.getId());
+        OTTOBusTEST.getInstance().getSelected_item_detail_bus().register(this);
 
         selected_gift_imageview = (ImageView) findViewById(R.id.selected_gift_imageview);
 

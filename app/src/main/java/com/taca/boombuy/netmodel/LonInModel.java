@@ -12,7 +12,7 @@ public class LonInModel {
 
     @Override
     public String toString() {
-        return "SignUpModel{" +
+        return "SignUpDTO{" +
                 "phone='" + phone + '\'' +
                 ", password='" + password + '\'' +
                 '}';

@@ -1,5 +1,6 @@
 package com.taca.boombuy.modelReq;
 
+import com.taca.boombuy.Reqmodel.ReqHeader;
 import com.taca.boombuy.netmodel.LonInModel;
 
 /**

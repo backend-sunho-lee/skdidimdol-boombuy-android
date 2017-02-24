@@ -1,4 +1,4 @@
-package com.taca.boombuy.netmodel;
+package com.taca.boombuy.Resmodel;
 
 /**
  * Created by Tacademy on 2017-01-17.

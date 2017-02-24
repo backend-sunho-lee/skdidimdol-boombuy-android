@@ -1,21 +1,19 @@
-package com.taca.boombuy.modelReq;
+package com.taca.boombuy.Reqmodel;
 
-import com.taca.boombuy.Reqmodel.ReqHeader;
+import com.taca.boombuy.networkmodel.SignUpDTO;
 
 /**
- * Created by Tacademy on 2017-02-19.
+ * Created by jimin on 2017-02-13.
  */
 
-public class ReqBbSearchItemId {
-
+public class ReqSignUp {
     ReqHeader header;
+    SignUpDTO body;
 
-    int body;
-
-    public ReqBbSearchItemId() {
+    public ReqSignUp() {
     }
 
-    public ReqBbSearchItemId(ReqHeader header, int body) {
+    public ReqSignUp(ReqHeader header, SignUpDTO body) {
         this.header = header;
         this.body = body;
     }
@@ -28,17 +26,17 @@ public class ReqBbSearchItemId {
         this.header = header;
     }
 
-    public int getBody() {
+    public SignUpDTO getBody() {
         return body;
     }
 
-    public void setBody(int body) {
+    public void setBody(SignUpDTO body) {
         this.body = body;
     }
 
     @Override
     public String toString() {
-        return "ReqBbSearchItemId{" +
+        return "ReqSignUp{" +
                 "header=" + header +
                 ", body=" + body +
                 '}';

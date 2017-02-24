@@ -1,4 +1,4 @@
-package com.taca.boombuy.modelReq;
+package com.taca.boombuy.Reqmodel;
 
 /**
  * Created by Tacademy on 2017-01-17.
@@ -21,4 +21,5 @@ public class ReqHeader
     public void setCode(String code) {
         this.code = code;
     }
+
 }

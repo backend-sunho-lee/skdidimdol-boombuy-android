@@ -1,17 +1,14 @@
-package com.taca.boombuy.netmodel;
+package com.taca.boombuy.networkmodel;
 
 /**
- * Created by jimin on 2017-02-13.
+ * Created by jimin on 2017-02-24.
  */
 
-public class SignUpModel {
+public class SignUpDTO {
     String phone;
     String password;
     String name;
     String token;
-    String profile;
-
-    public SignUpModel(){}
 
     @Override
     public String toString() {
@@ -20,7 +17,6 @@ public class SignUpModel {
                 ", password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", token='" + token + '\'' +
-                ", profile='" + profile + '\'' +
                 '}';
     }
 
@@ -56,20 +52,15 @@ public class SignUpModel {
         this.token = token;
     }
 
-    public String getProfile() {
-        return profile;
-    }
-
-    public void setProfile(String profile) {
-        this.profile = profile;
-    }
-
-    public SignUpModel(String phone, String password, String name, String token, String profile) {
+    public SignUpDTO(String phone, String password, String name, String token) {
 
         this.phone = phone;
         this.password = password;
         this.name = name;
         this.token = token;
-        this.profile = profile;
+    }
+
+    public SignUpDTO() {
+
     }
 }

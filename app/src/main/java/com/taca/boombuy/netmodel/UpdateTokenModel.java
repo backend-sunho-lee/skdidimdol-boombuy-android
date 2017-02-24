@@ -12,7 +12,7 @@ public class UpdateTokenModel {
 
     @Override
     public String toString() {
-        return "SignUpModel{" +
+        return "SignUpDTO{" +
                 "phone='" + phone + '\'' +
                 ", token='" + token + '\'' +
                 '}';

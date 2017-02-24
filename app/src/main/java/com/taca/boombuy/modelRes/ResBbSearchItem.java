@@ -1,6 +1,6 @@
 package com.taca.boombuy.modelRes;
 
-import com.taca.boombuy.netmodel.ResHeader;
+import com.taca.boombuy.Resmodel.ResHeader;
 
 import java.util.ArrayList;
 

@@ -154,9 +154,9 @@ public class NetVolley {
                 //return true; // verify always returns true, which could cause insecure network traffic due to trusting TLS/SSL server certificates for wrong hostnames
                 HostnameVerifier hv = HttpsURLConnection.getDefaultHostnameVerifier();
                 return hv.verify("localhost", session);
-            }
+            }//
         };
-    }*//*
+    }*/ /*
 
 
 

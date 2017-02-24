@@ -6,17 +6,16 @@ package com.taca.boombuy.Resmodel;
 
 public class ResBasic {
 
-    String result;
+    String message;
     ResError error;
 
-    public String getResult() {
-        return result;
+    public String getMessage() {
+        return message;
     }
 
-    public void setResult(String result) {
-        this.result = result;
+    public void setMessage(String message) {
+        this.message = message;
     }
-
 
     public ResError getError() {
         return error;

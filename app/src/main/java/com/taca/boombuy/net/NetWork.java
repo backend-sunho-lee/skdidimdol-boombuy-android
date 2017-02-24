@@ -3,6 +3,7 @@ package com.taca.boombuy.net;
 import android.content.Context;
 import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -12,10 +13,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.taca.boombuy.Reqmodel.ReqHeader;
-import com.taca.boombuy.Reqmodel.ReqLogin;
-import com.taca.boombuy.Reqmodel.ReqSearchProfile;
 import com.taca.boombuy.Reqmodel.ReqSendContacts;
-import com.taca.boombuy.Reqmodel.ReqSignUp;
 import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.Resmodel.ResItemDetail;
 import com.taca.boombuy.Resmodel.ResItems;
@@ -29,6 +27,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by Tacademy on 2017-02-24.
@@ -58,6 +57,7 @@ public class NetWork {
     // 회원가입 //////////////////////////////////////////////////////////////////////////////////////////
     public void NetSignUp(Context context, SignUpDTO signUpDTO){
 
+/*
         ReqSignUp reqSignUp = new ReqSignUp();
 
         ReqHeader header = new ReqHeader("회원 가입");
@@ -65,10 +65,11 @@ public class NetWork {
         reqSignUp.setBody(signUpDTO);
 
         Log.i("회원가입 입력값 :" , reqSignUp.toString());
-
+*/
+        Log.i("회원가입 값 :", signUpDTO.toString());
 
         try {
-            JSONObject json = new JSONObject(new Gson().toJson(reqSignUp));
+            JSONObject json = new JSONObject(new Gson().toJson(signUpDTO));
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST,
                     "http://ec2-52-78-52-228.ap-northeast-2.compute.amazonaws.com/users",
@@ -78,6 +79,7 @@ public class NetWork {
                         public void onResponse(JSONObject response) {
                             ResBasic resBasic = new Gson().fromJson(response.toString(), ResBasic.class);
 
+                            Log.i("response data :" , response.toString());
                             OttoBus.getInstance().getSignUp_Bus().post(resBasic);
 
                             Log.i("RES SUCCES :", "회원가입 됐다.");
@@ -86,7 +88,7 @@ public class NetWork {
                     new Response.ErrorListener(){
                         @Override
                         public void onErrorResponse(VolleyError error) {
-
+                            error.printStackTrace();
                             Log.i("RES Fail :", "회원가입 Volley 실패" + error.getMessage());
 
                         }
@@ -101,17 +103,17 @@ public class NetWork {
     // 회원 로그인 ///////////////////////////////////////////////////////////////////////////////////////
     public void NetLogin(Context context, LoginDTO loginDTO){
 
-        ReqLogin reqLogin = new ReqLogin();
+        /*ReqLogin reqLogin = new ReqLogin();
 
         ReqHeader header = new ReqHeader("로그인");
         reqLogin.setHeader(header);
-        reqLogin.setBody(loginDTO);
+        reqLogin.setBody(loginDTO);*/
 
         try {
-            JSONObject json = new JSONObject(new Gson().toJson(reqLogin));
+            JSONObject json = new JSONObject(new Gson().toJson(loginDTO));
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST,
-                    "",
+                    "http://ec2-52-78-52-228.ap-northeast-2.compute.amazonaws.com/auth/local/login",
                     json,
                     new Response.Listener<JSONObject>(){
                         @Override
@@ -141,14 +143,14 @@ public class NetWork {
     // 회원 프로필 조회 //////////////////////////////////////////////////////////////////////////////////
     public void NetSearchProfile(Context context, String phone){
 
-        ReqSearchProfile reqSearchProfile = new ReqSearchProfile();
+        /*ReqSearchProfile reqSearchProfile = new ReqSearchProfile();
 
         ReqHeader header = new ReqHeader("회원 프로필 조회");
         reqSearchProfile.setHeader(header);
-        reqSearchProfile.setPhone(phone);
+        reqSearchProfile.setPhone(phone);*/
 
         try {
-            JSONObject json = new JSONObject(new Gson().toJson(reqSearchProfile));
+            JSONObject json = new JSONObject(new Gson().toJson(phone));
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST,
                     "",
@@ -182,7 +184,7 @@ public class NetWork {
             //JSONObject json = new JSONObject(new Gson().toJson(reqSearchProfile));
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.GET,
-                    "",
+                    "http://ec2-52-78-52-228.ap-northeast-2.compute.amazonaws.com/items",
                     null,
                     new Response.Listener<JSONObject>(){
                         @Override
@@ -212,7 +214,7 @@ public class NetWork {
             //JSONObject json = new JSONObject(new Gson().toJson(reqSearchProfile));
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.GET,
-                    "",
+                    "http://ec2-52-78-52-228.ap-northeast-2.compute.amazonaws.com/brands",
                     null,
                     new Response.Listener<JSONObject>(){
                         @Override
@@ -267,6 +269,37 @@ public class NetWork {
     }
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
+    public void NetSearchCoupon(Context context){
+
+        try {
+            //JSONObject json = new JSONObject(new Gson().toJson(reqSearchProfile));
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                    Request.Method.GET,
+                    "http://ec2-52-78-52-228.ap-northeast-2.compute.amazonaws.com/items/voucher",
+                    null,
+                    new Response.Listener<JSONObject>(){
+                        @Override
+                        public void onResponse(JSONObject response) {
+
+                            ResItems resItems = new Gson().fromJson(response.toString(), ResItems.class);
+                            OttoBus.getInstance().getSearchCoupons_Bus().post(resItems);
+                            Log.i("RES SUCCES :", "상품권 상품 전체 조회 됐다.");
+                        }
+                    },
+                    new Response.ErrorListener(){
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.i("RES Fail :", "상품권 상품 전체 조회 실패" + error.getMessage());
+                        }
+                    });
+            getRequestQueue(context).add(jsonObjectRequest);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+    }
+
+
     // 하나의 상품 상세정보 조회 /////////////////////////////////////////////////////////////////////////
     public void NetSearchItemDetail(Context context, int iid){
 
@@ -274,7 +307,7 @@ public class NetWork {
             //JSONObject json = new JSONObject(new Gson().toJson(reqSearchProfile));
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.GET,
-                    "" + iid,
+                    "http://ec2-52-78-52-228.ap-northeast-2.compute.amazonaws.com/items/:"+iid ,
                     null,
                     new Response.Listener<JSONObject>(){
                         @Override
@@ -350,8 +383,11 @@ public class NetWork {
                     public void onErrorResponse(VolleyError error) {
 
                     }
-                });
-
-        getRequestQueue(context).add()
+                }){
+            @Override
+            protected Map<String, String> getPostParams() throws AuthFailureError {
+                return super.getPostParams();
+            }
+        };
     }
 }

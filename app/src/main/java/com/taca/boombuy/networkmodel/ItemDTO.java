@@ -1,10 +1,12 @@
 package com.taca.boombuy.networkmodel;
 
+import java.io.Serializable;
+
 /**
  * Created by jimin on 2017-02-24.
  */
 
-public class ItemDTO {
+public class ItemDTO implements Serializable {
 
     int id;
     int bid;

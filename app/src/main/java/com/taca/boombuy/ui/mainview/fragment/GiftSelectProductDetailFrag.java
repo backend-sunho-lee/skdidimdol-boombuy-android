@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.taca.boombuy.R;
-import com.taca.boombuy.modelRes.ResBbSearchItemBody;
+import com.taca.boombuy.networkmodel.ItemDTO;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +27,7 @@ public class GiftSelectProductDetailFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gift_select_product_detail, container, false);
-        ResBbSearchItemBody item = (ResBbSearchItemBody) getActivity().getIntent().getSerializableExtra("item");
+        ItemDTO item = (ItemDTO) getActivity().getIntent().getSerializableExtra("item");
         Log.i("ITEM DATA", item.toString());
 
         selected_detail_textView = (TextView) view.findViewById(R.id.selected_detail_textView);

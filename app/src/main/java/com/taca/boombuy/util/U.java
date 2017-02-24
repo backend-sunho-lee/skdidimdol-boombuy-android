@@ -32,6 +32,7 @@ public class U {
                                     ContactsContract.CommonDataKinds.Phone.NUMBER,        // 연락처
                                     ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME}; // 연락처 이름.
 
+
                             String[] selectionArgs = null;
 
                             String sortOrder = ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME

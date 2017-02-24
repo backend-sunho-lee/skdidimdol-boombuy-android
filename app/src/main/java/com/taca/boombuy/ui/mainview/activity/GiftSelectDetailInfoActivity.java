@@ -14,10 +14,10 @@ import android.widget.ImageView;
 
 import com.squareup.otto.Subscribe;
 import com.taca.boombuy.R;
-import com.taca.boombuy.evt.OTTOBusTEST;
-import com.taca.boombuy.modelRes.ResBbSearchItemBody;
-import com.taca.boombuy.modelRes.ResBbSearchItemId;
-import com.taca.boombuy.net.NetworkTEST;
+import com.taca.boombuy.Resmodel.ResItemDetail;
+import com.taca.boombuy.evt.OttoBus;
+import com.taca.boombuy.net.NetWork;
+import com.taca.boombuy.networkmodel.ItemDTO;
 import com.taca.boombuy.ui.mainview.fragment.GiftSelectProductDetailFrag;
 import com.taca.boombuy.ui.mainview.fragment.GiftSelectProductMatterFrag;
 import com.taca.boombuy.util.ImageProc;
@@ -31,8 +31,7 @@ public class GiftSelectDetailInfoActivity extends AppCompatActivity {
     // 상품번호 담아올 변수
 
     ImageView selected_gift_imageview;
-    ResBbSearchItemId reqBbSearchItemId;
-
+    ResItemDetail resItemDetail;
     boolean ottoFlag = false;
 
     @Override
@@ -40,11 +39,11 @@ public class GiftSelectDetailInfoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gift_select_detail_info);
 
-        ResBbSearchItemBody item = (ResBbSearchItemBody)getIntent().getSerializableExtra("item");
+        ItemDTO item = (ItemDTO)getIntent().getSerializableExtra("item");
         Log.i("ITEM DATA", item.toString());
 
-        NetworkTEST.getInstance().bb_search_item_Id(this, item.getId());
-        OTTOBusTEST.getInstance().getSelected_item_detail_bus().register(this);
+        NetWork.getInstance().NetSearchItemDetail(getApplicationContext(), item.getId());
+        OttoBus.getInstance().getSearchItemDetail_Bus().register(this);
 
         selected_gift_imageview = (ImageView) findViewById(R.id.selected_gift_imageview);
 
@@ -112,8 +111,10 @@ public class GiftSelectDetailInfoActivity extends AppCompatActivity {
     }
 
     @Subscribe
-    public void FinishLoad(ResBbSearchItemId data){
-        reqBbSearchItemId = data;
-        ImageProc.getInstance().drawImage(reqBbSearchItemId.getBody().getLocation() , selected_gift_imageview);
+    public void FinishLoad(ResItemDetail data){
+
+        resItemDetail = data;
+        ImageProc.getInstance().drawImage(resItemDetail.getResult().getLocation() , selected_gift_imageview);
+        OttoBus.getInstance().getSearchItemDetail_Bus().unregister(this);
     }
 }

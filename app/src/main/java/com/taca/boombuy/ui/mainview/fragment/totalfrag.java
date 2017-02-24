@@ -21,10 +21,10 @@ import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 import com.taca.boombuy.R;
+import com.taca.boombuy.Resmodel.ResItems;
 import com.taca.boombuy.evt.OTTOBusTEST;
-import com.taca.boombuy.modelRes.ResBbSearchItem;
-import com.taca.boombuy.modelRes.ResBbSearchItemBody;
-import com.taca.boombuy.net.NetworkTEST;
+import com.taca.boombuy.evt.OttoBus;
+import com.taca.boombuy.net.NetWork;
 import com.taca.boombuy.networkmodel.ItemDTO;
 import com.taca.boombuy.singleton.item_single;
 import com.taca.boombuy.ui.mainview.activity.GiftSelectDetailInfoActivity;
@@ -34,8 +34,8 @@ import java.util.Collections;
 
 public class totalfrag extends Fragment {
 
-
-    ResBbSearchItem resBbSearchItem = new ResBbSearchItem();
+    ResItems resItems;
+    //ResBbSearchItem resBbSearchItem = new ResBbSearchItem();
 
     CustomListAdapter listAdapter;
     ListView listView;
@@ -47,10 +47,8 @@ public class totalfrag extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.activity_totalfrag, container, false);
 
-
-        NetworkTEST.getInstance().bb_search_items(getActivity().getApplicationContext());
-
-
+        NetWork.getInstance().NetSearchItems(getActivity().getApplicationContext());
+        OttoBus.getInstance().getSearchItems_Bus().register(this);
 
         if(!ottoFlag){
             OTTOBusTEST.getInstance().getSearch_items_bus().register(this);
@@ -95,12 +93,12 @@ public class totalfrag extends Fragment {
 
         @Override
         public int getCount() {
-            return resBbSearchItem.getBody().size();
+            return resItems.getResult().size();
         }
 
         @Override
-        public ResBbSearchItemBody getItem(int position) {
-            return resBbSearchItem.getBody().get(position);
+        public ItemDTO getItem(int position) {
+            return resItems.getResult().get(position);
         }
 
         @Override
@@ -183,12 +181,9 @@ public class totalfrag extends Fragment {
             holder.lv_detailinfo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     Intent intent = new Intent(getActivity(), GiftSelectDetailInfoActivity.class);
-
-                    ResBbSearchItemBody item = getItem(position);
+                    ItemDTO item = getItem(position);
                     intent.putExtra("item", item);
-
                     startActivity(intent);
                 }
             });
@@ -207,11 +202,13 @@ public class totalfrag extends Fragment {
     }
 
     @Subscribe
-    public void FinishLoad(ResBbSearchItem data){
+    public void FinishLoad(ResItems data){
 
         //resBbSearchItem = new ResBbSearchItem();
-        resBbSearchItem = data;
+        resItems = data;
         listView.setAdapter(listAdapter);
         ((totalfrag.CustomListAdapter)listView.getAdapter()).notifyDataSetChanged();
+
+        OttoBus.getInstance().getSearchItems_Bus().unregister(this);
     }
 }

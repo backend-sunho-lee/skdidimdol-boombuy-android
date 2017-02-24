@@ -30,6 +30,9 @@ public class OttoBus {
     // 전체 브랜드 조회 버스
     Bus SearchBrands_Bus = new Bus();
 
+    // 전체 상품권 조회 버스
+    Bus SearchCoupons_Bus = new Bus();
+
     // 하나의 브랜드 상품 전체 조회 버스
     Bus SearchBrandItem_Bus = new Bus();
 
@@ -38,6 +41,14 @@ public class OttoBus {
 
     // 친구 전화번호 목록 전송 버스
     Bus SendContacts_Bus = new Bus();
+
+    public Bus getSearchCoupons_Bus() {
+        return SearchCoupons_Bus;
+    }
+
+    public void setSearchCoupons_Bus(Bus searchCoupons_Bus) {
+        SearchCoupons_Bus = searchCoupons_Bus;
+    }
 
     public Bus getSendContacts_Bus() {
         return SendContacts_Bus;

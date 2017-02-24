@@ -25,4 +25,12 @@ public class LoginDTO {
         this.password = password;
     }
 
+
+    public LoginDTO() {
+    }
+
+    public LoginDTO(String phone, String password) {
+        this.phone = phone;
+        this.password = password;
+    }
 }

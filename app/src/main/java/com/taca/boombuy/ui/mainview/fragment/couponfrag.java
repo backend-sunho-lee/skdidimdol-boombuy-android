@@ -18,10 +18,9 @@ import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 import com.taca.boombuy.R;
-import com.taca.boombuy.evt.OTTOBusTEST;
-import com.taca.boombuy.modelRes.ResBbSearchItemCoupon;
-import com.taca.boombuy.modelRes.ResBbSearchItemCouponBody;
-import com.taca.boombuy.net.NetworkTEST;
+import com.taca.boombuy.Resmodel.ResItems;
+import com.taca.boombuy.evt.OttoBus;
+import com.taca.boombuy.net.NetWork;
 import com.taca.boombuy.networkmodel.ItemDTO;
 import com.taca.boombuy.singleton.item_single;
 import com.taca.boombuy.util.ImageProc;
@@ -57,8 +56,7 @@ public class couponfrag extends Fragment {
 
     boolean ottoflag = false;
 
-    ResBbSearchItemCoupon resBbSearchItemCoupon;
-
+    ResItems resItems;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -69,9 +67,9 @@ public class couponfrag extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_couponfrag, container, false);
 
         couponAdapter = new CouponListViewAdapter();
-        NetworkTEST.getInstance().bb_search_item_coupon(getActivity(), 28);
+        NetWork.getInstance().NetSearchCoupon(getActivity().getApplicationContext());
         if(!ottoflag){
-            OTTOBusTEST.getInstance().getSearch_items_coupon_bus().register(this);
+            OttoBus.getInstance().getSearchCoupons_Bus().register(this);
             ottoflag = true;
         }
 
@@ -114,12 +112,12 @@ public class couponfrag extends Fragment {
 
         @Override
         public int getCount() {
-            return resBbSearchItemCoupon.getBody().size();
+            return resItems.getResult().size();
         }
 
         @Override
-        public ResBbSearchItemCouponBody getItem(int position) {
-            return resBbSearchItemCoupon.getBody().get(position);
+        public ItemDTO getItem(int position) {
+            return resItems.getResult().get(position);
         }
 
         @Override
@@ -170,12 +168,13 @@ public class couponfrag extends Fragment {
 
 
     @Subscribe
-    public void FinishLoad(ResBbSearchItemCoupon data){
+    public void FinishLoad(ResItems data){
 
 
-        resBbSearchItemCoupon = data;
+        resItems = data;
         listview.setAdapter(couponAdapter);
         ((couponfrag.CouponListViewAdapter)listview.getAdapter()).notifyDataSetChanged();
+        OttoBus.getInstance().getSearchCoupons_Bus().unregister(this);
     }
 
     public couponfrag() {

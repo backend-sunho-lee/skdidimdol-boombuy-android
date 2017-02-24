@@ -97,7 +97,7 @@ public class SignUpActivity extends AppCompatActivity {
     public void FinishLoad(ResBasic data) {
         resBasic = data;
 
-        if(resBasic.getResult() != null){
+        if(resBasic.getMessage() != null){
             StorageHelper.getInstance().setBoolean(SignUpActivity.this, "auto_login", true);
             StorageHelper.getInstance().setString(SignUpActivity.this, "auto_login_password", et_signup_password.getText().toString());
             StorageHelper.getInstance().setString(SignUpActivity.this, "user_name", et_signup_name.getText().toString());

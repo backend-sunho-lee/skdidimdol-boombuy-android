@@ -15,10 +15,10 @@ import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 import com.taca.boombuy.R;
-import com.taca.boombuy.evt.OTTOBusTEST;
-import com.taca.boombuy.modelRes.ResBbSearchBrand;
-import com.taca.boombuy.modelRes.ResBbSearchBrandBody;
-import com.taca.boombuy.net.NetworkTEST;
+import com.taca.boombuy.Resmodel.ResSearchBrands;
+import com.taca.boombuy.evt.OttoBus;
+import com.taca.boombuy.net.NetWork;
+import com.taca.boombuy.networkmodel.BrandDTO;
 import com.taca.boombuy.ui.mainview.activity.GiftSelectDetailInfoActivity;
 import com.taca.boombuy.util.ImageProc;
 
@@ -48,8 +48,8 @@ public class brandfrag extends Fragment {
     LayoutInflater inflater;
     GridView gridView;
     GridViewAdapter myAdapter;
-    ResBbSearchBrand resBbSearchBrand;
 
+    ResSearchBrands resSearchBrands;
     boolean ottoFlag = false;
 
     @Override
@@ -58,11 +58,10 @@ public class brandfrag extends Fragment {
         this.inflater = inflater;
         View view = inflater.inflate(R.layout.fragment_brandfrag, container, false);
 
-
-        NetworkTEST.getInstance().bb_search_brands(getActivity().getApplicationContext());
+        NetWork.getInstance().NetSearchBrands(getActivity().getApplicationContext());
 
         if(!ottoFlag){
-            OTTOBusTEST.getInstance().getSearch_brands_bus().register(this);
+            OttoBus.getInstance().getSearchBrands_Bus().register(this);
             ottoFlag = true;
         }
 
@@ -89,12 +88,12 @@ public class brandfrag extends Fragment {
 
         @Override
         public int getCount() {
-            return resBbSearchBrand.getBody().size();
+            return resSearchBrands.getResult().size();
         }
 
         @Override
-        public ResBbSearchBrandBody getItem(int position) {
-            return resBbSearchBrand.getBody().get(position);
+        public BrandDTO getItem(int position) {
+            return resSearchBrands.getResult().get(position);
         }
 
         @Override
@@ -174,10 +173,11 @@ public class brandfrag extends Fragment {
     }
 
     @Subscribe
-    public void FinishLoad(ResBbSearchBrand data){
+    public void FinishLoad(ResSearchBrands data){
 
-        resBbSearchBrand = data;
+        resSearchBrands = data;
         gridView.setAdapter(myAdapter);
         ((brandfrag.GridViewAdapter)gridView.getAdapter()).notifyDataSetChanged();
+        OttoBus.getInstance().getSearchBrands_Bus().unregister(this);
     }
 }

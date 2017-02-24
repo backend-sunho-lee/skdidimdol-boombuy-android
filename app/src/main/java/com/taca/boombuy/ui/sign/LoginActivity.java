@@ -19,10 +19,11 @@ import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.database.StorageHelper;
-import com.taca.boombuy.evt.OTTOBusTEST;
 import com.taca.boombuy.evt.OttoBus;
+import com.taca.boombuy.net.NetWork;
 import com.taca.boombuy.net.NetworkTEST;
 import com.taca.boombuy.netmodel.LoginModel;
+import com.taca.boombuy.networkmodel.LoginDTO;
 import com.taca.boombuy.ui.mainview.activity.MainActivity;
 import com.taca.boombuy.util.U;
 
@@ -47,14 +48,22 @@ public class LoginActivity extends AppCompatActivity {
         et_signin_password = (EditText) findViewById(R.id.et_signin_password);
 
         // 자동로그인 후
-       if (StorageHelper.getInstance().getBoolean(LoginActivity.this, "auto_login")) {
+        if (StorageHelper.getInstance().getBoolean(LoginActivity.this, "auto_login")) {
             et_signin_id.setText(StorageHelper.getInstance().getString(LoginActivity.this, "my_phone_number"));
             et_signin_password.setText(StorageHelper.getInstance().getString(LoginActivity.this, "auto_login_password"));
             // 서버로부터 로그인
             Single_Value.getInstance().lonInModel = new LoginModel();
             Single_Value.getInstance().lonInModel.setPhone(StorageHelper.getInstance().getString(LoginActivity.this, "my_phone_number"));
             Single_Value.getInstance().lonInModel.setPassword(StorageHelper.getInstance().getString(LoginActivity.this, "auto_login_password"));
-            NetworkTEST.getInstance().bb_Login(getApplicationContext(), Single_Value.getInstance().lonInModel);
+
+            LoginDTO loginDTO = new LoginDTO(
+                    StorageHelper.getInstance().getString(LoginActivity.this, "my_phone_number"),
+                    StorageHelper.getInstance().getString(LoginActivity.this, "auto_login_password")
+            );
+
+            NetWork.getInstance().NetLogin(getApplicationContext(), loginDTO);
+
+
         }
 
         // 버튼 매칭 및 클릭리스너
@@ -89,17 +98,20 @@ public class LoginActivity extends AppCompatActivity {
     // 오토버스 이벤트 도착
 
     ResBasic resBasic;
+
     @Subscribe
     public void FinishLoad(ResBasic data) {
 
         resBasic = data;
-        if (resBasic.getResult() != null) {
+        if (resBasic.getMessage() != null) {
             StorageHelper.getInstance().setBoolean(LoginActivity.this, "auto_login", true);
             StorageHelper.getInstance().setString(LoginActivity.this, "auto_login_password", et_signin_password.getText().toString());
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             // 오토버스 썼으면 등록해제
-            OTTOBusTEST.getInstance().getSign_in_bus().unregister(this);
+            OttoBus.getInstance().getLogin_Bus().unregister(this);
+
+
             startActivity(intent);
             finish();
         } else {

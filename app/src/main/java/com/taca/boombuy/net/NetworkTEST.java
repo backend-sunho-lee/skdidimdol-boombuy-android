@@ -11,13 +11,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 import com.taca.boombuy.dto.itemDTO;
-import com.taca.boombuy.evt.OTTOBus;
+import com.taca.boombuy.evt.OTTOBusTEST;
 import com.taca.boombuy.modelReq.ReqBbLogIn;
 import com.taca.boombuy.modelReq.ReqBbSearchBrand;
 import com.taca.boombuy.modelReq.ReqBbSearchItem;
 import com.taca.boombuy.modelReq.ReqBbSearchItemId;
 import com.taca.boombuy.modelReq.ReqBbSignUp;
-import com.taca.boombuy.modelReq.ReqHeader;
+import com.taca.boombuy.Reqmodel.ReqHeader;
 import com.taca.boombuy.modelReq.ReqSendFcm;
 import com.taca.boombuy.modelReq.ReqUpdateToken;
 import com.taca.boombuy.modelRes.ResBbSearchBrand;
@@ -25,7 +25,7 @@ import com.taca.boombuy.modelRes.ResBbSearchItem;
 import com.taca.boombuy.modelRes.ResBbSearchItemCoupon;
 import com.taca.boombuy.modelRes.ResBbSearchItemId;
 import com.taca.boombuy.netmodel.FCMModel;
-import com.taca.boombuy.netmodel.LonInModel;
+import com.taca.boombuy.netmodel.LoginModel;
 import com.taca.boombuy.netmodel.SignUpModel;
 import com.taca.boombuy.netmodel.UpdateTokenModel;
 
@@ -37,14 +37,14 @@ import java.util.ArrayList;
 /**
  * Created by jimin on 2017-01-20.
  */
-public class Network {
-    private static Network ourInstance = new Network();
+public class NetworkTEST {
+    private static NetworkTEST ourInstance = new NetworkTEST();
 
-    public static Network getInstance() {
+    public static NetworkTEST getInstance() {
         return ourInstance;
     }
 
-    private Network() {
+    private NetworkTEST() {
     }
 
     String url = "http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/"; // 준범 서버
@@ -83,7 +83,7 @@ public class Network {
 
                                 Log.i("COUPON RES" , response.toString());
                                 ResBbSearchItemCoupon resBbSearchItemCoupon = new Gson().fromJson(response.toString(), ResBbSearchItemCoupon.class);
-                                OTTOBus.getInstance().getSearch_items_coupon_bus().post(resBbSearchItemCoupon);
+                                OTTOBusTEST.getInstance().getSearch_items_coupon_bus().post(resBbSearchItemCoupon);
 
                             }
                         },
@@ -130,7 +130,7 @@ public class Network {
                             ResBbSearchItemId resBbSearchItemId = new Gson().fromJson(response.toString(), ResBbSearchItemId.class);
                             Log.i("SELECT FROM ID : ", resBbSearchItemId.toString());
 
-                            OTTOBus.getInstance().getSelected_item_detail_bus().post(resBbSearchItemId);
+                            OTTOBusTEST.getInstance().getSelected_item_detail_bus().post(resBbSearchItemId);
 
 
                         }
@@ -215,7 +215,7 @@ public class Network {
                                     // 4. 응답처리
                                     Log.i("RES", "bb_Signup" + response.toString());
                                     // 이벤트 발생 등록
-                                    OTTOBus.getInstance().getSign_up_bus().post(response.toString());
+                                    OTTOBusTEST.getInstance().getSign_up_bus().post(response.toString());
                                 }
                             },
                             new Response.ErrorListener() {
@@ -232,7 +232,7 @@ public class Network {
     }
 
     // users 로그인
-    public void bb_Login(Context context, LonInModel lonInModel) {
+    public void bb_Login(Context context, LoginModel lonInModel) {
         // 전송 : { header:{code:AD}, body:[{uid:xx, name:xx, tel:xx}] }
         // 응답 : { code:1, msg:"ok" }
         // 1. 파라미터 구성
@@ -253,7 +253,7 @@ public class Network {
                                     // 4. 응답처리
                                     Log.i("RES", "bb_Login" + response.toString());
                                     // 이벤트 발생 등록
-                                    OTTOBus.getInstance().getSign_in_bus().post(response.toString());
+                                    OTTOBusTEST.getInstance().getSign_in_bus().post(response.toString());
                                 }
                             },
                             new Response.ErrorListener() {
@@ -329,7 +329,7 @@ public class Network {
 
                             Log.i("RESULT RES", resBbSearchItem.toString());
 
-                            OTTOBus.getInstance().getSearch_items_bus().post(resBbSearchItem);
+                            OTTOBusTEST.getInstance().getSearch_items_bus().post(resBbSearchItem);
 
                         }
                     },
@@ -374,7 +374,7 @@ public class Network {
 
                             ResBbSearchBrand resBbSearchBrand = new Gson().fromJson(response.toString(), ResBbSearchBrand.class);
 
-                            OTTOBus.getInstance().getSearch_brands_bus().post(resBbSearchBrand);
+                            OTTOBusTEST.getInstance().getSearch_brands_bus().post(resBbSearchBrand);
 
                         }
                     },

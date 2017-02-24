@@ -4,11 +4,11 @@ package com.taca.boombuy.netmodel;
  * Created by jimin on 2017-02-13.
  */
 
-public class LonInModel {
+public class LoginModel {
     String phone;
     String password;
 
-    public LonInModel(){}
+    public LoginModel(){}
 
     @Override
     public String toString() {
@@ -34,7 +34,7 @@ public class LonInModel {
         this.password = password;
     }
 
-    public LonInModel(String phone, String password) {
+    public LoginModel(String phone, String password) {
 
         this.phone = phone;
         this.password = password;

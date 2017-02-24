@@ -1,7 +1,7 @@
 package com.taca.boombuy.modelReq;
 
 import com.taca.boombuy.Reqmodel.ReqHeader;
-import com.taca.boombuy.netmodel.LonInModel;
+import com.taca.boombuy.netmodel.LoginModel;
 
 /**
  * Created by jimin on 2017-02-13.
@@ -9,7 +9,7 @@ import com.taca.boombuy.netmodel.LonInModel;
 
 public class ReqBbLogIn {
     ReqHeader header;
-    LonInModel body;
+    LoginModel body;
 
     public ReqHeader getHeader() {
         return header;
@@ -19,11 +19,11 @@ public class ReqBbLogIn {
         this.header = header;
     }
 
-    public LonInModel getBody() {
+    public LoginModel getBody() {
         return body;
     }
 
-    public void setBody(LonInModel body) {
+    public void setBody(LoginModel body) {
         this.body = body;
     }
 }

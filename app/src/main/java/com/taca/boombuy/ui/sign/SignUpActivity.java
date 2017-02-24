@@ -3,7 +3,6 @@ package com.taca.boombuy.ui.sign;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -12,11 +11,11 @@ import android.widget.Toast;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.otto.Subscribe;
 import com.taca.boombuy.R;
-import com.taca.boombuy.Single_Value;
+import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.database.StorageHelper;
-import com.taca.boombuy.evt.OTTOBus;
-import com.taca.boombuy.net.Network;
-import com.taca.boombuy.netmodel.SignUpModel;
+import com.taca.boombuy.evt.OttoBus;
+import com.taca.boombuy.net.NetWork;
+import com.taca.boombuy.networkmodel.SignUpDTO;
 import com.taca.boombuy.ui.popup.SignUpPopupActivity;
 
 public class SignUpActivity extends AppCompatActivity {
@@ -37,7 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         // 이벤트 받을 녀석(회원가입 완료 메시지)
-        OTTOBus.getInstance().getSign_up_bus().register(this);
+        OttoBus.getInstance().getSignUp_Bus().register(this);
 
         // EditText 매칭
         et_signup_name = (EditText) findViewById(R.id.et_signup_name);
@@ -53,7 +52,7 @@ public class SignUpActivity extends AppCompatActivity {
         btn_back_to_signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(SignUpActivity.this, SignInActivity.class);
+                Intent intent = new Intent(SignUpActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -64,7 +63,18 @@ public class SignUpActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // 비밀번호와 비밀번호 확인이 같을 때 회원가입 진행(서버)
                 if (et_signup_password.getText().toString().equals(et_signup_re_password.getText().toString())) {
-                    Single_Value.getInstance().signUpModel = new SignUpModel();
+
+
+                    SignUpDTO signUpDTO = new SignUpDTO(
+                            et_signup_id.getText().toString(),
+                            et_signup_password.getText().toString(),
+                            et_signup_name.getText().toString(),
+                            FirebaseInstanceId.getInstance().getToken()
+                    );
+
+                    NetWork.getInstance().NetSignUp(getApplicationContext(), signUpDTO);
+
+                 /*   Single_Value.getInstance().signUpModel = new SignUpModel();
                     Single_Value.getInstance().signUpModel.setPhone(et_signup_id.getText().toString());
                     Single_Value.getInstance().signUpModel.setPassword(et_signup_password.getText().toString());
                     Single_Value.getInstance().signUpModel.setName(et_signup_name.getText().toString());
@@ -72,7 +82,7 @@ public class SignUpActivity extends AppCompatActivity {
                     // 가입할 때 토큰 얻고 이 때 처음으로 쉐어드프리퍼런스에 저장
                     StorageHelper.getInstance().setString(SignUpActivity.this, "my_token", FirebaseInstanceId.getInstance().getToken());
                     Single_Value.getInstance().signUpModel.setProfile("");
-                    Network.getInstance().bb_Signup(getApplicationContext(), Single_Value.getInstance().signUpModel);
+                    NetworkTEST.getInstance().bb_Signup(getApplicationContext(), Single_Value.getInstance().signUpModel);*/
                 } else {
                     Toast.makeText(SignUpActivity.this, "비밀번호가 다릅니다.", Toast.LENGTH_SHORT).show();
                 }
@@ -81,7 +91,28 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     // 오토버스 이벤트 도착
+
+    ResBasic resBasic;
     @Subscribe
+    public void FinishLoad(ResBasic data) {
+        resBasic = data;
+
+        if(resBasic.getResult() != null){
+            StorageHelper.getInstance().setBoolean(SignUpActivity.this, "auto_login", true);
+            StorageHelper.getInstance().setString(SignUpActivity.this, "auto_login_password", et_signup_password.getText().toString());
+            StorageHelper.getInstance().setString(SignUpActivity.this, "user_name", et_signup_name.getText().toString());
+
+            Intent intent = new Intent(SignUpActivity.this, SignUpPopupActivity.class);
+            // 오토버스 썼으면 등록해제
+            OttoBus.getInstance().getSignUp_Bus().unregister(this);
+            startActivity(intent);
+            //
+        }else {
+            Toast.makeText(SignUpActivity.this, "회원가입 실패", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    /*@Subscribe
     public void FinishLoad(String data) {
         Log.i("OTTO", data);
         if (data.contains("성공")) {
@@ -90,10 +121,10 @@ public class SignUpActivity extends AppCompatActivity {
             StorageHelper.getInstance().setString(SignUpActivity.this, "user_name", et_signup_name.getText().toString());
             Intent intent = new Intent(SignUpActivity.this, SignUpPopupActivity.class);
             // 오토버스 썼으면 등록해제
-            OTTOBus.getInstance().getSign_up_bus().unregister(this);
+            OTTOBusTEST.getInstance().getSign_up_bus().unregister(this);
             startActivity(intent);
         } else {
             Toast.makeText(SignUpActivity.this, "회원가입 실패", Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 }

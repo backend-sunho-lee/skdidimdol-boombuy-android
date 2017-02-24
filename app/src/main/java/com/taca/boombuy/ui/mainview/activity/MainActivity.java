@@ -29,7 +29,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.database.StorageHelper;
-import com.taca.boombuy.net.Network;
+import com.taca.boombuy.net.NetworkTEST;
 import com.taca.boombuy.netmodel.UpdateTokenModel;
 import com.taca.boombuy.singleton.item_single;
 import com.taca.boombuy.util.ImageProc;
@@ -163,7 +163,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             Single_Value.getInstance().updateTokenModel = new UpdateTokenModel();
             Single_Value.getInstance().updateTokenModel.setPhone(StorageHelper.getInstance().getString(getApplicationContext(), "my_phone_number"));
             Single_Value.getInstance().updateTokenModel.setToken(token);
-            Network.getInstance().bb_Update_token(getApplicationContext(), Single_Value.getInstance().updateTokenModel);
+            NetworkTEST.getInstance().bb_Update_token(getApplicationContext(), Single_Value.getInstance().updateTokenModel);
             StorageHelper.getInstance().setString(getApplicationContext(), "my_token", token);
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -202,7 +202,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         //fcmModel.setToken("ccGKhTjloXU:APA91bHbJgKGr88hvP3_0uZ_-3xpaAyyLqWLcnro8ukQVu2FU3RVYpMEmV0wD5c934VbSjgqqLNegNgWVb3kmzYXM2F_KWgyfx5B0AhDdkNy3nZioD_mU-WqVt4FHNJTGcNYvSAJggbG");
         fcmModel.setContent("Send!!!!!!!!!!!!!!!!!");
         fcmModels.add(fcmModel);
-        Network.getInstance().sendFcm(getApplicationContext(), fcmModels);*/
+        NetworkTEST.getInstance().sendFcm(getApplicationContext(), fcmModels);*/
     }
 
     public void onAdd(View view) {

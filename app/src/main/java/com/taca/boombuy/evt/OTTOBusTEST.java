@@ -2,14 +2,14 @@ package com.taca.boombuy.evt;
 
 import com.squareup.otto.Bus;
 
-public class OTTOBus {
-    private static OTTOBus ourInstance = new OTTOBus();
+public class OTTOBusTEST {
+    private static OTTOBusTEST ourInstance = new OTTOBusTEST();
 
-    public static OTTOBus getInstance() {
+    public static OTTOBusTEST getInstance() {
         return ourInstance;
     }
 
-    private OTTOBus() {
+    private OTTOBusTEST() {
     }
     Bus sign_up_bus = new Bus();
     Bus sign_in_bus = new Bus();

@@ -3,7 +3,7 @@ package com.taca.boombuy;
 
 import com.taca.boombuy.singleton.item_single;
 import com.taca.boombuy.vo.VO_Gift_Total_SendernReceiver;
-import com.taca.boombuy.netmodel.LonInModel;
+import com.taca.boombuy.netmodel.LoginModel;
 import com.taca.boombuy.netmodel.SignUpModel;
 import com.taca.boombuy.netmodel.UpdateTokenModel;
 import com.taca.boombuy.vo.VO_from_friends_info;
@@ -80,7 +80,7 @@ public class Single_Value {
     public SignUpModel signUpModel;
 
     // 로그인 정보
-    public LonInModel lonInModel;
+    public LoginModel lonInModel;
 
     // 토큰 업데이트 정보(폰번호, 현재 토큰)
     public UpdateTokenModel updateTokenModel;

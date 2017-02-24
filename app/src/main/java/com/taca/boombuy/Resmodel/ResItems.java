@@ -12,7 +12,7 @@ public class ResItems {
 
     ArrayList<ItemDTO> result;
 
-    String error;
+    ResError error;
 
     public ArrayList<ItemDTO> getResult() {
         return result;
@@ -22,11 +22,11 @@ public class ResItems {
         this.result = result;
     }
 
-    public String getError() {
+    public ResError getError() {
         return error;
     }
 
-    public void setError(String error) {
+    public void setError(ResError error) {
         this.error = error;
     }
 
@@ -34,7 +34,7 @@ public class ResItems {
     public String toString() {
         return "ResItems{" +
                 "result=" + result +
-                ", error='" + error + '\'' +
+                ", error=" + error +
                 '}';
     }
 }

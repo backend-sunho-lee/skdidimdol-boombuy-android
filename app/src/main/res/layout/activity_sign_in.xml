@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_bg"
-    tools:context="com.taca.boombuy.ui.sign.SignInActivity">
+    tools:context="com.taca.boombuy.ui.sign.LoginActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

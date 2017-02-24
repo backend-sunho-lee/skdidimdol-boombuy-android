@@ -9,8 +9,7 @@ import com.taca.boombuy.networkmodel.ProfileDTO;
 public class ResSearchProfile {
 
     ProfileDTO result;
-
-    String error;
+    ResError error;
 
     public ProfileDTO getResult() {
         return result;
@@ -20,11 +19,12 @@ public class ResSearchProfile {
         this.result = result;
     }
 
-    public String getError() {
+
+    public ResError getError() {
         return error;
     }
 
-    public void setError(String error) {
+    public void setError(ResError error) {
         this.error = error;
     }
 
@@ -32,7 +32,7 @@ public class ResSearchProfile {
     public String toString() {
         return "ResSearchProfile{" +
                 "result=" + result +
-                ", error='" + error + '\'' +
+                ", error=" + error +
                 '}';
     }
 }

@@ -4,6 +4,7 @@ package com.taca.boombuy.netmodel;
  * Created by jimin on 2017-02-13.
  */
 
+//
 public class LoginModel {
     String phone;
     String password;

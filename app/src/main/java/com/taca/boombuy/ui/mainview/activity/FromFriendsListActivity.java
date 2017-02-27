@@ -32,6 +32,8 @@ import com.taca.boombuy.util.ImageProc;
 import com.taca.boombuy.util.U;
 import com.taca.boombuy.vo.VO_from_friends_info;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -63,6 +65,8 @@ public class FromFriendsListActivity extends AppCompatActivity {
 
     ResFriendList resFriendList;
 
+    ArrayList<ResFriendDTO> auto_resFriendDTOArrayList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +85,8 @@ public class FromFriendsListActivity extends AppCompatActivity {
 
                         resFriendList = response.body();
                         Log.i("나와바", resFriendList.toString());
+                        auto_resFriendDTOArrayList.clear();
+                        auto_resFriendDTOArrayList.addAll(resFriendList.getResult());
                         lv_from_friends_local_list.setAdapter(fromFriendsLocalListAdapter);
                     } else {
                         Log.i("RESPONSE RESULT 1: ", response.message());
@@ -168,9 +174,10 @@ public class FromFriendsListActivity extends AppCompatActivity {
 
         tv_devided_price.setText(Single_Value.getInstance().devided_non_master() + "원");
     }
+
     public void refreshList_add_friends() {
-        Single_Value.getInstance().vo_from_friends_local_lists.clear();
-        U.getInstance().getPhoneNumber(this, et_search_from_friends_name.getText().toString());
+        auto_resFriendDTOArrayList.clear();
+        addAutoComplete(et_search_from_friends_name.getText().toString());
 
         lv_from_friends_local_list = (ListView) findViewById(R.id.lv_from_friends_local_list);
         lv_from_friends_local_list.setOnItemClickListener(itemClickListenerOfFromFriendsList);
@@ -180,33 +187,39 @@ public class FromFriendsListActivity extends AppCompatActivity {
         tv_devided_price.setText(Single_Value.getInstance().devided_non_master() + "원");
     }
 
+    // 자동완성 함수
+    public void addAutoComplete(String keyword) {
+        for (int i = 0; i < resFriendList.getResult().size(); i++) {
+            if ((resFriendList.getResult().get(i).getName()).contains(keyword)) {
+                ResFriendDTO resFriendDTO = new ResFriendDTO(
+                        resFriendList.getResult().get(i).getUid(),
+                        resFriendList.getResult().get(i).getPhone(),
+                        resFriendList.getResult().get(i).getName(),
+                        resFriendList.getResult().get(i).getLocation()
+                );
+                auto_resFriendDTOArrayList.add(resFriendDTO);
+            }
+        }
+    }
+
     public void onSearchFromFrineds(View view) {
         refreshList();
     }
 
     /*
-     * 리스트뷰 클릭 리스터
+     * 리스트뷰 클릭 리스너
      */
     private AdapterView.OnItemClickListener itemClickListenerOfFromFriendsList = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> adapterView, View clickedView, int pos, long id) {
             //Single_Value.getInstance().vo_from_friends_infos.clear();
             Single_Value.getInstance().vo_from_friends_info = new VO_from_friends_info(
-
-                    resFriendList.getResult().get(pos).getName(),
-                    resFriendList.getResult().get(pos).getPhone(),
-                    resFriendList.getResult().get(pos).getLocation()
+                    auto_resFriendDTOArrayList.get(pos).getName(),
+                    auto_resFriendDTOArrayList.get(pos).getPhone(),
+                    auto_resFriendDTOArrayList.get(pos).getLocation()
             );
 
             Single_Value.getInstance().vo_from_friends_infos.add(Single_Value.getInstance().vo_from_friends_info);
-
-            //MainActivity.tv_from_friends_name.setText(Single_Value.getInstance().vo_from_friends_infos.get(0).getName());
-
-            /*// 보내는 사람들 모아서 한틀에 틀에담음
-            Single_Value.getInstance().SenderNReceiver.setVo_from_friends_local_list(Single_Value.getInstance().vo_from_friends_infos);
-*/
-            // 데이터 공급원 아답터 연결
             rv_selected_friends.setAdapter(recycleAdapter);
-
             refreshList();
 
         }
@@ -241,13 +254,13 @@ public class FromFriendsListActivity extends AppCompatActivity {
         // 리스트뷰에 표현한 데이터의 총 수
         @Override
         public int getCount() {
-            return resFriendList.getResult().size();
+            return auto_resFriendDTOArrayList.size();
         }
 
         // cell에 대응되는 1개의 데이터를 획득하는 메소드
         @Override
         public ResFriendDTO getItem(int position) {
-            return resFriendList.getResult().get(position);
+            return auto_resFriendDTOArrayList.get(position);
         }
 
         // 아이템의 아이디, 잘 사용안함!!
@@ -278,9 +291,6 @@ public class FromFriendsListActivity extends AppCompatActivity {
                 // 재사용시 cell의 구성을 담는 그릇을 획득
                 holder = (FromFriendsListActivity.ViewHolder) convertView.getTag();
             }
-
-            // 데이터 설정
-            //holder.iv_from_profile_cell.setImageBitmap();
 
             ImageProc.getInstance().drawImage(getItem(position).getLocation(), holder.iv_to_friend_profile);
             holder.tv_to_friend_local_name.setText(getItem(position).getName());
@@ -350,7 +360,7 @@ public class FromFriendsListActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     int i = 0;
                     for (i = 0; i < Single_Value.getInstance().vo_from_friends_infos.size(); i++) {
-                            if (Single_Value.getInstance().vo_from_friends_infos.get(i).getName() == tmp_name) {
+                        if (Single_Value.getInstance().vo_from_friends_infos.get(i).getName() == tmp_name) {
                             break;
                         }
                     }

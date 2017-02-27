@@ -74,11 +74,6 @@
             android:name=".ui.mainview.activity.GiftSelectDetailInfoActivity"
             android:label="@string/title_activity_gift_select_detail_info"
             android:theme="@style/AppTheme.NoActionBar"></activity>
-
-        <service
-            android:name=".service.ContactsService"
-            android:enabled="true"
-            android:exported="true" />
     </application>
 
 </manifest>

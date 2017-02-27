@@ -26,11 +26,6 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        /*Single_Value.getInstance().vo_from_friends_infos.clear();
-        Single_Value.getInstance().vo_from_friends_info = new VO_from_friends_info();
-        Single_Value.getInstance().vo_from_friends_info.setName("내가 결제할 금액");
-        Single_Value.getInstance().vo_from_friends_info.setPhone_num("");
-        Single_Value.getInstance().vo_from_friends_infos.add(Single_Value.getInstance().vo_from_friends_info);*/
 
         ImageProc.getInstance().getImageLoader(this);
         Single_Value.getInstance().vo_gift_total_member = new ArrayList<>();

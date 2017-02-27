@@ -3,6 +3,7 @@ package com.taca.boombuy.ui.sign;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -10,13 +11,17 @@ import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.otto.Subscribe;
+import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.database.StorageHelper;
 import com.taca.boombuy.evt.OttoBus;
-import com.taca.boombuy.net.NetWork;
 import com.taca.boombuy.networkmodel.SignUpDTO;
 import com.taca.boombuy.ui.popup.SignUpPopupActivity;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -72,7 +77,37 @@ public class SignUpActivity extends AppCompatActivity {
                             FirebaseInstanceId.getInstance().getToken()
                     );
 
-                    NetWork.getInstance().NetSignUp(getApplicationContext(), signUpDTO);
+                    //etWork.getInstance().NetSignUp(getApplicationContext(), signUpDTO);
+
+                    Call<ResBasic> NetSignUp = NetSSL.getInstance().getMemberImpFactory().NetSignUp(signUpDTO);
+                    NetSignUp.enqueue(new Callback<ResBasic>() {
+                        @Override
+                        public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
+
+                            if( response.isSuccessful()){
+
+                                if(response.body() != null && response.body().getMessage() != null){
+
+                                    Log.i("RES SUC", response.body().getMessage());
+                                    OttoBus.getInstance().getSignUp_Bus().post(response.body());
+                                }else{
+
+
+                                    Log.i("RES FAIl", response.body().getError().getMessage());
+                                }
+                            }else{
+
+                                Log.i("RES FAIL", response.body().toString());
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResBasic> call, Throwable t) {
+
+                        }
+                    });
+
+
 
                  /*   Single_Value.getInstance().signUpModel = new SignUpModel();
                     Single_Value.getInstance().signUpModel.setPhone(et_signup_id.getText().toString());

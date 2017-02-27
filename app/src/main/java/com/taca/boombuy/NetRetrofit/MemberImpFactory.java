@@ -62,7 +62,6 @@ public interface MemberImpFactory {
     @GET("/brands")
     Call<ResSearchBrands> NetSearchBrands();
 
-
     // 하나의 브랜드 상품 전체 조회
     @GET("/items/brand/{bid}")
     Call<ResItems> NetSearchBrandItem(@Path("bid") int bid);

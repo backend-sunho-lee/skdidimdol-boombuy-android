@@ -68,7 +68,7 @@ public class NetSSL {
             client = clientTmp.build();
             // ====================================================================================
             retrofit = new Retrofit.Builder()
-                    .baseUrl("http://ec2-52-78-52-228.ap-northeast-2.compute.amazonaws.com")
+                    .baseUrl("https://ec2-52-78-52-228.ap-northeast-2.compute.amazonaws.com")
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(client)
                     .build();

@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -15,17 +16,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
+import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.database.StorageHelper;
 import com.taca.boombuy.evt.OttoBus;
 import com.taca.boombuy.net.NetWork;
-import com.taca.boombuy.net.NetworkTEST;
 import com.taca.boombuy.netmodel.LoginModel;
 import com.taca.boombuy.networkmodel.LoginDTO;
 import com.taca.boombuy.ui.mainview.activity.MainActivity;
 import com.taca.boombuy.util.U;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -75,7 +80,38 @@ public class LoginActivity extends AppCompatActivity {
                 Single_Value.getInstance().lonInModel = new LoginModel();
                 Single_Value.getInstance().lonInModel.setPhone(et_signin_id.getText().toString());
                 Single_Value.getInstance().lonInModel.setPassword(et_signin_password.getText().toString());
-                NetworkTEST.getInstance().bb_Login(getApplicationContext(), Single_Value.getInstance().lonInModel);
+
+                //NetworkTEST.getInstance().bb_Login(getApplicationContext(), Single_Value.getInstance().lonInModel);
+
+                Call<ResBasic> NetLogin = NetSSL.getInstance().getMemberImpFactory().NetLogin(new LoginDTO("01085199709", "1111"));
+
+                NetLogin.enqueue(new Callback<ResBasic>() {
+                    @Override
+                    public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
+
+                        Log.i("LOG RESPONSE", response.message().toString());
+
+                        if(response.isSuccessful() ){
+                            if(response.body() != null && response.body().getMessage() != null){
+                                Log.i("RES SUC", response.body().getMessage());
+                            }else{
+                                Log.i("RF","로그인실패:"+response.message());
+                            }
+                        }else{
+
+                            Log.i("RF","로그인실패11:"+response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResBasic> call, Throwable t) {
+
+                        t.printStackTrace();
+                        Log.i("ERROR : ", t.getMessage());
+                    }
+                });
+
+
             }
         });
 

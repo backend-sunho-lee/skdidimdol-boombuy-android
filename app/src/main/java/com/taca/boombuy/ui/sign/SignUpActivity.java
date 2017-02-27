@@ -91,13 +91,11 @@ public class SignUpActivity extends AppCompatActivity {
                                     Log.i("RES SUC", response.body().getMessage());
                                     OttoBus.getInstance().getSignUp_Bus().post(response.body());
                                 }else{
-
-
-                                    Log.i("RES FAIl", response.body().getError().getMessage());
+                                    Log.i("RES FAIl", response.message().toString());
                                 }
                             }else{
 
-                                Log.i("RES FAIL", response.body().toString());
+                                Log.i("RES FAIL", response.message().toString());
                             }
                         }
 

@@ -20,17 +20,21 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
+import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResItems;
 import com.taca.boombuy.evt.OTTOBusTEST;
 import com.taca.boombuy.evt.OttoBus;
-import com.taca.boombuy.net.NetWork;
 import com.taca.boombuy.networkmodel.ItemDTO;
 import com.taca.boombuy.singleton.item_single;
 import com.taca.boombuy.ui.mainview.activity.GiftSelectDetailInfoActivity;
 import com.taca.boombuy.util.ImageProc;
 
 import java.util.Collections;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class totalfrag extends Fragment {
 
@@ -47,7 +51,36 @@ public class totalfrag extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.activity_totalfrag, container, false);
 
-        NetWork.getInstance().NetSearchItems(getActivity().getApplicationContext());
+        Call<ResItems> NetSearchItems = NetSSL.getInstance().getMemberImpFactory().NetSearchItems();
+        NetSearchItems.enqueue(new Callback<ResItems>() {
+            @Override
+            public void onResponse(Call<ResItems> call, Response<ResItems> response) {
+
+                if(response.isSuccessful() ){
+                    if(response.body() != null && response.body().getResult() != null){
+
+                        OttoBus.getInstance().getSearchItems_Bus().post(response.body());
+
+                    }else{
+
+                        Log.i("RESPONSE RESULT 1: " , response.message());
+
+                    }
+                }else{
+
+                    Log.i("RESPONSE RESULT 2 : " , response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResItems> call, Throwable t) {
+
+            }
+        });
+
+
+
+
         OttoBus.getInstance().getSearchItems_Bus().register(this);
 
         if(!ottoFlag){
@@ -203,8 +236,6 @@ public class totalfrag extends Fragment {
 
     @Subscribe
     public void FinishLoad(ResItems data){
-
-        //resBbSearchItem = new ResBbSearchItem();
         resItems = data;
         listView.setAdapter(listAdapter);
         ((totalfrag.CustomListAdapter)listView.getAdapter()).notifyDataSetChanged();

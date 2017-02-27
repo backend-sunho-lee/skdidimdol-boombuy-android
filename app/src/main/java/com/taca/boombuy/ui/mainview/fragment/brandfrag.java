@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,16 +15,19 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
+import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResSearchBrands;
 import com.taca.boombuy.evt.OttoBus;
-import com.taca.boombuy.net.NetWork;
 import com.taca.boombuy.networkmodel.BrandDTO;
 import com.taca.boombuy.ui.mainview.activity.GiftSelectDetailInfoActivity;
 import com.taca.boombuy.util.ImageProc;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -58,9 +62,32 @@ public class brandfrag extends Fragment {
         this.inflater = inflater;
         View view = inflater.inflate(R.layout.fragment_brandfrag, container, false);
 
-        NetWork.getInstance().NetSearchBrands(getActivity().getApplicationContext());
+        Call<ResSearchBrands> NetSearchBrands = NetSSL.getInstance().getMemberImpFactory().NetSearchBrands();
+        NetSearchBrands.enqueue(new Callback<ResSearchBrands>() {
+            @Override
+            public void onResponse(Call<ResSearchBrands> call, Response<ResSearchBrands> response) {
 
-        if(!ottoFlag){
+                if (response.isSuccessful()) {
+                    if (response.body() != null && response.body().getResult() != null) {
+
+                        OttoBus.getInstance().getSearchBrands_Bus().post(response.body());
+
+                    } else {
+                        Log.i("RESPONSE RESULT 1: ", response.message());
+                    }
+                } else {
+                    Log.i("RESPONSE RESULT 2 : ", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResSearchBrands> call, Throwable t) {
+
+            }
+        });
+
+
+        if (!ottoFlag) {
             OttoBus.getInstance().getSearchBrands_Bus().register(this);
             ottoFlag = true;
         }
@@ -74,7 +101,7 @@ public class brandfrag extends Fragment {
         return view;
     }
 
-    class ViewHolder{
+    class ViewHolder {
 
         @BindView(R.id.brandimg)
         ImageView brandimg;
@@ -84,7 +111,7 @@ public class brandfrag extends Fragment {
         }
     }
 
-    class GridViewAdapter extends BaseAdapter{
+    class GridViewAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
@@ -103,7 +130,7 @@ public class brandfrag extends Fragment {
 
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
-  //
+            //
             ViewHolder holder;
             convertView = inflater.inflate(R.layout.cell_grid_layout, parent, false);
 
@@ -118,13 +145,14 @@ public class brandfrag extends Fragment {
                     Toast.makeText(getActivity(), getItem(position).getName(), Toast.LENGTH_SHORT).show();
 
 
-
                     Intent intent = new Intent(getActivity(), GiftSelectDetailInfoActivity.class);
 
                     startActivity(intent);
 
                 }
             });
+
+
 
             return convertView;
         }
@@ -140,6 +168,7 @@ public class brandfrag extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -148,11 +177,13 @@ public class brandfrag extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
     }
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -163,21 +194,23 @@ public class brandfrag extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
+
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
     }
+
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
 
     @Subscribe
-    public void FinishLoad(ResSearchBrands data){
+    public void FinishLoad(ResSearchBrands data) {
 
         resSearchBrands = data;
         gridView.setAdapter(myAdapter);
-        ((brandfrag.GridViewAdapter)gridView.getAdapter()).notifyDataSetChanged();
+        ((brandfrag.GridViewAdapter) gridView.getAdapter()).notifyDataSetChanged();
         OttoBus.getInstance().getSearchBrands_Bus().unregister(this);
     }
 }

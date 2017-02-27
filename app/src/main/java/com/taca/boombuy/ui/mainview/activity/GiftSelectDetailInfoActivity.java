@@ -13,14 +13,18 @@ import android.view.MenuItem;
 import android.widget.ImageView;
 
 import com.squareup.otto.Subscribe;
+import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResItemDetail;
 import com.taca.boombuy.evt.OttoBus;
-import com.taca.boombuy.net.NetWork;
 import com.taca.boombuy.networkmodel.ItemDTO;
 import com.taca.boombuy.ui.mainview.fragment.GiftSelectProductDetailFrag;
 import com.taca.boombuy.ui.mainview.fragment.GiftSelectProductMatterFrag;
 import com.taca.boombuy.util.ImageProc;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class GiftSelectDetailInfoActivity extends AppCompatActivity {
 
@@ -42,7 +46,31 @@ public class GiftSelectDetailInfoActivity extends AppCompatActivity {
         ItemDTO item = (ItemDTO)getIntent().getSerializableExtra("item");
         Log.i("ITEM DATA", item.toString());
 
-        NetWork.getInstance().NetSearchItemDetail(getApplicationContext(), item.getId());
+        //NetWork.getInstance().NetSearchItemDetail(getApplicationContext(), item.getId());
+
+        Call<ResItemDetail> NetSearchItemDetail = NetSSL.getInstance().getMemberImpFactory().NetSearchItemDetail(item.getBid());
+        NetSearchItemDetail.enqueue(new Callback<ResItemDetail>() {
+            @Override
+            public void onResponse(Call<ResItemDetail> call, Response<ResItemDetail> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null && response.body().getResult() != null) {
+
+                        OttoBus.getInstance().getSearchItemDetail_Bus().post(response.body());
+
+                    } else {
+                        Log.i("RESPONSE RESULT 1: ", response.message());
+                    }
+                } else {
+                    Log.i("RESPONSE RESULT 2 : ", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResItemDetail> call, Throwable t) {
+
+            }
+        });
+
         OttoBus.getInstance().getSearchItemDetail_Bus().register(this);
 
         selected_gift_imageview = (ImageView) findViewById(R.id.selected_gift_imageview);
@@ -114,7 +142,9 @@ public class GiftSelectDetailInfoActivity extends AppCompatActivity {
     public void FinishLoad(ResItemDetail data){
 
         resItemDetail = data;
-        ImageProc.getInstance().drawImage(resItemDetail.getResult().getLocation() , selected_gift_imageview);
+
+        Log.i("fff" , resItemDetail.getResult().getLocation());
+        ImageProc.getInstance().drawImage(resItemDetail.getResult().getLocation(), selected_gift_imageview);
         OttoBus.getInstance().getSearchItemDetail_Bus().unregister(this);
     }
 }

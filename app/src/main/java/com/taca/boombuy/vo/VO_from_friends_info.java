@@ -7,18 +7,33 @@ package com.taca.boombuy.vo;
 public class VO_from_friends_info {
     String name;
     String phone_num;
+    String location;
 
     public VO_from_friends_info(){
     }
 
+
     @Override
     public String toString() {
-        return name + " ";
+        return "VO_from_friends_info{" +
+                "name='" + name + '\'' +
+                ", phone_num='" + phone_num + '\'' +
+                ", location='" + location + '\'' +
+                '}';
     }
 
-    public VO_from_friends_info(String name, String phone_num) {
+    public VO_from_friends_info(String name, String phone_num, String location) {
         this.name = name;
         this.phone_num = phone_num;
+        this.location = location;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public String getName() {

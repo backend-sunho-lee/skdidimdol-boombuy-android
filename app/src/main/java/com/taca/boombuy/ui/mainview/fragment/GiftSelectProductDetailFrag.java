@@ -9,7 +9,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.squareup.otto.Subscribe;
 import com.taca.boombuy.R;
+import com.taca.boombuy.Resmodel.ResItemDetail;
+import com.taca.boombuy.evt.OttoBus;
 import com.taca.boombuy.networkmodel.ItemDTO;
 
 /**
@@ -28,11 +31,21 @@ public class GiftSelectProductDetailFrag extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_gift_select_product_detail, container, false);
         ItemDTO item = (ItemDTO) getActivity().getIntent().getSerializableExtra("item");
+
+        OttoBus.getInstance().getSearchItemDetail_Bus().register(this);
+
         Log.i("ITEM DATA", item.toString());
 
         selected_detail_textView = (TextView) view.findViewById(R.id.selected_detail_textView);
         selected_detail_textView.setText(item.getDetail());
 
         return view;
+    }
+
+    @Subscribe
+    public void FinishLoad(ResItemDetail data){
+        Log.i("PRODUCTDETAIL FRAG ", data.toString());
+
+        
     }
 }

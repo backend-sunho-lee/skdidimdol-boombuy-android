@@ -1,20 +1,19 @@
 package com.taca.boombuy.NetRetrofit;
 
 import com.taca.boombuy.Resmodel.ResBasic;
+import com.taca.boombuy.Resmodel.ResFriendList;
 import com.taca.boombuy.Resmodel.ResItemDetail;
 import com.taca.boombuy.Resmodel.ResItems;
 import com.taca.boombuy.Resmodel.ResSearchBrands;
 import com.taca.boombuy.Resmodel.ResSearchProfile;
+import com.taca.boombuy.networkmodel.GiftDTO;
 import com.taca.boombuy.networkmodel.LoginDTO;
 import com.taca.boombuy.networkmodel.SignUpDTO;
-
-import java.util.ArrayList;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 /**
@@ -52,11 +51,9 @@ public interface MemberImpFactory {
     @GET("/users/me")
     Call<ResSearchProfile> NetSearchProfile();
 
-
     // 전체 상품 목록 조회
     @GET("/items")
     Call<ResItems> NetSearchItems();
-
 
     // 브랜드 전체 목록 조회
     @GET("/brands")
@@ -75,30 +72,15 @@ public interface MemberImpFactory {
     @GET("/items/{iid}")
     Call<ResItemDetail> NetSearchItemDetail(@Path("iid") int iid);
 
-
     // 친구 목록 전송
-    @PUT("/friends")
-    Call<ResBasic> NetSendContacts(@Body ArrayList<String> list);
+    /*@POST("/friends")
+    Call<ResBasic> NetSendContacts(@Body String list);*/
+    @GET("/friends")
+    Call<ResFriendList> NetSearchFriendList();
 
+    @POST("/orders")
+    Call<ResBasic> NetOrders(@Body GiftDTO giftDTO);
 
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

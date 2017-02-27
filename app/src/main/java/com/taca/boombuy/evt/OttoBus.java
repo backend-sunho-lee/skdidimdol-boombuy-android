@@ -42,6 +42,19 @@ public class OttoBus {
     // 친구 전화번호 목록 전송 버스
     Bus SendContacts_Bus = new Bus();
 
+
+    // temp
+    Bus FriendList_Bus = new Bus();
+
+
+    public Bus getFriendList_Bus() {
+        return FriendList_Bus;
+    }
+
+    public void setFriendList_Bus(Bus friendList_Bus) {
+        FriendList_Bus = friendList_Bus;
+    }
+
     public Bus getSearchCoupons_Bus() {
         return SearchCoupons_Bus;
     }

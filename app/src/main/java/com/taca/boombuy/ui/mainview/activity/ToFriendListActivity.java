@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,14 +18,20 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
+import com.taca.boombuy.Resmodel.ResFriendList;
 import com.taca.boombuy.Single_Value;
+import com.taca.boombuy.networkmodel.ResFriendDTO;
+import com.taca.boombuy.util.ImageProc;
 import com.taca.boombuy.util.U;
 import com.taca.boombuy.vo.VO_to_friend_info;
-import com.taca.boombuy.vo.VO_to_friend_local_list;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ToFriendListActivity extends AppCompatActivity {
 
@@ -39,12 +46,48 @@ public class ToFriendListActivity extends AppCompatActivity {
     //뷰 홀더
     ViewHolder holder;
 
+
+    ResFriendList resFriendList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_friend_list);
 
+        lv_to_friend_local_list = (ListView) findViewById(R.id.lv_to_friend_local_list);
+        lv_to_friend_local_list.setOnItemClickListener(itemClickListenerOfToFriendList);
+        toFriendLocalListAdapter = new ToFriendLocalListAdapter();
         request_read_contacts();
+
+
+        Call<ResFriendList> NetSearchFriendList = NetSSL.getInstance().getMemberImpFactory().NetSearchFriendList();
+        NetSearchFriendList.enqueue(new Callback<ResFriendList>() {
+            @Override
+            public void onResponse(Call<ResFriendList> call, Response<ResFriendList> response) {
+
+                if (response.isSuccessful()) {
+                    if (response.body() != null && response.body().getResult() != null) {
+
+                        resFriendList = response.body();
+                        Log.i("나와바", resFriendList.toString());
+
+                        lv_to_friend_local_list.setAdapter(toFriendLocalListAdapter);
+
+                    } else {
+                        Log.i("RESPONSE RESULT 1: ", response.message());
+                    }
+                } else {
+                    Log.i("RESPONSE RESULT 2 : ", response.message());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResFriendList> call, Throwable t) {
+
+            }
+        });
+
+
 
         et_search_to_friend_name = (EditText) findViewById(R.id.et_search_to_friend_name);
         et_search_to_friend_name.addTextChangedListener(new TextWatcher() {
@@ -72,10 +115,8 @@ public class ToFriendListActivity extends AppCompatActivity {
         Single_Value.getInstance().vo_to_friend_local_lists.clear();
         U.getInstance().getPhoneNumber(this, et_search_to_friend_name.getText().toString());
 
-        lv_to_friend_local_list = (ListView) findViewById(R.id.lv_to_friend_local_list);
-        lv_to_friend_local_list.setOnItemClickListener(itemClickListenerOfToFriendList);
-        toFriendLocalListAdapter = new ToFriendLocalListAdapter();
-        lv_to_friend_local_list.setAdapter(toFriendLocalListAdapter);
+        //        toFriendLocalListAdapter = new ToFriendLocalListAdapter();
+        //lv_to_friend_local_list.setAdapter(toFriendLocalListAdapter);
     }
 
     public void onSearchToFrined(View view) {
@@ -88,31 +129,23 @@ public class ToFriendListActivity extends AppCompatActivity {
     private AdapterView.OnItemClickListener itemClickListenerOfToFriendList = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> adapterView, View clickedView, int pos, long id) {
             Single_Value.getInstance().vo_to_friend_infos.clear();
-            Single_Value.getInstance().vo_to_friend_info = new VO_to_friend_info();
-            Single_Value.getInstance().vo_to_friend_info.setName(Single_Value.getInstance().vo_to_friend_local_lists.get(pos).getTv_to_friend_local_name().toString());
-            Single_Value.getInstance().vo_to_friend_info.setPhone_num(Single_Value.getInstance().vo_to_friend_local_lists.get(pos).getTv_to_friend_local_number().toString());
+
+            Single_Value.getInstance().vo_to_friend_info = new VO_to_friend_info(
+                    resFriendList.getResult().get(pos).getName() ,
+                    resFriendList.getResult().get(pos).getPhone()
+            );
+
             Single_Value.getInstance().vo_to_friend_infos.add(Single_Value.getInstance().vo_to_friend_info);
-
-            //Single_Value.getInstance().SenderNReceiver = new VO_Gift_Total_SendernReceiver();
-
-
-            // 받는사람 정보 담았어
-            Single_Value.getInstance().SenderNReceiver.setVo_to_friend_info(Single_Value.getInstance().vo_to_friend_info);
-
-
-
 
             finish();
         }
     };
-    /*
-     *
-     */
+
+
 
     /*
      * 받는 사람 전화번호부 리스트뷰 설정----------------------------------------------------------------------------------------------
      */
-
     // 반복되는 cell의 구성 콤포넌트를 최초 cell 생성시 획득하여 설정하는 클래스
     class ViewHolder {
         @BindView(R.id.iv_to_friend_profile)
@@ -135,16 +168,14 @@ public class ToFriendListActivity extends AppCompatActivity {
         // 리스트뷰에 표현한 데이터의 총 수
         @Override
         public int getCount() {
-            if (Single_Value.getInstance().vo_to_friend_local_lists == null) {
-                return 0;
-            }
-            return Single_Value.getInstance().vo_to_friend_local_lists.size();
+
+            return resFriendList.getResult().size();
         }
 
         // cell에 대응되는 1개의 데이터를 획득하는 메소드
         @Override
-        public VO_to_friend_local_list getItem(int position) {
-            return Single_Value.getInstance().vo_to_friend_local_lists.get(position);
+        public ResFriendDTO getItem(int position) {
+            return resFriendList.getResult().get(position);
         }
 
         // 아이템의 아이디, 잘 사용안함!!
@@ -178,8 +209,9 @@ public class ToFriendListActivity extends AppCompatActivity {
 
             // 데이터 설정
             //holder.iv_from_profile_cell.setImageBitmap();
-            holder.tv_to_friend_local_name.setText(getItem(position).getTv_to_friend_local_name());
-            holder.tv_to_friend_local_number.setText(getItem(position).getTv_to_friend_local_number());
+            ImageProc.getInstance().drawImage(getItem(position).getLocation(), holder.iv_to_friend_profile);
+            holder.tv_to_friend_local_name.setText(getItem(position).getName());
+            holder.tv_to_friend_local_number.setText(getItem(position).getPhone());
 
             return convertView;
         }

@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,10 +18,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
+import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResItems;
 import com.taca.boombuy.evt.OttoBus;
-import com.taca.boombuy.net.NetWork;
 import com.taca.boombuy.networkmodel.ItemDTO;
 import com.taca.boombuy.singleton.item_single;
 import com.taca.boombuy.util.ImageProc;
@@ -29,6 +30,9 @@ import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,9 +69,34 @@ public class couponfrag extends Fragment {
 
         this.inflater = inflater;
         View view =  inflater.inflate(R.layout.fragment_couponfrag, container, false);
-
         couponAdapter = new CouponListViewAdapter();
-        NetWork.getInstance().NetSearchCoupon(getActivity().getApplicationContext());
+
+        Call<ResItems> NetSearchCoupon = NetSSL.getInstance().getMemberImpFactory().NetSearchCoupon();
+        NetSearchCoupon.enqueue(new Callback<ResItems>() {
+            @Override
+            public void onResponse(Call<ResItems> call, Response<ResItems> response) {
+
+                if (response.isSuccessful()) {
+                    if (response.body() != null && response.body().getResult() != null) {
+
+                        OttoBus.getInstance().getSearchCoupons_Bus().post(response.body());
+
+                    } else {
+                        Log.i("RESPONSE RESULT 1: ", response.message());
+                    }
+                } else {
+                    Log.i("RESPONSE RESULT 2 : ", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResItems> call, Throwable t) {
+
+            }
+        });
+
+
+
         if(!ottoflag){
             OttoBus.getInstance().getSearchCoupons_Bus().register(this);
             ottoflag = true;

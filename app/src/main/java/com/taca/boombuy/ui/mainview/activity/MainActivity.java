@@ -26,22 +26,31 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.firebase.iid.FirebaseInstanceId;
+import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
+import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.database.StorageHelper;
 import com.taca.boombuy.net.NetworkTEST;
 import com.taca.boombuy.netmodel.UpdateTokenModel;
+import com.taca.boombuy.networkmodel.GiftDTO;
+import com.taca.boombuy.networkmodel.GiftSenderDTO;
 import com.taca.boombuy.singleton.item_single;
 import com.taca.boombuy.util.ImageProc;
+import com.taca.boombuy.util.U;
 import com.taca.boombuy.vo.VO_Gift_Total_SendernReceiver;
 import com.taca.boombuy.vo.VO_from_friends_info;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -182,9 +191,61 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void onMovePaymentActivity(View view) {
+
+
+        ArrayList<Integer> cartNums = new ArrayList<>();
+        for( int i =0; i < item_single.getInstance().itemDTOArrayList.size()-1; i++){
+            cartNums.add(item_single.getInstance().itemDTOArrayList.get(i).getId());
+        }
+
+        ArrayList<GiftSenderDTO> senderDTOs = new ArrayList<>();
+
+        senderDTOs.add(0, new GiftSenderDTO(StorageHelper.getInstance().getString(MainActivity.this, "my_phone_number") , Single_Value.getInstance().devided_master()));
+        for(int i=0; i< Single_Value.getInstance().vo_from_friends_infos.size(); i++){
+            GiftSenderDTO giftSenderDTO = new GiftSenderDTO(Single_Value.getInstance().vo_from_friends_infos.get(i).getPhone_num(), Single_Value.getInstance().devided_non_master());
+            senderDTOs.add(giftSenderDTO);
+        }
+
+        GiftDTO giftDTO = new GiftDTO(cartNums , Single_Value.getInstance().vo_to_friend_infos.get(0).getPhone_num(), senderDTOs);
+
+        Log.i(" 제발 :" , giftDTO.toString());
+
+        Call<ResBasic> NetOrders = NetSSL.getInstance().getMemberImpFactory().NetOrders(giftDTO);
+        NetOrders.enqueue(new Callback<ResBasic>() {
+            @Override
+            public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
+
+                if(response.isSuccessful() ){
+                    if(response.body() != null && response.body().getMessage() != null){
+
+                        Log.i("제에에에에발 : ", response.body().getMessage());
+
+                    }else{
+
+                        Log.i("RESPONSE RESULT 1: " , response.message());
+
+                    }
+                }else{
+
+                    Log.i("RESPONSE RESULT 2 : " , response.message());
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResBasic> call, Throwable t) {
+
+            }
+        });
+
+
+/*
         Intent intent = new Intent(MainActivity.this, GiftManageActivity.class);
         startActivity(intent);
         finish();
+*/
+
+
 
         Log.i("TOTAL TEST", Single_Value.getInstance().SenderNReceiver.toString());
 
@@ -497,6 +558,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         } else if (id == R.id.nav_setting) {
 
+        } else if (id == R.id.nav_sync_friends) {
+            // 동기화
+            U.getInstance().sendPhoneNumber(this);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -529,9 +593,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // 프레그 넘어가고 다시돌아왔을때 다시 데이터 설정하는 메소드 onResume 에서 사용할 부분
     public void refreshMainView() {
+
         if (Single_Value.getInstance().vo_to_friend_infos.size() != 0) {
             tv_to_friend_name.setText(Single_Value.getInstance().vo_to_friend_infos.get(0).getName());
         }
+
         String full_selected = "";
         if (Single_Value.getInstance().vo_from_friends_infos.size() != 0) {
             for (int i = 0; i < Single_Value.getInstance().vo_from_friends_infos.size(); i++) {
@@ -556,11 +622,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // 선택한 상품 개수 카운드
         tv_selected_count = (TextView) findViewById(R.id.tv_selected_count);
-        tv_selected_count.setText(item_single.getInstance().itemDTOArrayList.size()-1+"개");
+        tv_selected_count.setText(item_single.getInstance().itemDTOArrayList.size() - 1 + "개");
 
         // 결제하는 사람 카운트
         tv_from_count = (TextView) findViewById(R.id.tv_from_count);
-        tv_from_count.setText(Single_Value.getInstance().vo_from_friends_infos.size()+1+"명");
+        tv_from_count.setText(Single_Value.getInstance().vo_from_friends_infos.size() + 1 + "명");
     }
 
 

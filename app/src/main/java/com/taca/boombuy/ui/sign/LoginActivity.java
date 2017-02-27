@@ -19,11 +19,8 @@ import com.squareup.otto.Subscribe;
 import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResBasic;
-import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.database.StorageHelper;
 import com.taca.boombuy.evt.OttoBus;
-import com.taca.boombuy.net.NetWork;
-import com.taca.boombuy.netmodel.LoginModel;
 import com.taca.boombuy.networkmodel.LoginDTO;
 import com.taca.boombuy.ui.mainview.activity.MainActivity;
 import com.taca.boombuy.util.U;
@@ -57,16 +54,43 @@ public class LoginActivity extends AppCompatActivity {
             et_signin_id.setText(StorageHelper.getInstance().getString(LoginActivity.this, "my_phone_number"));
             et_signin_password.setText(StorageHelper.getInstance().getString(LoginActivity.this, "auto_login_password"));
             // 서버로부터 로그인
-            Single_Value.getInstance().lonInModel = new LoginModel();
+            /*Single_Value.getInstance().lonInModel = new LoginModel();
             Single_Value.getInstance().lonInModel.setPhone(StorageHelper.getInstance().getString(LoginActivity.this, "my_phone_number"));
-            Single_Value.getInstance().lonInModel.setPassword(StorageHelper.getInstance().getString(LoginActivity.this, "auto_login_password"));
+            Single_Value.getInstance().lonInModel.setPassword(StorageHelper.getInstance().getString(LoginActivity.this, "auto_login_password"));*/
 
             LoginDTO loginDTO = new LoginDTO(
                     StorageHelper.getInstance().getString(LoginActivity.this, "my_phone_number"),
                     StorageHelper.getInstance().getString(LoginActivity.this, "auto_login_password")
             );
 
-            NetWork.getInstance().NetLogin(getApplicationContext(), loginDTO);
+            Call<ResBasic> NetLogin = NetSSL.getInstance().getMemberImpFactory().NetLogin(loginDTO);
+
+            NetLogin.enqueue(new Callback<ResBasic>() {
+                @Override
+                public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
+
+                    Log.i("LOG RESPONSE", response.message().toString());
+
+                    if(response.isSuccessful() ){
+                        if(response.body() != null && response.body().getMessage() != null){
+                            Log.i("RES SUC", response.body().getMessage());
+                            OttoBus.getInstance().getLogin_Bus().post(response.body());
+                        }else{
+                            Log.i("RF","로그인실패:"+response.message());
+                        }
+                    }else{
+
+                        Log.i("RF","로그인실패11:"+response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResBasic> call, Throwable t) {
+
+                    t.printStackTrace();
+                    Log.i("ERROR : ", t.getMessage());
+                }
+            });
 
 
         }
@@ -77,13 +101,17 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // 서버로부터 로그인
-                Single_Value.getInstance().lonInModel = new LoginModel();
+                /*Single_Value.getInstance().lonInModel = new LoginModel();
                 Single_Value.getInstance().lonInModel.setPhone(et_signin_id.getText().toString());
-                Single_Value.getInstance().lonInModel.setPassword(et_signin_password.getText().toString());
+                Single_Value.getInstance().lonInModel.setPassword(et_signin_password.getText().toString());*/
 
                 //NetworkTEST.getInstance().bb_Login(getApplicationContext(), Single_Value.getInstance().lonInModel);
 
-                Call<ResBasic> NetLogin = NetSSL.getInstance().getMemberImpFactory().NetLogin(new LoginDTO("01085199709", "1111"));
+                LoginDTO loginDTO = new LoginDTO(
+                        et_signin_id.getText().toString(),
+                        et_signin_password.getText().toString()
+                );
+                Call<ResBasic> NetLogin = NetSSL.getInstance().getMemberImpFactory().NetLogin(loginDTO);
 
                 NetLogin.enqueue(new Callback<ResBasic>() {
                     @Override
@@ -94,6 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                         if(response.isSuccessful() ){
                             if(response.body() != null && response.body().getMessage() != null){
                                 Log.i("RES SUC", response.body().getMessage());
+                                OttoBus.getInstance().getLogin_Bus().post(response.body());
                             }else{
                                 Log.i("RF","로그인실패:"+response.message());
                             }

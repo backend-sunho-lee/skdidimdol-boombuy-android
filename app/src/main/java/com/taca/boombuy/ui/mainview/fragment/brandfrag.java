@@ -1,7 +1,6 @@
 package com.taca.boombuy.ui.mainview.fragment;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.squareup.otto.Subscribe;
 import com.taca.boombuy.NetRetrofit.NetSSL;
@@ -20,7 +18,6 @@ import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResSearchBrands;
 import com.taca.boombuy.evt.OttoBus;
 import com.taca.boombuy.networkmodel.BrandDTO;
-import com.taca.boombuy.ui.mainview.activity.GiftSelectDetailInfoActivity;
 import com.taca.boombuy.util.ImageProc;
 
 import butterknife.BindView;
@@ -115,6 +112,7 @@ public class brandfrag extends Fragment {
 
         @Override
         public int getCount() {
+            Log.i("Y","개수" + resSearchBrands.getResult().size());
             return resSearchBrands.getResult().size();
         }
 
@@ -132,28 +130,22 @@ public class brandfrag extends Fragment {
         public View getView(final int position, View convertView, ViewGroup parent) {
             //
             ViewHolder holder;
-            convertView = inflater.inflate(R.layout.cell_grid_layout, parent, false);
-
-            holder = new ViewHolder(convertView);
-
+            if( convertView == null) {
+                convertView = inflater.inflate(R.layout.cell_grid_layout, parent, false);
+                holder = new ViewHolder(convertView);
+                convertView.setTag(holder);
+            }else{
+                holder = (ViewHolder)convertView.getTag();
+            }
             ImageProc.getInstance().drawImage(getItem(position).getLocation(), holder.brandimg);
-
             holder.brandimg.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    Toast.makeText(getActivity(), getItem(position).getName(), Toast.LENGTH_SHORT).show();
-
-
-                    Intent intent = new Intent(getActivity(), GiftSelectDetailInfoActivity.class);
-
-                    startActivity(intent);
-
+//                    Toast.makeText(getActivity(), getItem(position).getName(), Toast.LENGTH_SHORT).show();
+//                    Intent intent = new Intent(getActivity(), GiftSelectDetailInfoActivity.class);
+//                    startActivity(intent);
                 }
             });
-
-
-
             return convertView;
         }
     }
@@ -195,7 +187,13 @@ public class brandfrag extends Fragment {
         }
     }
 
-    @Override
+
+
+
+
+
+
+@Override
     public void onDetach() {
         super.onDetach();
         mListener = null;

@@ -10,18 +10,21 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.taca.boombuy.R;
+import com.taca.boombuy.ui.mainview.fragment.brandBaseFrag;
 import com.taca.boombuy.ui.mainview.fragment.brandfrag;
 import com.taca.boombuy.ui.mainview.fragment.couponfrag;
 import com.taca.boombuy.ui.mainview.fragment.totalfrag;
 
 public class MainProduct extends AppCompatActivity implements
-        brandfrag.OnFragmentInteractionListener,
-        couponfrag.OnFragmentInteractionListener {
+        brandBaseFrag.OnFragmentInteractionListener,
+        couponfrag.OnFragmentInteractionListener,
+        brandfrag.OnFragmentInteractionListener{
 
     TabLayout tabLayout;
     ViewPager viewPager;
 
     FragmentPagerAdapter fragmentPagerAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +44,7 @@ public class MainProduct extends AppCompatActivity implements
     class FragmentAdapter extends FragmentPagerAdapter {
 
         Fragment[] frags = new Fragment[]{
-                new totalfrag(), new brandfrag(), new couponfrag()
+                new totalfrag(), new brandBaseFrag(), new couponfrag()
         };
 
         public FragmentAdapter(FragmentManager fm) {

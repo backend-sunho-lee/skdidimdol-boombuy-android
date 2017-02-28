@@ -2,16 +2,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/frag_container"
     tools:context="com.taca.boombuy.ui.mainview.fragment.brandfrag">
 
-    <GridView
 
-        android:numColumns="3"
-        android:gravity="center"
-        android:layout_gravity="center"
+    <GridView
         android:id="@+id/gridview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        ></GridView>
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:numColumns="3"></GridView>
+
 
 </LinearLayout>

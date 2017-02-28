@@ -34,7 +34,7 @@ public class GiftSelectDetailInfoActivity extends AppCompatActivity {
 
     // 상품번호 담아올 변수
 
-    ImageView selected_gift_imageview;
+    ImageView selected_gift_imageview;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ;
     ResItemDetail resItemDetail;
     boolean ottoFlag = false;
 
@@ -75,6 +75,8 @@ public class GiftSelectDetailInfoActivity extends AppCompatActivity {
 
         selected_gift_imageview = (ImageView) findViewById(R.id.selected_gift_imageview);
 
+
+        ImageProc.getInstance().drawImage(item.getLocation(), selected_gift_imageview);
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);

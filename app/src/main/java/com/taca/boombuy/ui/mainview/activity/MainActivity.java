@@ -33,6 +33,7 @@ import com.google.firebase.iid.FirebaseInstanceId;
 import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResBasic;
+import com.taca.boombuy.Resmodel.ResMyProfile;
 import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.database.StorageHelper;
 import com.taca.boombuy.net.NetworkTEST;
@@ -105,6 +106,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     TextView tv_total_price;
     // 총 몇명이 결제하는지
     TextView tv_from_count;
+    // 내 프로필 이미지
+    CircleImageView iv_my_profile_cell;
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
     @Override
@@ -113,9 +116,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        /*tv_from_friends_name = (TextView) findViewById(R.id.tv_profile_name);
-        tv_from_friends_name.setText(StorageHelper.getInstance().getString(MainActivity.this, "user_name") + " 님");*/
 
         Single_Value.getInstance().SenderNReceiver = new VO_Gift_Total_SendernReceiver();
 
@@ -183,6 +183,38 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////
 
+        // 내 프로필 가져오기//////////////////////////////////////////////////////////////////////////////
+        Call<ResMyProfile> NetMyProfile = NetSSL.getInstance().getMemberImpFactory().NetMyProfile();
+        NetMyProfile.enqueue(new Callback<ResMyProfile>() {
+            @Override
+            public void onResponse(Call<ResMyProfile> call, Response<ResMyProfile> response) {
+
+                if (response.isSuccessful()) {
+                    if (response.body() != null && response.body().getResult() != null) {
+                        // 드로어 내 이름 설정
+                        tv_profile_name = (TextView) findViewById(R.id.tv_profile_name);
+                        tv_profile_name.setText(response.body().getResult().getName() + " 님");
+
+                        // 드로어 내 이미지 설정
+                        iv_profile = (CircleImageView) findViewById(R.id.iv_profile);
+                        ImageProc.getInstance().drawImage(response.body().getResult().getLocation(), iv_profile);
+
+                        // 선물하는 사람들 목록 내 이미지 설정
+                        iv_my_profile_cell = (CircleImageView) findViewById(R.id.iv_my_profile_cell);
+                        ImageProc.getInstance().drawImage(response.body().getResult().getLocation(), iv_my_profile_cell);
+                    } else {
+                        Log.i("RESPONSE RESULT 1: ", response.message());
+                    }
+                } else {
+                    Log.i("RESPONSE RESULT 2 : ", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResMyProfile> call, Throwable t) {
+
+            }
+        });
 
     }
 
@@ -200,40 +232,40 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         ArrayList<Integer> cartNums = new ArrayList<>();
-        for( int i =0; i < item_single.getInstance().itemDTOArrayList.size()-1; i++){
+        for (int i = 0; i < item_single.getInstance().itemDTOArrayList.size() - 1; i++) {
             cartNums.add(item_single.getInstance().itemDTOArrayList.get(i).getId());
         }
 
         ArrayList<GiftSenderDTO> senderDTOs = new ArrayList<>();
 
-        senderDTOs.add(0, new GiftSenderDTO(StorageHelper.getInstance().getString(MainActivity.this, "my_phone_number") , Single_Value.getInstance().devided_master()));
-        for(int i=0; i< Single_Value.getInstance().vo_from_friends_infos.size(); i++){
+        senderDTOs.add(0, new GiftSenderDTO(StorageHelper.getInstance().getString(MainActivity.this, "my_phone_number"), Single_Value.getInstance().devided_master()));
+        for (int i = 0; i < Single_Value.getInstance().vo_from_friends_infos.size(); i++) {
             GiftSenderDTO giftSenderDTO = new GiftSenderDTO(Single_Value.getInstance().vo_from_friends_infos.get(i).getPhone_num(), Single_Value.getInstance().devided_non_master());
             senderDTOs.add(giftSenderDTO);
         }
 
-        GiftDTO giftDTO = new GiftDTO(cartNums , Single_Value.getInstance().vo_to_friend_infos.get(0).getPhone_num(), senderDTOs);
+        GiftDTO giftDTO = new GiftDTO(cartNums, Single_Value.getInstance().vo_to_friend_infos.get(0).getPhone_num(), senderDTOs);
 
-        Log.i(" 제발 :" , giftDTO.toString());
+        Log.i(" 제발 :", giftDTO.toString());
 
         Call<ResBasic> NetOrders = NetSSL.getInstance().getMemberImpFactory().NetOrders(giftDTO);
         NetOrders.enqueue(new Callback<ResBasic>() {
             @Override
             public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
 
-                if(response.isSuccessful() ){
-                    if(response.body() != null && response.body().getMessage() != null){
+                if (response.isSuccessful()) {
+                    if (response.body() != null && response.body().getMessage() != null) {
 
                         Log.i("제에에에에발 : ", response.body().getMessage());
 
-                    }else{
+                    } else {
 
-                        Log.i("RESPONSE RESULT 1: " , response.message());
+                        Log.i("RESPONSE RESULT 1: ", response.message());
 
                     }
-                }else{
+                } else {
 
-                    Log.i("RESPONSE RESULT 2 : " , response.message());
+                    Log.i("RESPONSE RESULT 2 : ", response.message());
                 }
 
             }
@@ -498,7 +530,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             // 데이터 설정
             // 내 이미지 설정 부분
-            //ImageProc.getInstance().drawImage(Single_Value.getInstance().vo_from_friends_infos.get(position).getLocation(), holder.iv_from_profile_cell);
+            ImageProc.getInstance().drawImage(Single_Value.getInstance().vo_from_friends_infos.get(position).getLocation(), holder.iv_from_profile_cell);
             holder.tv_from_name_cell.setText(Single_Value.getInstance().vo_from_friends_infos.get(position).getName());
             holder.tv_divided_cell.setText(Single_Value.getInstance().devided_non_master() + "원");
 
@@ -566,7 +598,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_setting) {
 
         } else if (id == R.id.nav_sync_friends) {
-            // 동기화
+            // 전화번호 동기화
             U.getInstance().sendPhoneNumber(this);
         }
 

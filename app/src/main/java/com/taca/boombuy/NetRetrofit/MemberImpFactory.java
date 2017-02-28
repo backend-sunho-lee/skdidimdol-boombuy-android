@@ -5,8 +5,8 @@ import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.Resmodel.ResFriendList;
 import com.taca.boombuy.Resmodel.ResItemDetail;
 import com.taca.boombuy.Resmodel.ResItems;
+import com.taca.boombuy.Resmodel.ResMyProfile;
 import com.taca.boombuy.Resmodel.ResSearchBrands;
-import com.taca.boombuy.Resmodel.ResSearchProfile;
 import com.taca.boombuy.networkmodel.GiftDTO;
 import com.taca.boombuy.networkmodel.LoginDTO;
 import com.taca.boombuy.networkmodel.SignUpDTO;
@@ -15,7 +15,6 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 
@@ -37,10 +36,10 @@ public interface MemberImpFactory {
 
     // 내 정보 조회
     @GET("/users/me")
-    Call<ResSearchProfile> NetSearchProfile();
+    Call<ResMyProfile> NetMyProfile();
 
     // 친구 전화번호 전체 전송
-    @PUT("/friends")
+    @POST("/friends")
     Call<ResBasic> NetSendContacts(@Body ReqSendContacts reqSendContacts);
 
     // 전체 상품 목록 조회

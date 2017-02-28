@@ -4,11 +4,14 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 
@@ -53,6 +56,7 @@ public class brandfrag extends Fragment {
     ResSearchBrands resSearchBrands;
     boolean ottoFlag = false;
 
+    Button btn1 ;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -138,18 +142,35 @@ public class brandfrag extends Fragment {
                 holder = (ViewHolder)convertView.getTag();
             }
             ImageProc.getInstance().drawImage(getItem(position).getLocation(), holder.brandimg);
-            holder.brandimg.setOnClickListener(new View.OnClickListener() {
+
+            convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    Toast.makeText(getActivity(), getItem(position).getName(), Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(getActivity(), GiftSelectDetailInfoActivity.class);
-//                    startActivity(intent);
+
+                    Fragment brandSelectfrag = new brandSelectfrag();
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("bid", getItem(position).getBid());
+                    brandSelectfrag.setArguments(bundle);
+
+
+                    FragmentManager fragmentManager = getFragmentManager();
+                    FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+
+                    fragmentTransaction.replace(R.id.container_Frag, brandSelectfrag);
+
+                    fragmentTransaction.addToBackStack(null);
+
+                    fragmentTransaction.commit();
                 }
             });
             return convertView;
         }
     }
 
+
+    public void test(){
+
+    }
     //// 기본 fragment 생성 틀
 
     public static brandfrag newInstance(String param1, String param2) {
@@ -186,11 +207,6 @@ public class brandfrag extends Fragment {
                     + " must implement OnFragmentInteractionListener");
         }
     }
-
-
-
-
-
 
 
 @Override

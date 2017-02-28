@@ -95,8 +95,6 @@ public class couponfrag extends Fragment {
             }
         });
 
-
-
         if(!ottoflag){
             OttoBus.getInstance().getSearchCoupons_Bus().register(this);
             ottoflag = true;

@@ -432,7 +432,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             // 데이터 설정
-            //holder.iv_from_profile_cell.setImageBitmap();
+            ImageProc.getInstance().drawImage(Single_Value.getInstance().vo_from_friends_infos.get(position).getLocation(), holder.iv_from_profile_cell);
             holder.tv_from_name_cell.setText(Single_Value.getInstance().vo_from_friends_infos.get(position).getName());
             holder.tv_divided_cell.setText(Single_Value.getInstance().devided_non_master() + "원");
         }
@@ -497,7 +497,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
 
             // 데이터 설정
-            //holder.iv_from_profile_cell.setImageBitmap();
+            // 내 이미지 설정 부분
+            //ImageProc.getInstance().drawImage(Single_Value.getInstance().vo_from_friends_infos.get(position).getLocation(), holder.iv_from_profile_cell);
             holder.tv_from_name_cell.setText(Single_Value.getInstance().vo_from_friends_infos.get(position).getName());
             holder.tv_divided_cell.setText(Single_Value.getInstance().devided_non_master() + "원");
 

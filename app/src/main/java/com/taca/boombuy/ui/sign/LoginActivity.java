@@ -183,8 +183,6 @@ public class LoginActivity extends AppCompatActivity {
         switch (requestCode) {
             case 1: {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    // my_phone_number 쉐어드프리퍼런스에 내 전화번호 저장
-                    StorageHelper.getInstance().setString(LoginActivity.this, "my_phone_number", U.getInstance().getMyPhoneNum(LoginActivity.this));
                 } else {
                     // 사용자가 권한 동의를 안하므로 종료
                     finish();
@@ -208,7 +206,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         } else {
             // my_phone_number 쉐어드프리퍼런스에 내 전화번호 저장
-            StorageHelper.getInstance().setString(LoginActivity.this, "my_phone_number", U.getInstance().getMyPhoneNum(LoginActivity.this));
+            //StorageHelper.getInstance().setString(LoginActivity.this, "my_phone_number", U.getInstance().getMyPhoneNum(LoginActivity.this));
         }
     }
 }

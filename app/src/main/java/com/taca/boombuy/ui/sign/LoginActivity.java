@@ -209,8 +209,6 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             // my_phone_number 쉐어드프리퍼런스에 내 전화번호 저장
             StorageHelper.getInstance().setString(LoginActivity.this, "my_phone_number", U.getInstance().getMyPhoneNum(LoginActivity.this));
-            Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-            startActivity(intent);
         }
     }
 }

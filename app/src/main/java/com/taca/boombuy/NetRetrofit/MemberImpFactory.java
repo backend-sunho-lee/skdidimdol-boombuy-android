@@ -1,5 +1,6 @@
 package com.taca.boombuy.NetRetrofit;
 
+import com.taca.boombuy.Reqmodel.ReqSendContacts;
 import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.Resmodel.ResFriendList;
 import com.taca.boombuy.Resmodel.ResItemDetail;
@@ -36,6 +37,10 @@ public interface MemberImpFactory {
     // 내 정보 조회
     @GET("/users/me")
     Call<ResSearchProfile> NetSearchProfile();
+
+    // 친구 전화번호 전체 전송
+    @POST("/friends")
+    Call<ResBasic> NetSendContacts(@Body ReqSendContacts reqSendContacts);
 
     // 전체 상품 목록 조회
     @GET("/items")

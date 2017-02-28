@@ -598,6 +598,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         refreshMainView();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        item_single.getInstance().itemDTOArrayList.clear();
+    }
+
     // 프레그 넘어가고 다시돌아왔을때 다시 데이터 설정하는 메소드 onResume 에서 사용할 부분
     public void refreshMainView() {
 

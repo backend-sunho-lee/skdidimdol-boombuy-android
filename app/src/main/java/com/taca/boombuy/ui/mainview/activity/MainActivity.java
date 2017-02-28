@@ -3,10 +3,10 @@ package com.taca.boombuy.ui.mainview.activity;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -32,12 +32,11 @@ import android.widget.TextView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
+import com.taca.boombuy.Reqmodel.ReqChangeToken;
 import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.Resmodel.ResMyProfile;
 import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.database.StorageHelper;
-import com.taca.boombuy.net.NetworkTEST;
-import com.taca.boombuy.netmodel.UpdateTokenModel;
 import com.taca.boombuy.networkmodel.GiftDTO;
 import com.taca.boombuy.networkmodel.GiftSenderDTO;
 import com.taca.boombuy.singleton.item_single;
@@ -46,13 +45,16 @@ import com.taca.boombuy.util.U;
 import com.taca.boombuy.vo.VO_Gift_Total_SendernReceiver;
 import com.taca.boombuy.vo.VO_from_friends_info;
 
-import java.io.FileNotFoundException;
-import java.io.InputStream;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
+import okhttp3.MediaType;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -173,13 +175,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // 토큰 다르면 업데이트 ///////////////////////////////////////////////////////////////////////
         String token = FirebaseInstanceId.getInstance().getToken();
+        Log.i("토큰 확인 : ", token);
         if (!(StorageHelper.getInstance().getString(MainActivity.this, "my_token").equals(token))) {
-            Log.i("토큰 확인 / 전송 : ", token);
-            Single_Value.getInstance().updateTokenModel = new UpdateTokenModel();
-            Single_Value.getInstance().updateTokenModel.setPhone(StorageHelper.getInstance().getString(getApplicationContext(), "my_phone_number"));
-            Single_Value.getInstance().updateTokenModel.setToken(token);
-            NetworkTEST.getInstance().bb_Update_token(getApplicationContext(), Single_Value.getInstance().updateTokenModel);
+            Log.i("토큰 전송 : ", token);
             StorageHelper.getInstance().setString(getApplicationContext(), "my_token", token);
+            Call<ResBasic> NetChaneToken = NetSSL.getInstance().getMemberImpFactory().NetChaneToken(new ReqChangeToken(token));
+            NetChaneToken.enqueue(new Callback<ResBasic>() {
+                @Override
+                public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
+
+                    if (response.isSuccessful()) {
+                        if (response.body() != null && response.body().getMessage() != null) {
+                            Log.i("Result : ", response.body().getMessage());
+                        } else {
+                            Log.i("RESPONSE RESULT 1: ", response.message());
+                        }
+                    } else {
+
+                        Log.i("RESPONSE RESULT 2 : ", response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResBasic> call, Throwable t) {
+                }
+            });
         }
         ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -246,7 +266,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         GiftDTO giftDTO = new GiftDTO(cartNums, Single_Value.getInstance().vo_to_friend_infos.get(0).getPhone_num(), senderDTOs);
 
-        Log.i(" 제발 :", giftDTO.toString());
+        Log.i(" 정보 조회 :", giftDTO.toString());
 
         Call<ResBasic> NetOrders = NetSSL.getInstance().getMemberImpFactory().NetOrders(giftDTO);
         NetOrders.enqueue(new Callback<ResBasic>() {
@@ -255,24 +275,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                 if (response.isSuccessful()) {
                     if (response.body() != null && response.body().getMessage() != null) {
-
-                        Log.i("제에에에에발 : ", response.body().getMessage());
-
+                        Log.i("Result : ", response.body().getMessage());
                     } else {
-
                         Log.i("RESPONSE RESULT 1: ", response.message());
-
                     }
                 } else {
 
                     Log.i("RESPONSE RESULT 2 : ", response.message());
                 }
-
             }
 
             @Override
             public void onFailure(Call<ResBasic> call, Throwable t) {
-
             }
         });
 
@@ -282,26 +296,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
         finish();
 */
-
-
-
-        /*Log.i("TOTAL TEST", Single_Value.getInstance().SenderNReceiver.toString());
-
-        Single_Value.getInstance().vo_gift_total_member.add(Single_Value.getInstance().SenderNReceiver);
-        Log.i("TOTAL TEST2", Single_Value.getInstance().vo_gift_total_member.toString());
-        Log.i("TOTAL TEST2 SIZE", Single_Value.getInstance().vo_gift_total_member.size() + "");
-
-        //Single_Value.getInstance().SenderNReceiver = new VO_Gift_Total_SendernReceiver();
-        Log.i("After TEST", Single_Value.getInstance().SenderNReceiver.toString());*/
-
-
-        /*ArrayList<FCMModel> fcmModels = new ArrayList<FCMModel>();
-        FCMModel fcmModel = new FCMModel();
-        fcmModel.setToken(FirebaseInstanceId.getInstance().getToken());
-        //fcmModel.setToken("ccGKhTjloXU:APA91bHbJgKGr88hvP3_0uZ_-3xpaAyyLqWLcnro8ukQVu2FU3RVYpMEmV0wD5c934VbSjgqqLNegNgWVb3kmzYXM2F_KWgyfx5B0AhDdkNy3nZioD_mU-WqVt4FHNJTGcNYvSAJggbG");
-        fcmModel.setContent("Send!!!!!!!!!!!!!!!!!");
-        fcmModels.add(fcmModel);
-        NetworkTEST.getInstance().sendFcm(getApplicationContext(), fcmModels);*/
     }
 
     public void onAdd(View view) {
@@ -561,14 +555,56 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (resultCode == RESULT_OK) {
                     try {
                         Uri selectedImage = imageReturnedIntent.getData();
-                        InputStream imageStream = getContentResolver().openInputStream(selectedImage);
+                        Log.i("파일 경로?? : ", getPath(selectedImage) + "");
+                        onFileUpload(getPath(selectedImage));
+                        /*InputStream imageStream = getContentResolver().openInputStream(selectedImage);
                         Bitmap bitmapSelectedImage = BitmapFactory.decodeStream(imageStream);
-                        iv_profile.setImageBitmap(bitmapSelectedImage);
-                    } catch (FileNotFoundException e) {
+                        iv_profile.setImageBitmap(bitmapSelectedImage);*/
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
         }
+    }
+
+    private String getPath(Uri uri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
+    }
+
+    public void onFileUpload(String path) {
+        File file = new File(path); // 이미지파일주소는 확인됨
+
+        //Log.i("RF", file.getAbsolutePath() + "++" + file.canRead());
+        Map<String, RequestBody> map = new HashMap<>();
+        map.put("user_id", RequestBody.create(MediaType.parse("multipart/form-data"), "jimin") );
+        //RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
+        RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+        map.put("url_upload\"; filename=\"photos.jpg\"", fileBody);
+
+        Call<ResBasic> NetChangeImage = NetSSL.getInstance().getMemberImpFactory().NetChangeImage(map);
+        NetChangeImage.enqueue(new Callback<ResBasic>() {
+            @Override
+            public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
+                if (response.isSuccessful()) {
+                    if (response.body() != null && response.body().getMessage() != null) {
+                        Log.i("Result : ", response.body().getMessage());
+                    } else {
+                        Log.i("RESPONSE RESULT 1: ", response.message());
+                    }
+                } else {
+
+                    Log.i("RESPONSE RESULT 2 : ", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResBasic> call, Throwable t) {
+            }
+        });
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -600,6 +636,36 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         } else if (id == R.id.nav_sync_friends) {
             // 전화번호 동기화
             U.getInstance().sendPhoneNumber(this);
+        } else if (id == R.id.nav_withdrawal) {
+            // 회원 탈퇴
+            Call<ResBasic> NetWithdrawal = NetSSL.getInstance().getMemberImpFactory().NetWithdrawal();
+            NetWithdrawal.enqueue(new Callback<ResBasic>() {
+                @Override
+                public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null && response.body().getMessage() != null) {
+                            Log.i("Result : ", response.body().getMessage());
+
+                            // 자동로그인 지우기
+                            // 패스워드 지우기
+                            // 어플 종료
+                            StorageHelper.getInstance().setBoolean(MainActivity.this, "auto_login", false);
+                            StorageHelper.getInstance().setString(MainActivity.this, "auto_login_password", "");
+                            finish();
+
+                        } else {
+                            Log.i("RESPONSE RESULT 1: ", response.message());
+                        }
+                    } else {
+
+                        Log.i("RESPONSE RESULT 2 : ", response.message());
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResBasic> call, Throwable t) {
+                }
+            });
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

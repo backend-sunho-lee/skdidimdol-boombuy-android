@@ -8,26 +8,26 @@ import java.util.ArrayList;
 
 public class ReqSendContacts {
 
-    ArrayList<String> body;
+    ArrayList<String> phone;
 
     @Override
     public String toString() {
         return "ReqSendContacts{" +
-                "body=" + body +
+                "phone=" + phone +
                 '}';
     }
 
-    public ArrayList<String> getBody() {
-        return body;
+    public ArrayList<String> getPhone() {
+        return phone;
     }
 
-    public void setBody(ArrayList<String> body) {
-        this.body = body;
+    public void setPhone(ArrayList<String> phone) {
+        this.phone = phone;
     }
 
-    public ReqSendContacts(ArrayList<String> body) {
+    public ReqSendContacts(ArrayList<String> phone) {
 
-        this.body = body;
+        this.phone = phone;
     }
 
     public ReqSendContacts() {

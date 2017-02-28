@@ -15,6 +15,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 
@@ -39,7 +40,7 @@ public interface MemberImpFactory {
     Call<ResSearchProfile> NetSearchProfile();
 
     // 친구 전화번호 전체 전송
-    @POST("/friends")
+    @PUT("/friends")
     Call<ResBasic> NetSendContacts(@Body ReqSendContacts reqSendContacts);
 
     // 전체 상품 목록 조회

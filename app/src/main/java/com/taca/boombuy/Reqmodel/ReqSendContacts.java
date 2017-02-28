@@ -8,15 +8,13 @@ import java.util.ArrayList;
 
 public class ReqSendContacts {
 
-    ReqHeader header;
     ArrayList<String> body;
 
-    public ReqHeader getHeader() {
-        return header;
-    }
-
-    public void setHeader(ReqHeader header) {
-        this.header = header;
+    @Override
+    public String toString() {
+        return "ReqSendContacts{" +
+                "body=" + body +
+                '}';
     }
 
     public ArrayList<String> getBody() {
@@ -27,11 +25,12 @@ public class ReqSendContacts {
         this.body = body;
     }
 
-    @Override
-    public String toString() {
-        return "ReqSendContacts{" +
-                "header=" + header +
-                ", body=" + body +
-                '}';
+    public ReqSendContacts(ArrayList<String> body) {
+
+        this.body = body;
+    }
+
+    public ReqSendContacts() {
+
     }
 }

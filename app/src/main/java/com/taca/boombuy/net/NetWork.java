@@ -12,8 +12,6 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
-import com.taca.boombuy.Reqmodel.ReqHeader;
-import com.taca.boombuy.Reqmodel.ReqSendContacts;
 import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.Resmodel.ResItemDetail;
 import com.taca.boombuy.Resmodel.ResItems;
@@ -26,7 +24,6 @@ import com.taca.boombuy.networkmodel.SignUpDTO;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
 import java.util.Map;
 
 /**
@@ -332,7 +329,7 @@ public class NetWork {
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     // 친구 목록 배열 전송 ///////////////////////////////////////////////////////////////////////////////
-    public void NetSendContacts(Context context, ArrayList<String> list){
+    /*public void NetSendContacts(Context context, ArrayList<String> list){
 
         ReqSendContacts reqSendContacts = new ReqSendContacts();
         ReqHeader header = new ReqHeader("내 친구전화번호 목록 배열전송");
@@ -343,7 +340,7 @@ public class NetWork {
             JSONObject json = new JSONObject(new Gson().toJson(reqSendContacts));
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                     Request.Method.POST,
-                    "",
+                    "https://ec2-52-78-52-228.ap-northeast-2.compute.amazonaws.com/friends",
                     json,
                     new Response.Listener<JSONObject>(){
                         @Override
@@ -364,7 +361,7 @@ public class NetWork {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     public void temp(Context context){

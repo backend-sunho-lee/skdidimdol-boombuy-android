@@ -253,14 +253,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 
-        Log.i("TOTAL TEST", Single_Value.getInstance().SenderNReceiver.toString());
+        /*Log.i("TOTAL TEST", Single_Value.getInstance().SenderNReceiver.toString());
 
         Single_Value.getInstance().vo_gift_total_member.add(Single_Value.getInstance().SenderNReceiver);
         Log.i("TOTAL TEST2", Single_Value.getInstance().vo_gift_total_member.toString());
         Log.i("TOTAL TEST2 SIZE", Single_Value.getInstance().vo_gift_total_member.size() + "");
 
         //Single_Value.getInstance().SenderNReceiver = new VO_Gift_Total_SendernReceiver();
-        Log.i("After TEST", Single_Value.getInstance().SenderNReceiver.toString());
+        Log.i("After TEST", Single_Value.getInstance().SenderNReceiver.toString());*/
 
 
         /*ArrayList<FCMModel> fcmModels = new ArrayList<FCMModel>();

@@ -5,12 +5,20 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
+import com.taca.boombuy.NetRetrofit.NetSSL;
+import com.taca.boombuy.Reqmodel.ReqSendContacts;
+import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.vo.VO_from_friends_local_list;
 import com.taca.boombuy.vo.VO_to_friend_local_list;
 
 import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by jimin on 2017-02-06.
@@ -116,7 +124,7 @@ public class U {
             } while (contactCursor.moveToNext());
         }
 
-        /*Call<ResBasic> NetSendContacts = NetSSL.getInstance().getMemberImpFactory().NetSendContacts("01040140807");
+        Call<ResBasic> NetSendContacts = NetSSL.getInstance().getMemberImpFactory().NetSendContacts(new ReqSendContacts(friendsList));
         NetSendContacts.enqueue(new Callback<ResBasic>() {
             @Override
             public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
@@ -138,9 +146,8 @@ public class U {
                 t.printStackTrace();
                 Log.i("RES FAIL", t.getMessage());
             }
-        });*/
-/*
-        for (String s : friendsList) {
+        });
+        /*for (String s : friendsList) {
             Log.i("friendsList test : ", s);
         }*/
 

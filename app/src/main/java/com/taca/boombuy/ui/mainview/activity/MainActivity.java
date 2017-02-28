@@ -577,10 +577,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void onFileUpload(String path) {
         File file = new File(path); // 이미지파일주소는 확인됨
-
         //Log.i("RF", file.getAbsolutePath() + "++" + file.canRead());
         Map<String, RequestBody> map = new HashMap<>();
-        map.put("user_id", RequestBody.create(MediaType.parse("multipart/form-data"), "jimin") );
+        map.put("user_id", RequestBody.create(MediaType.parse("multipart/form-data"), "jimin"));
         //RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
         RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         map.put("url_upload\"; filename=\"photos.jpg\"", fileBody);

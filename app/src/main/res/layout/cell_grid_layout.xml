@@ -2,8 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="200dp"
     android:orientation="vertical"
+    android:background="#000000"
     >
 
     <ImageView
@@ -12,6 +13,10 @@
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        app:srcCompat="@mipmap/ic_launcher" />
+        android:scaleType="center"
+        android:gravity="center"
+
+        android:padding="1dp"
+        android:src="@mipmap/ic_launcher" />
 
 </LinearLayout>

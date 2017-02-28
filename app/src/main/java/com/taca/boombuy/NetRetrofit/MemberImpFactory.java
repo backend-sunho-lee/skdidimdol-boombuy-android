@@ -1,21 +1,28 @@
 package com.taca.boombuy.NetRetrofit;
 
+import com.taca.boombuy.Reqmodel.ReqChangeToken;
 import com.taca.boombuy.Reqmodel.ReqSendContacts;
 import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.Resmodel.ResFriendList;
 import com.taca.boombuy.Resmodel.ResItemDetail;
 import com.taca.boombuy.Resmodel.ResItems;
+import com.taca.boombuy.Resmodel.ResMyProfile;
 import com.taca.boombuy.Resmodel.ResSearchBrands;
-import com.taca.boombuy.Resmodel.ResSearchProfile;
 import com.taca.boombuy.networkmodel.GiftDTO;
 import com.taca.boombuy.networkmodel.LoginDTO;
 import com.taca.boombuy.networkmodel.SignUpDTO;
 
+import java.util.Map;
+
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.PartMap;
 import retrofit2.http.Path;
 
 
@@ -37,10 +44,18 @@ public interface MemberImpFactory {
 
     // 내 정보 조회
     @GET("/users/me")
-    Call<ResSearchProfile> NetSearchProfile();
+    Call<ResMyProfile> NetMyProfile();
+
+    // 내 토큰 변경
+    @PUT("/auth/local/token")
+    Call<ResBasic> NetChaneToken(@Body ReqChangeToken reqChangeToken);
+
+    // 회원 탈퇴
+    @DELETE("/users/me")
+    Call<ResBasic> NetWithdrawal();
 
     // 친구 전화번호 전체 전송
-    @PUT("/friends")
+    @POST("/friends")
     Call<ResBasic> NetSendContacts(@Body ReqSendContacts reqSendContacts);
 
     // 전체 상품 목록 조회
@@ -74,4 +89,8 @@ public interface MemberImpFactory {
     @POST("/orders")
     Call<ResBasic> NetOrders(@Body GiftDTO giftDTO);
 
+    // 파일(사진) 전송
+    @Multipart
+    @PUT("/users/me")
+    Call<ResBasic> NetChangeImage(@PartMap Map<String, RequestBody> params);
 }

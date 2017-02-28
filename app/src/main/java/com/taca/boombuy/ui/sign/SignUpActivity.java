@@ -125,7 +125,6 @@ public class SignUpActivity extends AppCompatActivity {
         if (resBasic.getMessage() != null) {
             StorageHelper.getInstance().setBoolean(SignUpActivity.this, "auto_login", true);
             StorageHelper.getInstance().setString(SignUpActivity.this, "auto_login_password", et_signup_password.getText().toString());
-            StorageHelper.getInstance().setString(SignUpActivity.this, "user_name", et_signup_name.getText().toString());
 
             Intent intent = new Intent(SignUpActivity.this, SignUpPopupActivity.class);
             // 오토버스 썼으면 등록해제

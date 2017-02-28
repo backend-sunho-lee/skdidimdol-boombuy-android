@@ -242,7 +242,6 @@
                 android:layout_marginLeft="7.7dp"
                 android:layout_marginTop="8dp"
                 android:layout_weight="0"
-                android:background="@drawable/img_basic_profile"
                 app:civ_border_color="@color/boderColor"
                 app:civ_border_width="0.5dp" />
 

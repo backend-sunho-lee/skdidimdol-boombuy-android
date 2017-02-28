@@ -124,19 +124,20 @@ public class U {
             } while (contactCursor.moveToNext());
         }
 
+
+        Log.i("친구 목록 전송 테스트 : ", friendsList.toString());
         Call<ResBasic> NetSendContacts = NetSSL.getInstance().getMemberImpFactory().NetSendContacts(new ReqSendContacts(friendsList));
         NetSendContacts.enqueue(new Callback<ResBasic>() {
             @Override
             public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
 
-                if(response.isSuccessful()){
-                    if(response.body() != null && response.body().getMessage() != null){
+                if (response.isSuccessful()) {
+                    if (response.body() != null && response.body().getMessage() != null) {
                         Log.i("RES FRIEND", response.body().getMessage());
-                    }else{
+                    } else {
                         Log.i("RES FRIEND", response.message());
                     }
-
-                }else{
+                } else {
                     Log.i("RES FRIEND", response.message());
                 }
             }

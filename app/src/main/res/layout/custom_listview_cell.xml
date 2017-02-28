@@ -81,7 +81,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:background="@drawable/ic_progress" />
+                android:background="@drawable/btn_detail" />
 
         </LinearLayout>
 

@@ -58,6 +58,19 @@ public class MainProduct extends AppCompatActivity implements
             return frags.length;
         }
 
+        @Override
+        public CharSequence getPageTitle(int position) {
+
+            switch (position) {
+                case 0:
+                    return "전체 상품";
+                case 1:
+                    return "브랜드";
+                case 2:
+                    return "상품권";
+            }
+            return null;
+        }
     }
 
     @Override

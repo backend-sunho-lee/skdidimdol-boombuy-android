@@ -3,7 +3,6 @@ package com.taca.boombuy.ui.sign;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -43,43 +42,43 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
 
+        // READ_PHONE_STATE 퍼미션
+        request_READ_PHONE_STATE_permission();
+
         // 이벤트 받을 녀석(회원가입 완료 메시지)
         OttoBus.getInstance().getLogin_Bus().register(this);
 
         et_signin_id = (EditText) findViewById(R.id.et_signin_id);
         et_signin_password = (EditText) findViewById(R.id.et_signin_password);
 
-        // 자동로그인 후
-
-        Log.i("FLAG ", StorageHelper.getInstance().getBoolean(this, "auto_login") + "");
+        // 자동로그인 후(sharedpreference에 저장)
         if (StorageHelper.getInstance().getBoolean(LoginActivity.this, "auto_login")) {
             et_signin_id.setText(StorageHelper.getInstance().getString(LoginActivity.this, "my_phone_number"));
             et_signin_password.setText(StorageHelper.getInstance().getString(LoginActivity.this, "auto_login_password"));
 
-
+            // 서버에 로그인 시도
             LoginDTO loginDTO = new LoginDTO(
                     StorageHelper.getInstance().getString(LoginActivity.this, "my_phone_number"),
                     StorageHelper.getInstance().getString(LoginActivity.this, "auto_login_password")
             );
 
             Call<ResBasic> NetLogin = NetSSL.getInstance().getMemberImpFactory().NetLogin(loginDTO);
-
             NetLogin.enqueue(new Callback<ResBasic>() {
                 @Override
                 public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
 
                     Log.i("LOG RESPONSE", response.message().toString());
 
-                    if(response.isSuccessful() ){
-                        if(response.body() != null && response.body().getMessage() != null){
+                    if (response.isSuccessful()) {
+                        if (response.body() != null && response.body().getMessage() != null) {
                             Log.i("RES SUC", response.body().getMessage());
                             OttoBus.getInstance().getLogin_Bus().post(response.body());
-                        }else{
-                            Log.i("RF","로그인실패:"+response.message());
+                        } else {
+                            Log.i("RF", "로그인실패:" + response.message());
                         }
-                    }else{
+                    } else {
 
-                        Log.i("RF","로그인실패11:"+response.message());
+                        Log.i("RF", "로그인실패11:" + response.message());
                     }
                 }
 
@@ -104,6 +103,7 @@ public class LoginActivity extends AppCompatActivity {
 
                 //NetworkTEST.getInstance().bb_Login(getApplicationContext(), Single_Value.getInstance().lonInModel);
 
+                // 서버 로그인 시도
                 LoginDTO loginDTO = new LoginDTO(
                         et_signin_id.getText().toString(),
                         et_signin_password.getText().toString()
@@ -116,16 +116,16 @@ public class LoginActivity extends AppCompatActivity {
 
                         Log.i("LOG RESPONSE", response.message().toString());
 
-                        if(response.isSuccessful() ){
-                            if(response.body() != null && response.body().getMessage() != null){
+                        if (response.isSuccessful()) {
+                            if (response.body() != null && response.body().getMessage() != null) {
                                 Log.i("RES SUC", response.body().getMessage());
                                 OttoBus.getInstance().getLogin_Bus().post(response.body());
-                            }else{
-                                Log.i("RF","로그인실패:"+response.message());
+                            } else {
+                                Log.i("RF", "로그인실패:" + response.message());
                             }
-                        }else{
+                        } else {
 
-                            Log.i("RF","로그인실패11:"+response.message());
+                            Log.i("RF", "로그인실패11:" + response.message());
                         }
                     }
 
@@ -145,22 +145,16 @@ public class LoginActivity extends AppCompatActivity {
         btn_signup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    request_READ_PHONE_STATE_permission();
-                } else {
-                    // my_phone_number 쉐어드프리퍼런스에 내 전화번호 저장
-                    StorageHelper.getInstance().setString(LoginActivity.this, "my_phone_number", U.getInstance().getMyPhoneNum(LoginActivity.this));
-                    Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                    startActivity(intent);
-                }
+                // my_phone_number 쉐어드프리퍼런스에 내 전화번호 저장
+                StorageHelper.getInstance().setString(LoginActivity.this, "my_phone_number", U.getInstance().getMyPhoneNum(LoginActivity.this));
+                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
+                startActivity(intent);
             }
         });
     }
 
     // 오토버스 이벤트 도착
-
     ResBasic resBasic;
-
     @Subscribe
     public void FinishLoad(ResBasic data) {
 
@@ -181,19 +175,6 @@ public class LoginActivity extends AppCompatActivity {
         } else {
             Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
         }
-
-        /*if (data.contains("성공")) {
-            StorageHelper.getInstance().setBoolean(LoginActivity.this, "auto_login", true);
-            StorageHelper.getInstance().setString(LoginActivity.this, "auto_login_password", et_signin_password.getText().toString());
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            // 오토버스 썼으면 등록해제
-            OTTOBusTEST.getInstance().getSign_in_bus().unregister(this);
-            startActivity(intent);
-            finish();
-        } else {
-            Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
-        }*/
     }
 
     @Override
@@ -204,8 +185,6 @@ public class LoginActivity extends AppCompatActivity {
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // my_phone_number 쉐어드프리퍼런스에 내 전화번호 저장
                     StorageHelper.getInstance().setString(LoginActivity.this, "my_phone_number", U.getInstance().getMyPhoneNum(LoginActivity.this));
-                    Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                    startActivity(intent);
                 } else {
                     // 사용자가 권한 동의를 안하므로 종료
                     finish();

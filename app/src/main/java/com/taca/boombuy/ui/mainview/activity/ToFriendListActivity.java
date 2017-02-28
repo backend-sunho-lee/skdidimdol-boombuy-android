@@ -24,8 +24,9 @@ import com.taca.boombuy.Resmodel.ResFriendList;
 import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.networkmodel.ResFriendDTO;
 import com.taca.boombuy.util.ImageProc;
-import com.taca.boombuy.util.U;
 import com.taca.boombuy.vo.VO_to_friend_info;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -46,8 +47,10 @@ public class ToFriendListActivity extends AppCompatActivity {
     //뷰 홀더
     ViewHolder holder;
 
-
     ResFriendList resFriendList;
+
+    ArrayList<ResFriendDTO> auto_resFriendDTOArrayList = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +72,8 @@ public class ToFriendListActivity extends AppCompatActivity {
 
                         resFriendList = response.body();
                         Log.i("나와바", resFriendList.toString());
-
+                        auto_resFriendDTOArrayList.clear();
+                        auto_resFriendDTOArrayList.addAll(resFriendList.getResult());
                         lv_to_friend_local_list.setAdapter(toFriendLocalListAdapter);
 
                     } else {
@@ -86,8 +90,6 @@ public class ToFriendListActivity extends AppCompatActivity {
 
             }
         });
-
-
 
         et_search_to_friend_name = (EditText) findViewById(R.id.et_search_to_friend_name);
         et_search_to_friend_name.addTextChangedListener(new TextWatcher() {
@@ -112,8 +114,9 @@ public class ToFriendListActivity extends AppCompatActivity {
 
     // 전화번호부에서 특정 키워드를 포함하는 리스트를 다시 불러와서 뿌려줌
     public void refreshList() {
-        Single_Value.getInstance().vo_to_friend_local_lists.clear();
-        U.getInstance().getPhoneNumber(this, et_search_to_friend_name.getText().toString());
+        auto_resFriendDTOArrayList.clear();
+        addAutoComplete(et_search_to_friend_name.getText().toString());
+        lv_to_friend_local_list.setAdapter(toFriendLocalListAdapter);
 
         //        toFriendLocalListAdapter = new ToFriendLocalListAdapter();
         //lv_to_friend_local_list.setAdapter(toFriendLocalListAdapter);
@@ -131,8 +134,8 @@ public class ToFriendListActivity extends AppCompatActivity {
             Single_Value.getInstance().vo_to_friend_infos.clear();
 
             Single_Value.getInstance().vo_to_friend_info = new VO_to_friend_info(
-                    resFriendList.getResult().get(pos).getName() ,
-                    resFriendList.getResult().get(pos).getPhone()
+                    auto_resFriendDTOArrayList.get(pos).getName(),
+                    auto_resFriendDTOArrayList.get(pos).getPhone()
             );
 
             Single_Value.getInstance().vo_to_friend_infos.add(Single_Value.getInstance().vo_to_friend_info);
@@ -140,8 +143,6 @@ public class ToFriendListActivity extends AppCompatActivity {
             finish();
         }
     };
-
-
 
     /*
      * 받는 사람 전화번호부 리스트뷰 설정----------------------------------------------------------------------------------------------
@@ -169,13 +170,13 @@ public class ToFriendListActivity extends AppCompatActivity {
         @Override
         public int getCount() {
 
-            return resFriendList.getResult().size();
+            return auto_resFriendDTOArrayList.size();
         }
 
         // cell에 대응되는 1개의 데이터를 획득하는 메소드
         @Override
         public ResFriendDTO getItem(int position) {
-            return resFriendList.getResult().get(position);
+            return auto_resFriendDTOArrayList.get(position);
         }
 
         // 아이템의 아이디, 잘 사용안함!!
@@ -214,6 +215,20 @@ public class ToFriendListActivity extends AppCompatActivity {
             holder.tv_to_friend_local_number.setText(getItem(position).getPhone());
 
             return convertView;
+        }
+    }
+
+    public void addAutoComplete(String keyword) {
+        for (int i = 0; i < resFriendList.getResult().size(); i++) {
+            if ((resFriendList.getResult().get(i).getName()).contains(keyword)) {
+                ResFriendDTO resFriendDTO = new ResFriendDTO(
+                        resFriendList.getResult().get(i).getUid(),
+                        resFriendList.getResult().get(i).getPhone(),
+                        resFriendList.getResult().get(i).getName(),
+                        resFriendList.getResult().get(i).getLocation()
+                );
+                auto_resFriendDTOArrayList.add(resFriendDTO);
+            }
         }
     }
 

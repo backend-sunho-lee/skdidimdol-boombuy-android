@@ -1,11 +1,15 @@
 package com.taca.boombuy.ui.mainview.activity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -124,6 +128,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         navigationView.setNavigationItemSelectedListener(this);
         ///////////////////////////////////////////////////////////////////////////////////////////////
 
+        // 전화번호부 동기화를 위한 권한
+        request_read_contacts();
 
         // 헤더 푸터 뷰
         /*header_content_main = getLayoutInflater().inflate(R.layout.header_content_main, null);
@@ -632,5 +638,37 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case 1: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    request_read_contacts();
+                } else {
+                    // 사용자가 권한 동의를 안하므로 종료
+                    finish();
+                }
+            }
+        }
+    }
+
+    public void request_read_contacts() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            //권한이 없을 경우
+
+            //최초 권한 요청인지 혹은 사용자에 의한 재요청인지 확인
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_CONTACTS)) {
+                //사용자가 임의로 권한을 취소시킨 경우
+                //권한 재요청
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, 1);
+            } else {
+                //최초로 권한을 요청하는 경우(첫실행)
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, 1);
+            }
+        } else {
+        }
+
+    }
 
 }

@@ -169,7 +169,7 @@ public class totalfrag extends Fragment {
 
             holder.lv_pname.setText(getItem(position).getName());
             // pcontent
-            holder.lv_pprice.setText(getItem(position).getPrice()+"");
+            holder.lv_pprice.setText(getItem(position).getPrice()+"원");
 
             holder.lv_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override

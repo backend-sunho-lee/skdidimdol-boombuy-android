@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.taca.boombuy.R;
+import com.taca.boombuy.evt.OttoBus;
 import com.taca.boombuy.ui.mainview.fragment.brandBaseFrag;
 import com.taca.boombuy.ui.mainview.fragment.brandfrag;
 import com.taca.boombuy.ui.mainview.fragment.couponfrag;
@@ -79,5 +80,12 @@ public class MainProduct extends AppCompatActivity implements
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        OttoBus.getInstance().getSearchBrandItem_Bus().unregister(this);
     }
 }

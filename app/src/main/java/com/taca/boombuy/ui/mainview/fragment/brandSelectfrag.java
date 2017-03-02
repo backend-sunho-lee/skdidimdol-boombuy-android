@@ -3,9 +3,12 @@ package com.taca.boombuy.ui.mainview.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,6 +43,10 @@ public class brandSelectfrag extends Fragment {
     }
     ResItems resItems;
 
+    RecyclerView selectedbrand_recyclerview;
+    RecyclerAdapter recyclerAdapter;
+
+    GridLayoutManager gridLayoutManager;
     int bid =0;
 
     @Override
@@ -55,9 +62,32 @@ public class brandSelectfrag extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_selectbrandsitem, container, false);
 
+        selectedbrand_recyclerview = (RecyclerView) view.findViewById(R.id.selectedbrand_recyclerview);
+
+
+        recyclerAdapter = new RecyclerAdapter();
+
+        gridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
+        gridLayoutManager.setOrientation(OrientationHelper.VERTICAL);
+
+        selectedbrand_recyclerview.setLayoutManager(gridLayoutManager);
+
+
+        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                //getActivity().finish();
+            }
+        });
+
+
         Bundle bundle= getArguments();
 
+        Log.i("선택된 프레그먼트 ", bid+"제발");
         bid = bundle.getInt("bid");
+
         Log.i("브랜드번호 : " ,  bid +"");
 
         Call<ResItems> NetSearchBrandItem = NetSSL.getInstance().getMemberImpFactory().NetSearchBrandItem(bid);
@@ -70,6 +100,8 @@ public class brandSelectfrag extends Fragment {
                     if(response.body() != null && response.body().getResult() != null){
 
                         OttoBus.getInstance().getSearchBrandItem_Bus().post(response.body());
+
+                        Log.i("DATA", response.body().toString());
 
                     }else{
 
@@ -96,14 +128,15 @@ public class brandSelectfrag extends Fragment {
     @Subscribe
     public void FinishLoad(ResItems data){
         resItems = data;
-
+        selectedbrand_recyclerview.setNestedScrollingEnabled(false);
+        selectedbrand_recyclerview.setAdapter(recyclerAdapter);
     }
 
     class RecyclerViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.lv_checkbox)
         CheckBox lv_checkbox;
-        @BindView(R.id.imageView)
+        @BindView(R.id.lv_imageview)
         ImageView lv_imageview;
         @BindView(R.id.lv_pname)
         TextView lv_pname;
@@ -123,7 +156,7 @@ public class brandSelectfrag extends Fragment {
 
         @Override
         public int getItemCount() {
-            return 0;
+            return resItems.getResult().size();
         }
 
         @Override
@@ -147,7 +180,7 @@ public class brandSelectfrag extends Fragment {
             });
 
             holder.lv_pname.setText(resItems.getResult().get(position).getName());
-            holder.lv_pprice.setText(resItems.getResult().get(position).getPrice());
+            holder.lv_pprice.setText(resItems.getResult().get(position).getPrice()+"원");
 
 
         }

@@ -86,6 +86,11 @@ public class MainProduct extends AppCompatActivity implements
     protected void onDestroy() {
         super.onDestroy();
 
+        OttoBus.getInstance().getSearchItems_Bus().unregister(this);
+
+        OttoBus.getInstance().getSearchBrands_Bus().unregister(this);
         OttoBus.getInstance().getSearchBrandItem_Bus().unregister(this);
+
+        OttoBus.getInstance().getSearchCoupons_Bus().unregister(this);
     }
 }

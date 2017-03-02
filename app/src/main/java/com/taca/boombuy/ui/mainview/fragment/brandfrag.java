@@ -153,13 +153,9 @@ public class brandfrag extends Fragment {
 
                     Fragment brandSelectfrag = new brandSelectfrag();
                     Bundle bundle = new Bundle();
-
-
                     bundle.putInt("bid", getItem(position).getBid());
-
                     Log.i("bid brandfrag : ", getItem(position).getBid() + "");
                     brandSelectfrag.setArguments(bundle);
-
 
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
@@ -187,6 +183,7 @@ public class brandfrag extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OttoBus.getInstance().getSearchItems_Bus().register(this);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -227,6 +224,6 @@ public class brandfrag extends Fragment {
         resSearchBrands = data;
         gridView.setAdapter(myAdapter);
         ((brandfrag.GridViewAdapter) gridView.getAdapter()).notifyDataSetChanged();
-        OttoBus.getInstance().getSearchBrands_Bus().unregister(this);
+
     }
 }

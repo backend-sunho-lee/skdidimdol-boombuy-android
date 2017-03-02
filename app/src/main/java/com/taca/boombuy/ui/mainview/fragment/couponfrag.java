@@ -61,6 +61,8 @@ public class couponfrag extends Fragment {
     boolean ottoflag = false;
 
     ResItems resItems;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -95,10 +97,9 @@ public class couponfrag extends Fragment {
             }
         });
 
-        if(!ottoflag){
-            OttoBus.getInstance().getSearchCoupons_Bus().register(this);
-            ottoflag = true;
-        }
+
+
+
 
         listview = (ListView) view.findViewById(R.id.listview);
 
@@ -201,7 +202,7 @@ public class couponfrag extends Fragment {
         resItems = data;
         listview.setAdapter(couponAdapter);
         ((couponfrag.CouponListViewAdapter)listview.getAdapter()).notifyDataSetChanged();
-        OttoBus.getInstance().getSearchCoupons_Bus().unregister(this);
+
     }
 
     public couponfrag() {
@@ -219,6 +220,8 @@ public class couponfrag extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        OttoBus.getInstance().getSearchCoupons_Bus().register(this);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);

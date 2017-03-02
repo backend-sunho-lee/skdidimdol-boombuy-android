@@ -54,7 +54,10 @@ public class brandSelectfrag extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_selectbrandsitem, container, false);
-        bid = getArguments().getInt("bid");
+
+        Bundle bundle= getArguments();
+
+        bid = bundle.getInt("bid");
         Log.i("브랜드번호 : " ,  bid +"");
 
         Call<ResItems> NetSearchBrandItem = NetSSL.getInstance().getMemberImpFactory().NetSearchBrandItem(bid);

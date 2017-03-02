@@ -85,7 +85,7 @@ public interface MemberImpFactory {
     @GET("/friends")
     Call<ResFriendList> NetSearchFriendList();
 
-    // 주문 정보 전송
+        // 주문 정보 전송
     @POST("/orders")
     Call<ResBasic> NetOrders(@Body GiftDTO giftDTO);
 

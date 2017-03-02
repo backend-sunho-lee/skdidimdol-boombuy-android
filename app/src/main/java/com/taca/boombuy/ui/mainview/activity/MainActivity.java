@@ -84,10 +84,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
 
-    // 헤더 푸터 뷰
-    //View header_content_main, footer_content_main;
-
-
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // 상품 선택 리싸이클 뷰
     RecyclerView recyclerview;
@@ -133,11 +129,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // 전화번호부 동기화를 위한 권한
         request_read_contacts();
 
-        // 헤더 푸터 뷰
-        /*header_content_main = getLayoutInflater().inflate(R.layout.header_content_main, null);
-        footer_content_main = getLayoutInflater().inflate(footer_content_main, null);*/
-
-
         // 상품 추가버튼 부분 //////////////////////////////////////////////////////////////////////////
         recyclerview = (RecyclerView) findViewById(R.id.recyclerview);
         linearLayoutManager = new LinearLayoutManager(this);
@@ -156,10 +147,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         rv_from_name_list.setLayoutManager(SenderLinearLayoutManager);
         rv_from_name_list.setAdapter(fromRecycleAdapter);
 
-        /*
-        rv_from_name_list.addHeaderView(header_content_main);
-        rv_from_name_list.addFooterView(footer_content_main);*/
-
 
         ///////////////////////////////////////////////////////////////////////////////////////////////
         tv_to_friend_name = (TextView) findViewById(R.id.tv_to_friend_name);
@@ -174,6 +161,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
         // 토큰 다르면 업데이트 ///////////////////////////////////////////////////////////////////////
+        updateToken();
+        ///////////////////////////////////////////////////////////////////////////////////////////////
+
+        // 내 프로필 가져오기//////////////////////////////////////////////////////////////////////////////
+        getProfile();
+
+
+    }
+
+    // 토큰 다르면 업데이트 ///////////////////////////////////////////////////////////////////////
+    public void updateToken() {
         String token = FirebaseInstanceId.getInstance().getToken();
         Log.i("토큰 확인 : ", token);
         if (!(StorageHelper.getInstance().getString(MainActivity.this, "my_token").equals(token))) {
@@ -201,8 +199,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             });
         }
-        ///////////////////////////////////////////////////////////////////////////////////////////////
+    }
 
+    public void getProfile() {
         // 내 프로필 가져오기//////////////////////////////////////////////////////////////////////////////
         Call<ResMyProfile> NetMyProfile = NetSSL.getInstance().getMemberImpFactory().NetMyProfile();
         NetMyProfile.enqueue(new Callback<ResMyProfile>() {
@@ -235,7 +234,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             }
         });
-
     }
 
     public void onGoHome(View view) {
@@ -538,9 +536,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     // 네비게이션의 프로필 이미지를 눌렀을 때 앨범으로 이동
     public void onChangeProfile(View view) {
         iv_profile = (CircleImageView) findViewById(R.id.iv_profile);
-        //iv_profile.setImageResource(R.drawable.img_splash);
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-        photoPickerIntent.setType("image/*");
+        photoPickerIntent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         //requestCode 100
         startActivityForResult(photoPickerIntent, 100);
     }
@@ -555,11 +552,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (resultCode == RESULT_OK) {
                     try {
                         Uri selectedImage = imageReturnedIntent.getData();
-                        Log.i("파일 경로?? : ", getPath(selectedImage) + "");
+                        Log.i("파일 경로 : ", getPath(selectedImage) + "");
                         onFileUpload(getPath(selectedImage));
-                        /*InputStream imageStream = getContentResolver().openInputStream(selectedImage);
-                        Bitmap bitmapSelectedImage = BitmapFactory.decodeStream(imageStream);
-                        iv_profile.setImageBitmap(bitmapSelectedImage);*/
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -577,23 +571,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void onFileUpload(String path) {
         File file = new File(path); // 이미지파일주소는 확인됨
-        //Log.i("RF", file.getAbsolutePath() + "++" + file.canRead());
         Map<String, RequestBody> map = new HashMap<>();
-        map.put("user_id", RequestBody.create(MediaType.parse("multipart/form-data"), "jimin"));
         //RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
         RequestBody fileBody = RequestBody.create(MediaType.parse("multipart/form-data"), file);
-        map.put("url_upload\"; filename=\"photos.jpg\"", fileBody);
-
+        map.put("photos\"; filename=\"a.jpg\"", fileBody);
         Call<ResBasic> NetChangeImage = NetSSL.getInstance().getMemberImpFactory().NetChangeImage(map);
         NetChangeImage.enqueue(new Callback<ResBasic>() {
             @Override
             public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
                 if (response.isSuccessful()) {
-                    if (response.body() != null && response.body().getMessage() != null) {
-                        Log.i("Result : ", response.body().getMessage());
-                    } else {
-                        Log.i("RESPONSE RESULT 1: ", response.message());
-                    }
+                    Log.i("Result : ", "성공");
+                    getProfile();
                 } else {
 
                     Log.i("RESPONSE RESULT 2 : ", response.message());
@@ -602,6 +590,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
             @Override
             public void onFailure(Call<ResBasic> call, Throwable t) {
+                Log.i("RESPONSE RESULT 3 : ", t.getMessage());
             }
         });
     }
@@ -754,6 +743,14 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     finish();
                 }
             }
+            case 2: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    request_read_external_storage();
+                } else {
+                    // 사용자가 권한 동의를 안하므로 종료
+                    finish();
+                }
+            }
         }
     }
 
@@ -772,7 +769,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
         } else {
         }
-
     }
 
+    public void request_read_external_storage() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            //권한이 없을 경우
+
+            //최초 권한 요청인지 혹은 사용자에 의한 재요청인지 확인
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                //사용자가 임의로 권한을 취소시킨 경우
+                //권한 재요청
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 2);
+            } else {
+                //최초로 권한을 요청하는 경우(첫실행)
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, 2);
+            }
+        } else {
+        }
+    }
 }

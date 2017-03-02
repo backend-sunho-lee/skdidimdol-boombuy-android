@@ -9,6 +9,9 @@
     <!-- 주소록 읽기 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"

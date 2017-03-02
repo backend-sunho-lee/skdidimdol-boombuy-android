@@ -133,6 +133,8 @@ public class brandfrag extends Fragment {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             //
+            Log.i("BRAND ITEMS : " , getItem(position).toString());
+
             ViewHolder holder;
             if( convertView == null) {
                 convertView = inflater.inflate(R.layout.cell_grid_layout, parent, false);
@@ -142,6 +144,8 @@ public class brandfrag extends Fragment {
                 holder = (ViewHolder)convertView.getTag();
             }
             ImageProc.getInstance().drawImage(getItem(position).getLocation(), holder.brandimg);
+
+
 
             convertView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -159,11 +163,8 @@ public class brandfrag extends Fragment {
 
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
                     fragmentTransaction.replace(R.id.container_Frag, brandSelectfrag);
-
                     fragmentTransaction.addToBackStack(null);
-
                     fragmentTransaction.commit();
                 }
             });
@@ -172,9 +173,6 @@ public class brandfrag extends Fragment {
     }
 
 
-    public void test(){
-
-    }
     //// 기본 fragment 생성 틀
 
     public static brandfrag newInstance(String param1, String param2) {

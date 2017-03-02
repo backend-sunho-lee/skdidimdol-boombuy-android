@@ -149,7 +149,11 @@ public class brandfrag extends Fragment {
 
                     Fragment brandSelectfrag = new brandSelectfrag();
                     Bundle bundle = new Bundle();
+
+
                     bundle.putInt("bid", getItem(position).getBid());
+
+                    Log.i("bid brandfrag : ", getItem(position).getBid() + "");
                     brandSelectfrag.setArguments(bundle);
 
 

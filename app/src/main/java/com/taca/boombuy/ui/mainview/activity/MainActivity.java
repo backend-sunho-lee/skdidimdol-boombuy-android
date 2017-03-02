@@ -202,6 +202,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void getProfile() {
+
+        final View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.nav_header_main, null);
         // 내 프로필 가져오기//////////////////////////////////////////////////////////////////////////////
         Call<ResMyProfile> NetMyProfile = NetSSL.getInstance().getMemberImpFactory().NetMyProfile();
         NetMyProfile.enqueue(new Callback<ResMyProfile>() {
@@ -216,6 +218,17 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
                         // 드로어 내 이미지 설정
                         iv_profile = (CircleImageView) findViewById(R.id.iv_profile);
+
+
+                        // 네비게이션 프로필 사진 누르면 갤러리로 이동
+                        iv_profile.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                onChangeProfile();
+                            }
+                        });
+                        //
+
                         ImageProc.getInstance().drawImage(response.body().getResult().getLocation(), iv_profile);
 
                         // 선물하는 사람들 목록 내 이미지 설정
@@ -534,8 +547,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     // 네비게이션 프로필 사진 변경 작업 //////////////////////////////////////////////////////
     // 네비게이션의 프로필 이미지를 눌렀을 때 앨범으로 이동
-    public void onChangeProfile(View view) {
-        iv_profile = (CircleImageView) findViewById(R.id.iv_profile);
+    public void onChangeProfile() {
+
+        //iv_profile = (CircleImageView) findViewById(R.id.iv_profile);
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType(MediaStore.Images.Media.CONTENT_TYPE);
         //requestCode 100

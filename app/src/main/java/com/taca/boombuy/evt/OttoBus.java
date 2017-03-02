@@ -43,6 +43,7 @@ public class OttoBus {
     Bus SendContacts_Bus = new Bus();
 
 
+
     // temp
     Bus FriendList_Bus = new Bus();
 

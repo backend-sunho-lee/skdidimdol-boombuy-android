@@ -202,8 +202,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     }
 
     public void getProfile() {
-
-        final View view = LayoutInflater.from(getApplicationContext()).inflate(R.layout.nav_header_main, null);
         // 내 프로필 가져오기//////////////////////////////////////////////////////////////////////////////
         Call<ResMyProfile> NetMyProfile = NetSSL.getInstance().getMemberImpFactory().NetMyProfile();
         NetMyProfile.enqueue(new Callback<ResMyProfile>() {

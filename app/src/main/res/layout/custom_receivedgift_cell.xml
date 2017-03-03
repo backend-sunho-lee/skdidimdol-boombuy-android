@@ -1,135 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="145dp"
-    android:layout_marginLeft="8dp"
-    android:layout_marginRight="8dp"
-    android:layout_marginTop="8dp"
-    android:background="@drawable/my_custom_inner_layout_border"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/insertWindowColor"
     android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/received_gift_cell_tv_date"
-        android:text="2017 02 11"
-        android:textColor="@color/letterColor"
-        android:textSize="16.3sp"
-        android:layout_marginTop="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_weight="0"
-        android:layout_width="match_parent"
-        android:layout_height="20dp" />
 
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/receivedfrag_linearlayout"
+        android:orientation="vertical"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
+
+        android:background="@drawable/my_custom_inner_layout_border"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:gravity="center"
-            android:orientation="horizontal"
+        <TextView
+            android:id="@+id/received_gift_cell_tv_date"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="0"
+            android:text="2017 02 11"
+            android:textColor="@color/letterColor"
+            android:textSize="16.3sp" />
+
+        <FrameLayout
+
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <LinearLayout
+                android:layout_marginLeft="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:gravity="center"
-                android:layout_gravity="center"
-                android:orientation="vertical"
-                android:layout_width="85dp"
-                android:layout_height="120dp">
+                android:orientation="horizontal">
 
-                <FrameLayout
-                    android:layout_width="70dp"
-                    android:layout_height="70dp">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/received_gift_cell_sendMemberProfile"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="4dp"
-                        android:background="@drawable/img_basic_profile"
-                        app:civ_border_color="@color/boderColor"
-                        app:civ_border_width="0.5dp" />
-
-                    <ImageView
-                        android:id="@+id/received_gift_cell_senders_count"
-                        android:background="@drawable/ic_1"
-                        android:layout_marginTop="-5dp"
-                        android:layout_marginLeft="40dp"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp" />
-
-                </FrameLayout>
-
-                <TextView
-                    android:id="@+id/gift_Senders"
-                    android:textColor="@color/letterColor"
-                    android:text="누구아"
-                    android:textSize="13sp"
+                <LinearLayout
+                    android:layout_width="85dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:layout_width="80dp"
-                    android:layout_height="20dp" />
+                    android:orientation="vertical">
 
-                <!--<TextView
-                    android:id="@id/senders"
+                    <FrameLayout
+                        android:layout_width="70dp"
+                        android:layout_height="70dp">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/received_gift_cell_sendMemberProfile"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="4dp"
+
+                            app:civ_border_color="@color/boderColor"
+                            app:civ_border_width="0.5dp" />
+
+                        <ImageView
+                            android:id="@+id/received_gift_cell_senders_count"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_marginLeft="40dp"
+                            android:layout_marginTop="-5dp"
+                            android:background="@drawable/ic_1" />
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/gift_Senders"
+                        android:layout_width="80dp"
+                        android:layout_height="20dp"
+                        android:gravity="center"
+                        android:text="누구아"
+                        android:textColor="@color/letterColor"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="32dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginRight="25dp"
+                    android:background="@drawable/ic_right_color_33dp" />
+
+                <LinearLayout
+                    android:layout_width="85dp"
+                    android:layout_height="120dp"
+                    android:layout_gravity="center"
                     android:gravity="center"
-                    android:textSize="13sp"
-                    android:text="라라라 외 1명"
-                    android:textColor="@color/letterColor"
-                    android:layout_width="80dp"
-                    android:layout_height="20dp" />-->
+                    android:orientation="vertical">
+
+                    <FrameLayout
+                        android:layout_width="70dp"
+                        android:layout_height="70dp">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/received_gift_cell_receivedMemberProfile"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_margin="4dp"
+
+                            app:civ_border_color="@color/boderColor"
+                            app:civ_border_width="0.5dp" />
+
+                    </FrameLayout>
+
+                    <TextView
+                        android:id="@+id/gift_receivedPerson"
+                        android:layout_width="80dp"
+                        android:layout_height="20dp"
+                        android:gravity="center"
+                        android:text="라라라 외 1명"
+                        android:textColor="@color/letterColor"
+                        android:textSize="13sp" />
+
+                </LinearLayout>
 
             </LinearLayout>
 
             <ImageView
-                android:layout_marginRight="25dp"
-                android:layout_marginLeft="25dp"
-                android:layout_gravity="center"
-                android:background="@drawable/ic_right_color_33dp"
-                android:layout_width="32dp"
-                android:layout_height="35dp" />
+                android:id="@+id/received_gift_cell_PayState"
+                android:layout_width="72dp"
+                android:layout_height="40dp"
+                android:layout_marginLeft="2dp"
+                android:layout_marginTop="-3dp"
+                android:background="@drawable/ic_progress" />
+        </FrameLayout>
 
-            <LinearLayout
-                android:gravity="center"
-                android:layout_gravity="center"
-                android:orientation="vertical"
-                android:layout_width="85dp"
-                android:layout_height="120dp">
-
-                <FrameLayout
-                    android:layout_width="70dp"
-                    android:layout_height="70dp">
-
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/received_gift_cell_receivedMemberProfile"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_margin="4dp"
-                        android:background="@drawable/img_basic_profile"
-                        app:civ_border_color="@color/boderColor"
-                        app:civ_border_width="0.5dp" />
-
-                </FrameLayout>
-
-                <TextView
-                    android:id="@+id/gift_receivedPerson"
-                    android:gravity="center"
-                    android:textSize="13sp"
-                    android:text="라라라 외 1명"
-                    android:textColor="@color/letterColor"
-                    android:layout_width="80dp"
-                    android:layout_height="20dp"
-                     />
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <ImageView
-            android:id="@+id/received_gift_cell_PayState"
-            android:background="@drawable/ic_progress"
-            android:layout_marginTop="-3dp"
-            android:layout_marginLeft="2dp"
-            android:layout_width="75dp"
-            android:layout_height="40dp" />
-    </FrameLayout>
+    </LinearLayout>
 </LinearLayout>

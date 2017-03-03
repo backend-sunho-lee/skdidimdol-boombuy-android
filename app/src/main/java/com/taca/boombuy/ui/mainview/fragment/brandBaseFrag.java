@@ -21,6 +21,7 @@ import com.taca.boombuy.R;
  * create an instance of this fragment.
  */
 public class brandBaseFrag extends Fragment {
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -70,6 +71,14 @@ public class brandBaseFrag extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_brand_base, container, false);
 
+        onBackPressed();
+
+
+        return view;
+    }
+
+    public void onBackPressed() {
+        // brandfrag 이동
         Fragment brandfrag = new brandfrag();
         Bundle bundle = new Bundle();
         bundle.putInt("bid", 1);
@@ -83,9 +92,6 @@ public class brandBaseFrag extends Fragment {
         //fragmentTransaction.addToBackStack(null);
 
         fragmentTransaction.commit();
-
-
-        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event

@@ -21,6 +21,7 @@ import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResSearchBrands;
 import com.taca.boombuy.evt.OttoBus;
 import com.taca.boombuy.networkmodel.BrandDTO;
+import com.taca.boombuy.ui.mainview.activity.MainProduct;
 import com.taca.boombuy.util.ImageProc;
 
 import butterknife.BindView;
@@ -159,9 +160,9 @@ public class brandfrag extends Fragment {
 
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.container_Frag, brandSelectfrag);
-                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.replace(R.id.container_Frag, brandSelectfrag, "brandfrag");
                     fragmentTransaction.commit();
+                    ((MainProduct)getActivity()).secondMenuDepth=1;
                 }
             });
             return convertView;
@@ -208,7 +209,7 @@ public class brandfrag extends Fragment {
     }
 
 
-@Override
+    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
@@ -225,5 +226,9 @@ public class brandfrag extends Fragment {
         gridView.setAdapter(myAdapter);
         ((brandfrag.GridViewAdapter) gridView.getAdapter()).notifyDataSetChanged();
 
+    }
+
+    public void onBackPressed() {
+        // 액티비를 닫음
     }
 }

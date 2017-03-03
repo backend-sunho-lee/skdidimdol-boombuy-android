@@ -10,6 +10,7 @@ import com.taca.boombuy.Resmodel.ResMyProfile;
 import com.taca.boombuy.Resmodel.ResSearchBrands;
 import com.taca.boombuy.networkmodel.GiftDTO;
 import com.taca.boombuy.networkmodel.LoginDTO;
+import com.taca.boombuy.networkmodel.ResSimpleSendOrders;
 import com.taca.boombuy.networkmodel.SignUpDTO;
 
 import java.util.Map;
@@ -92,4 +93,11 @@ public interface MemberImpFactory {
     @Multipart
     @PUT("/users/me")
     Call<ResBasic> NetChangeImage(@PartMap Map<String, RequestBody> params);
+
+    //보낸선물목록 조회
+    @GET("/orders/sendlist")
+    Call<ResSimpleSendOrders> NetSimpleSendOrders();
+
+
+
 }

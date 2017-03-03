@@ -37,8 +37,6 @@ import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.Resmodel.ResMyProfile;
 import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.database.StorageHelper;
-import com.taca.boombuy.networkmodel.GiftDTO;
-import com.taca.boombuy.networkmodel.GiftSenderDTO;
 import com.taca.boombuy.singleton.item_single;
 import com.taca.boombuy.util.ImageProc;
 import com.taca.boombuy.util.U;
@@ -46,7 +44,6 @@ import com.taca.boombuy.vo.VO_Gift_Total_SendernReceiver;
 import com.taca.boombuy.vo.VO_from_friends_info;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -260,7 +257,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onMovePaymentActivity(View view) {
 
 
-        ArrayList<Integer> cartNums = new ArrayList<>();
+        /*ArrayList<Integer> cartNums = new ArrayList<>();
         for (int i = 0; i < item_single.getInstance().itemDTOArrayList.size() - 1; i++) {
             cartNums.add(item_single.getInstance().itemDTOArrayList.get(i).getId());
         }
@@ -297,14 +294,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             @Override
             public void onFailure(Call<ResBasic> call, Throwable t) {
             }
-        });
+        });*/
 
 
-/*
         Intent intent = new Intent(MainActivity.this, GiftManageActivity.class);
         startActivity(intent);
         finish();
-*/
     }
 
     public void onAdd(View view) {

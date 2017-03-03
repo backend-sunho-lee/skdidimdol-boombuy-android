@@ -232,9 +232,8 @@ public class totalfrag extends Fragment {
     @Subscribe
     public void FinishLoad(ResItems data){
         resItems = data;
+
         listView.setAdapter(listAdapter);
         ((totalfrag.CustomListAdapter)listView.getAdapter()).notifyDataSetChanged();
-
-
     }
 }

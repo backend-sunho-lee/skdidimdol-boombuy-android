@@ -31,7 +31,6 @@ SentGift.OnFragmentInteractionListener{
     ViewPager mViewPager;
     TabLayout tabLayout;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

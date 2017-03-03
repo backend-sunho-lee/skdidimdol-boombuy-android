@@ -1,6 +1,7 @@
 package com.taca.boombuy.ui.mainview.fragment;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -25,6 +26,8 @@ import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResItems;
 import com.taca.boombuy.evt.OttoBus;
+import com.taca.boombuy.networkmodel.ItemDTO;
+import com.taca.boombuy.ui.mainview.activity.GiftSelectDetailInfoActivity;
 import com.taca.boombuy.util.ImageProc;
 
 import butterknife.BindView;
@@ -49,6 +52,14 @@ public class brandSelectfrag extends Fragment {
     GridLayoutManager gridLayoutManager;
     int bid =0;
 
+    //////
+
+    FragmentManager fragmentManager;
+    FragmentTransaction fragmentTransaction;
+    //////
+
+
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,8 +74,6 @@ public class brandSelectfrag extends Fragment {
         View view = inflater.inflate(R.layout.fragment_selectbrandsitem, container, false);
 
         selectedbrand_recyclerview = (RecyclerView) view.findViewById(R.id.selectedbrand_recyclerview);
-
-
         recyclerAdapter = new RecyclerAdapter();
 
         gridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
@@ -77,11 +86,14 @@ public class brandSelectfrag extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 //getActivity().finish();
+
+                //onBackPressed();
+
             }
         });
 
+        //fragmentTransaction.commit();
 
         Bundle bundle= getArguments();
 
@@ -151,6 +163,7 @@ public class brandSelectfrag extends Fragment {
         }
     }
 
+
     class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
 
 
@@ -167,7 +180,7 @@ public class brandSelectfrag extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(RecyclerViewHolder holder, int position) {
+        public void onBindViewHolder(RecyclerViewHolder holder, final int position) {
 
             ImageProc.getInstance().drawImage(resItems.getResult().get(position).getLocation(), holder.lv_imageview);
 
@@ -182,6 +195,19 @@ public class brandSelectfrag extends Fragment {
             holder.lv_pname.setText(resItems.getResult().get(position).getName());
             holder.lv_pprice.setText(resItems.getResult().get(position).getPrice()+"원");
 
+            holder.lv_detailinfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    Intent intent = new Intent(getActivity(), GiftSelectDetailInfoActivity.class);
+                    ItemDTO item = resItems.getResult().get(position);
+                    intent.putExtra("item", item);
+                    startActivity(intent);
+                }
+            });
+
+
+
 
         }
 
@@ -190,19 +216,14 @@ public class brandSelectfrag extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-
-        Fragment brandfrag = new brandfrag();
-       /* Bundle bundle = new Bundle();
-        bundle.putInt("bid", 1);
-        brandfrag.setArguments(bundle);*/
-
-        FragmentManager fragmentManager = getFragmentManager();
-        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-
-        fragmentTransaction.add(R.id.container_Frag, brandfrag);
-        //fragmentTransaction.replace(R.id.container_Frag, brandfrag);
-        //fragmentTransaction.addToBackStack(null);
-
-        fragmentTransaction.commit();
+//
+//        Fragment brandfrag = new brandfrag();
+//        FragmentManager fragmentManager = getFragmentManager();
+//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+//
+//        fragmentTransaction.add(R.id.container_Frag, brandfrag);
+//        fragmentTransaction.commit();
     }
+
+
 }

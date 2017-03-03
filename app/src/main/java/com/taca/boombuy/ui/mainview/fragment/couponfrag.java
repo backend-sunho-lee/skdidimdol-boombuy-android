@@ -1,6 +1,7 @@
 package com.taca.boombuy.ui.mainview.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -24,6 +26,7 @@ import com.taca.boombuy.Resmodel.ResItems;
 import com.taca.boombuy.evt.OttoBus;
 import com.taca.boombuy.networkmodel.ItemDTO;
 import com.taca.boombuy.singleton.item_single;
+import com.taca.boombuy.ui.mainview.activity.GiftSelectDetailInfoActivity;
 import com.taca.boombuy.util.ImageProc;
 
 import java.util.Collections;
@@ -120,7 +123,6 @@ public class couponfrag extends Fragment {
         @BindView(R.id.lv_pname)
         TextView lv_pname;
 
-
         @BindView(R.id.lv_checkbox)
         CheckBox lv_checkbox;
 
@@ -129,6 +131,9 @@ public class couponfrag extends Fragment {
 
         @BindView(R.id.lv_pprice)
         TextView lv_pprice;
+
+        @BindView(R.id.lv_detailinfo)
+        Button lv_detailinfo;
 
 
         public CouponViewHolder(View view) {
@@ -188,6 +193,16 @@ public class couponfrag extends Fragment {
                         item_single.getInstance().itemDTOArrayList.remove(item_single.getInstance().itemDTO);
                         Toast.makeText(getActivity(), position + "번째 선택 취소", Toast.LENGTH_SHORT).show();
                     }
+                }
+            });
+
+            couponViewHolder.lv_detailinfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), GiftSelectDetailInfoActivity.class);
+                    ItemDTO item = resItems.getResult().get(position);
+                    intent.putExtra("item", item);
+                    startActivity(intent);
                 }
             });
             return convertView;

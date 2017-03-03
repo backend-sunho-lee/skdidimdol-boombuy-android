@@ -8,9 +8,7 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <!-- 주소록 읽기 -->
     <uses-permission android:name="android.permission.READ_CONTACTS" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
 
     <application
         android:name=".MyApplication"
@@ -22,6 +20,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:screenOrientation="portrait"
             android:name=".ui.SplashActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen">
             <intent-filter>
@@ -31,27 +30,39 @@
             </intent-filter>
         </activity>
         <activity
+            android:screenOrientation="portrait"
             android:name=".ui.mainview.activity.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".ui.sign.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
+            android:screenOrientation="portrait"
             android:name=".ui.sign.SignUpActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".ui.popup.SignUpPopupActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
-        <activity android:name=".ui.mainview.activity.ToFriendListActivity" />
-        <activity android:name=".ui.mainview.activity.FromFriendsListActivity" />
-        <activity android:name=".ui.mainview.activity.MainProduct" />
         <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.mainview.activity.ToFriendListActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.mainview.activity.FromFriendsListActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.mainview.activity.MainProduct" />
+        <activity
+            android:screenOrientation="portrait"
             android:name=".ui.mainview.activity.GiftManageActivity"
             android:label="@string/title_activity_gift_manage"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.mainview.activity.SignUpTermsActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.mainview.activity.SignUpTermsActivity" />
 
         <!-- FCM 메시징 수신 서비스 -->
         <service android:name=".fcm.MyFirebaseMessagingService">
@@ -66,7 +77,9 @@
             </intent-filter>
         </service>
 
-        <activity android:name=".ui.mainview.activity.GiftDetailInfoActivity" />
+        <activity
+            android:screenOrientation="portrait"
+            android:name=".ui.mainview.activity.GiftDetailInfoActivity" />
 
         <!--
             android:screenOrientation="portrait"
@@ -74,9 +87,11 @@
         -->
 
         <activity
+            android:screenOrientation="portrait"
             android:name=".ui.mainview.activity.GiftSelectDetailInfoActivity"
             android:label="@string/title_activity_gift_select_detail_info"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ui.mainview.activity.SelectedSendOrderActivity"></activity>
     </application>
 
 </manifest>

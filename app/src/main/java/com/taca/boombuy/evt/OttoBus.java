@@ -42,11 +42,19 @@ public class OttoBus {
     // 친구 전화번호 목록 전송 버스
     Bus SendContacts_Bus = new Bus();
 
-
-
     // temp
     Bus FriendList_Bus = new Bus();
 
+    // 보낸상품 하나 조회
+    Bus SelectSendOrder_Bus = new Bus();
+
+    public Bus getSelectSendOrder_Bus() {
+        return SelectSendOrder_Bus;
+    }
+
+    public void setSelectSendOrder_Bus(Bus selectSendOrder_Bus) {
+        SelectSendOrder_Bus = selectSendOrder_Bus;
+    }
 
     public Bus getFriendList_Bus() {
         return FriendList_Bus;

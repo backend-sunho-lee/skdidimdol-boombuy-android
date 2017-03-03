@@ -12,4 +12,7 @@
     <string name="title_activity_gift_manage">GiftManageActivity</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_gift_select_detail_info">GiftSelectDetailInfoActivity</string>
+
+    <string name="sendorder_info">장바구니에 담긴 상품은 최대 30일까지 보관되며 종료되거나 매진될 경우 자동
+            으로 삭제됩니다.</string>
 </resources>

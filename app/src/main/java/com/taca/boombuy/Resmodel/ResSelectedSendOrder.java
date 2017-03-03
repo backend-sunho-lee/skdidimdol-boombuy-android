@@ -1,23 +1,19 @@
-package com.taca.boombuy.networkmodel;
-
-import com.taca.boombuy.Resmodel.ResError;
-
-import java.util.ArrayList;
+package com.taca.boombuy.Resmodel;
 
 /**
  * Created by Tacademy on 2017-03-03.
  */
 
-public class ResSimpleSendOrders {
+public class ResSelectedSendOrder {
 
-    ArrayList<SimpleSendOrdersDTO> result;
+    ResSendOrder result;
     ResError error;
 
-    public ArrayList<SimpleSendOrdersDTO> getResult() {
+    public ResSendOrder getResult() {
         return result;
     }
 
-    public void setResult(ArrayList<SimpleSendOrdersDTO> result) {
+    public void setResult(ResSendOrder result) {
         this.result = result;
     }
 
@@ -31,7 +27,7 @@ public class ResSimpleSendOrders {
 
     @Override
     public String toString() {
-        return "ResSimpleSendOrders{" +
+        return "ResSelectedSendOrder{" +
                 "result=" + result +
                 ", error=" + error +
                 '}';

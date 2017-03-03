@@ -1,6 +1,7 @@
 package com.taca.boombuy.ui.mainview.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -13,11 +14,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
-import com.taca.boombuy.networkmodel.ResSimpleSendOrders;
+import com.taca.boombuy.Resmodel.ResSimpleSendOrders;
+import com.taca.boombuy.ui.mainview.activity.SelectedSendOrderActivity;
 import com.taca.boombuy.util.ImageProc;
 
 import butterknife.BindView;
@@ -114,6 +115,7 @@ public class ReceivedGift extends Fragment {
         View view = inflater.inflate(R.layout.fragment_received_gift, container, false);
 
         received_gift_recyclerView = (RecyclerView) view.findViewById(R.id.received_gift_recyclerView);
+        received_gift_recyclerView.setNestedScrollingEnabled(false);
         receivedAdapter = new ReceivedAdapter();
         gridLayoutManager = new GridLayoutManager(getActivity().getApplicationContext(), 1);
         received_gift_recyclerView.setLayoutManager(gridLayoutManager);
@@ -159,7 +161,7 @@ public class ReceivedGift extends Fragment {
         }
 
         @Override
-        public void onBindViewHolder(ReceivedRecyclerViewHolder holder, int position) {
+        public void onBindViewHolder(ReceivedRecyclerViewHolder holder, final int position) {
 
 
             holder.received_gift_cell_tv_date.setText(resSimpleSendOrders.getResult().get(position).getOrderstime().substring(0, 10).replace("-", "."));
@@ -170,7 +172,7 @@ public class ReceivedGift extends Fragment {
                 holder.received_gift_cell_PayState.setBackgroundResource(R.drawable.ic_payment);
             }
 
-            switch (resSimpleSendOrders.getResult().get(position).getCnt()-1){
+            switch (resSimpleSendOrders.getResult().get(position).getCnt()){
                 case 1:
                     holder.received_gift_cell_senders_count.setBackgroundResource(R.drawable.ic_1);
                     break;
@@ -203,9 +205,8 @@ public class ReceivedGift extends Fragment {
                     break;
             }
 
-            holder.gift_Senders.setText(resSimpleSendOrders.getResult().get(position).getSender() + "외 " + (resSimpleSendOrders.getResult().get(position).getCnt()-1) +"명");
+            holder.gift_Senders.setText(resSimpleSendOrders.getResult().get(position).getSender() + "외 " + resSimpleSendOrders.getResult().get(position).getCnt() +"명");
             holder.gift_receivedPerson.setText(resSimpleSendOrders.getResult().get(position).getReceiver());
-
 
             ImageProc.getInstance().drawImage( resSimpleSendOrders.getResult().get(position).getSenderphoto() ,holder.received_gift_cell_sendMemberProfile);
             ImageProc.getInstance().drawImage( resSimpleSendOrders.getResult().get(position).getReceiverphoto() ,holder.received_gift_cell_receivedMemberProfile);
@@ -215,8 +216,9 @@ public class ReceivedGift extends Fragment {
                 @Override
                 public void onClick(View v) {
 
-                    Toast.makeText(getActivity(), "페이지 이동할거", Toast.LENGTH_SHORT).show();
-                    
+                    Intent intent = new Intent(getActivity(), SelectedSendOrderActivity.class);
+                    intent.putExtra("oid", resSimpleSendOrders.getResult().get(position).getOid());
+                    startActivity(intent);
                 }
             });
 

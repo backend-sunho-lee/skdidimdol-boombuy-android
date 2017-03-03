@@ -1,117 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="145dp"
+    android:layout_marginLeft="8dp"
+    android:layout_marginRight="8dp"
+    android:layout_marginTop="8dp"
+    android:background="@drawable/my_custom_inner_layout_border"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
+    <TextView
+        android:id="@+id/received_gift_cell_tv_date"
+        android:text="2017 02 11"
+        android:textColor="@color/letterColor"
+        android:textSize="16.3sp"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_weight="0"
+        android:layout_width="match_parent"
+        android:layout_height="20dp" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
+            android:gravity="center"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:layout_width="85dp"
+                android:layout_height="120dp">
 
-                <TextView
-                    android:id="@+id/received_gift_cell_tv_date"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_weight="9"
-                    android:text="2017. 02. 16"
-                    android:textSize="20dp"
-                    android:textStyle="bold" />
+                <FrameLayout
+                    android:layout_width="70dp"
+                    android:layout_height="70dp">
 
-            </LinearLayout>
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-
-            >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="30dp">
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="8" />
-                <ImageButton
-                    android:id="@+id/received_gift_cell_payment_state"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5.01"
-                    android:gravity="center"
-                    android:orientation="vertical">
-
-                    <ImageView
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/received_gift_cell_sendMemberProfile"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/img_basic_profile" />
-
-                    <TextView
-                        android:id="@+id/gift_sendPeople"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="한길웅 외 3명" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:orientation="vertical">
+                        android:layout_height="match_parent"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/img_basic_profile"
+                        app:civ_border_color="@color/boderColor"
+                        app:civ_border_width="0.5dp" />
 
                     <ImageView
-                        android:id="@+id/imageView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/arrow_right" />
-                </LinearLayout>
+                        android:id="@+id/received_gift_cell_senders_count"
+                        android:background="@drawable/ic_1"
+                        android:layout_marginTop="-5dp"
+                        android:layout_marginLeft="40dp"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp" />
 
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="5"
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/gift_Senders"
+                    android:textColor="@color/letterColor"
+                    android:text="누구아"
+                    android:textSize="13sp"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:layout_width="80dp"
+                    android:layout_height="20dp" />
 
-                    <ImageView
+                <!--<TextView
+                    android:id="@id/senders"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:text="라라라 외 1명"
+                    android:textColor="@color/letterColor"
+                    android:layout_width="80dp"
+                    android:layout_height="20dp" />-->
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_marginRight="25dp"
+                android:layout_marginLeft="25dp"
+                android:layout_gravity="center"
+                android:background="@drawable/ic_right_color_33dp"
+                android:layout_width="32dp"
+                android:layout_height="35dp" />
+
+            <LinearLayout
+                android:gravity="center"
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:layout_width="85dp"
+                android:layout_height="120dp">
+
+                <FrameLayout
+                    android:layout_width="70dp"
+                    android:layout_height="70dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
                         android:id="@+id/received_gift_cell_receivedMemberProfile"
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/img_basic_profile" />
-
-                    <TextView
-                        android:id="@+id/gift_receivedPerson"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:text="홍승지" />
-                </LinearLayout>
+                        android:layout_height="match_parent"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/img_basic_profile"
+                        app:civ_border_color="@color/boderColor"
+                        app:civ_border_width="0.5dp" />
+
+                </FrameLayout>
+
+                <TextView
+                    android:id="@+id/gift_receivedPerson"
+                    android:gravity="center"
+                    android:textSize="13sp"
+                    android:text="라라라 외 1명"
+                    android:textColor="@color/letterColor"
+                    android:layout_width="80dp"
+                    android:layout_height="20dp"
+                     />
+
             </LinearLayout>
 
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/received_gift_cell_PayState"
+            android:background="@drawable/ic_progress"
+            android:layout_marginTop="-3dp"
+            android:layout_marginLeft="2dp"
+            android:layout_width="75dp"
+            android:layout_height="40dp" />
+    </FrameLayout>
 </LinearLayout>

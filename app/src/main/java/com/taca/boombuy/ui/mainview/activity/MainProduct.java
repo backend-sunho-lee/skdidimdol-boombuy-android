@@ -23,27 +23,22 @@ public class MainProduct extends AppCompatActivity implements
 
     TabLayout tabLayout;
     ViewPager viewPager;
+    public int secondMenuDepth;
 
     FragmentPagerAdapter fragmentPagerAdapter;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_product);
-
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
-
-
         fragmentPagerAdapter = new FragmentAdapter(getSupportFragmentManager());
         viewPager.setAdapter(fragmentPagerAdapter);
-
         tabLayout.setupWithViewPager(viewPager);
     }
 
     class FragmentAdapter extends FragmentPagerAdapter {
-
         Fragment[] frags = new Fragment[]{
                 new totalfrag(), new brandBaseFrag(), new couponfrag()
         };
@@ -51,9 +46,9 @@ public class MainProduct extends AppCompatActivity implements
         public FragmentAdapter(FragmentManager fm) {
             super(fm);
         }
-
         @Override
         public Fragment getItem(int position) {
+            if( position == 1) secondMenuDepth=0;
             return frags[position];
         }
 
@@ -79,13 +74,37 @@ public class MainProduct extends AppCompatActivity implements
 
     @Override
     public void onFragmentInteraction(Uri uri) {
-
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
+        OttoBus.getInstance().getSearchItems_Bus().unregister(this);
+        OttoBus.getInstance().getSearchBrands_Bus().unregister(this);
         OttoBus.getInstance().getSearchBrandItem_Bus().unregister(this);
+        OttoBus.getInstance().getSearchCoupons_Bus().unregister(this);
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        switch(viewPager.getCurrentItem()){
+            case 0:
+            case 2:
+                // 종료
+                super.onBackPressed();
+                break;
+            case 1:
+                // 브랜드
+                if( secondMenuDepth == 0 ){
+                    // brand -> 종료
+                    super.onBackPressed();
+                }else{
+                    // 보이는 화면이 brandSelectfrag면 -> brand
+                    secondMenuDepth = 0;
+                    ((brandBaseFrag)fragmentPagerAdapter.getItem(1)).onBackPressed();
+                }
+                break;
+        }
     }
 }

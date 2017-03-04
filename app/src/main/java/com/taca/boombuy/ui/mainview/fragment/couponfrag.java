@@ -1,6 +1,7 @@
 package com.taca.boombuy.ui.mainview.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -24,6 +26,7 @@ import com.taca.boombuy.Resmodel.ResItems;
 import com.taca.boombuy.evt.OttoBus;
 import com.taca.boombuy.networkmodel.ItemDTO;
 import com.taca.boombuy.singleton.item_single;
+import com.taca.boombuy.ui.mainview.activity.GiftSelectDetailInfoActivity;
 import com.taca.boombuy.util.ImageProc;
 
 import java.util.Collections;
@@ -61,6 +64,8 @@ public class couponfrag extends Fragment {
     boolean ottoflag = false;
 
     ResItems resItems;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -95,10 +100,9 @@ public class couponfrag extends Fragment {
             }
         });
 
-        if(!ottoflag){
-            OttoBus.getInstance().getSearchCoupons_Bus().register(this);
-            ottoflag = true;
-        }
+
+
+
 
         listview = (ListView) view.findViewById(R.id.listview);
 
@@ -119,7 +123,6 @@ public class couponfrag extends Fragment {
         @BindView(R.id.lv_pname)
         TextView lv_pname;
 
-
         @BindView(R.id.lv_checkbox)
         CheckBox lv_checkbox;
 
@@ -128,6 +131,9 @@ public class couponfrag extends Fragment {
 
         @BindView(R.id.lv_pprice)
         TextView lv_pprice;
+
+        @BindView(R.id.lv_detailinfo)
+        Button lv_detailinfo;
 
 
         public CouponViewHolder(View view) {
@@ -189,6 +195,16 @@ public class couponfrag extends Fragment {
                     }
                 }
             });
+
+            couponViewHolder.lv_detailinfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(getActivity(), GiftSelectDetailInfoActivity.class);
+                    ItemDTO item = resItems.getResult().get(position);
+                    intent.putExtra("item", item);
+                    startActivity(intent);
+                }
+            });
             return convertView;
         }
     }
@@ -201,7 +217,7 @@ public class couponfrag extends Fragment {
         resItems = data;
         listview.setAdapter(couponAdapter);
         ((couponfrag.CouponListViewAdapter)listview.getAdapter()).notifyDataSetChanged();
-        OttoBus.getInstance().getSearchCoupons_Bus().unregister(this);
+
     }
 
     public couponfrag() {
@@ -219,6 +235,8 @@ public class couponfrag extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        OttoBus.getInstance().getSearchCoupons_Bus().register(this);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);

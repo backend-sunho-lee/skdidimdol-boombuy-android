@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="145dp"
+    android:layout_height="match_parent"
     android:background="@color/insertWindowColor"
     android:orientation="vertical">
 
@@ -30,7 +30,6 @@
             android:textSize="16.3sp" />
 
         <FrameLayout
-
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -60,15 +59,6 @@
 
                             app:civ_border_color="@color/boderColor"
                             app:civ_border_width="0.5dp" />
-
-                        <ImageView
-                            android:id="@+id/received_gift_cell_senders_count"
-                            android:layout_width="30dp"
-                            android:layout_height="30dp"
-                            android:layout_marginLeft="40dp"
-                            android:layout_marginTop="-5dp"
-                            android:background="@drawable/ic_1" />
-
                     </FrameLayout>
 
                     <TextView
@@ -78,7 +68,7 @@
                         android:gravity="center"
                         android:text="누구아"
                         android:textColor="@color/letterColor"
-                        android:textSize="13sp" />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -119,7 +109,7 @@
                         android:gravity="center"
                         android:text="라라라 외 1명"
                         android:textColor="@color/letterColor"
-                        android:textSize="13sp" />
+                        android:textSize="12sp" />
 
                 </LinearLayout>
 
@@ -134,5 +124,111 @@
                 android:background="@drawable/ic_progress" />
         </FrameLayout>
 
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/sender_recyclerview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
+
+        <LinearLayout
+            android:layout_marginLeft="15.7dp"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+
+            <TextView
+                android:textColor="@color/letterColor"
+                android:textStyle="bold"
+                android:textSize="17sp"
+                android:gravity="left|center"
+                android:text="구매 상품 정보"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </LinearLayout>
+        <include
+               layout="@layout/include_selected_send_order_product_recyclerview"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="115dp">
+
+            <LinearLayout
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+
+                <TextView
+                    android:textStyle="bold"
+                    android:gravity="left|center"
+                    android:textSize="17sp"
+                    android:textColor="@color/letterColor"
+                    android:text="총 결제 금액"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp" />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="25dp" />
+
+                <TextView
+                    android:textColor="@color/appColor"
+                    android:textStyle="bold"
+                    android:text="10,000원"
+                    android:gravity="end|center"
+                    android:textSize="17sp"
+                    android:layout_width="100dp"
+                    android:layout_height="25dp" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginLeft="16dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="25dp">
+
+                <TextView
+                    android:textStyle="bold"
+                    android:gravity="left|center"
+                    android:textSize="17sp"
+                    android:textColor="@color/letterColor"
+                    android:text="결제 완료 금액"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp" />
+
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="25dp" />
+
+                <TextView
+                    android:textColor="@color/colorAccent"
+                    android:textStyle="bold"
+                    android:text="10,000원"
+                    android:gravity="end|center"
+                    android:textSize="17sp"
+                    android:layout_width="100dp"
+                    android:layout_height="25dp" />
+            </LinearLayout>
+
+            <TextView
+                android:gravity="start"
+                android:textColor="@color/letterColor"
+                android:textSize="12sp"
+                android:layout_margin="15dp"
+                android:text="@string/sendorder_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+
     </LinearLayout>
-</LinearLayout>
+
+</android.support.v4.widget.NestedScrollView>

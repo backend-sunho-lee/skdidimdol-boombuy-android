@@ -21,6 +21,7 @@ import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResSearchBrands;
 import com.taca.boombuy.evt.OttoBus;
 import com.taca.boombuy.networkmodel.BrandDTO;
+import com.taca.boombuy.ui.mainview.activity.MainProduct;
 import com.taca.boombuy.util.ImageProc;
 
 import butterknife.BindView;
@@ -153,19 +154,15 @@ public class brandfrag extends Fragment {
 
                     Fragment brandSelectfrag = new brandSelectfrag();
                     Bundle bundle = new Bundle();
-
-
                     bundle.putInt("bid", getItem(position).getBid());
-
                     Log.i("bid brandfrag : ", getItem(position).getBid() + "");
                     brandSelectfrag.setArguments(bundle);
 
-
                     FragmentManager fragmentManager = getFragmentManager();
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                    fragmentTransaction.replace(R.id.container_Frag, brandSelectfrag);
-                    fragmentTransaction.addToBackStack(null);
+                    fragmentTransaction.replace(R.id.container_Frag, brandSelectfrag, "brandfrag");
                     fragmentTransaction.commit();
+                    ((MainProduct)getActivity()).secondMenuDepth=1;
                 }
             });
             return convertView;
@@ -187,6 +184,7 @@ public class brandfrag extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        OttoBus.getInstance().getSearchItems_Bus().register(this);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -211,7 +209,7 @@ public class brandfrag extends Fragment {
     }
 
 
-@Override
+    @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
@@ -227,6 +225,10 @@ public class brandfrag extends Fragment {
         resSearchBrands = data;
         gridView.setAdapter(myAdapter);
         ((brandfrag.GridViewAdapter) gridView.getAdapter()).notifyDataSetChanged();
-        OttoBus.getInstance().getSearchBrands_Bus().unregister(this);
+
+    }
+
+    public void onBackPressed() {
+        // 액티비를 닫음
     }
 }

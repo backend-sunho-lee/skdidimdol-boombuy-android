@@ -36,7 +36,7 @@ public class GiftSelectDetailInfoActivity extends AppCompatActivity {
 
     ImageView selected_gift_imageview;                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                ;
     ResItemDetail resItemDetail;
-    boolean ottoFlag = false;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +46,6 @@ public class GiftSelectDetailInfoActivity extends AppCompatActivity {
         ItemDTO item = (ItemDTO)getIntent().getSerializableExtra("item");
         Log.i("ITEM DATA", item.toString());
 
-        //NetWork.getInstance().NetSearchItemDetail(getApplicationContext(), item.getId());
 
         Call<ResItemDetail> NetSearchItemDetail = NetSSL.getInstance().getMemberImpFactory().NetSearchItemDetail(item.getBid());
         NetSearchItemDetail.enqueue(new Callback<ResItemDetail>() {

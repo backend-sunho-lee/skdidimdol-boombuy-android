@@ -15,6 +15,7 @@ import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
 import java.security.cert.CertificateFactory;
 import java.security.cert.X509Certificate;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLContext;
@@ -65,6 +66,8 @@ public class NetSSL {
             clientTmp.hostnameVerifier(hostnameVerifier);
             clientTmp.interceptors().add(new AddCookiesInterceptor());
             clientTmp.interceptors().add(new ReceivedCookiesInterceptor());
+            clientTmp.connectTimeout(20, TimeUnit.SECONDS);
+            clientTmp.readTimeout(30, TimeUnit.SECONDS);
             client = clientTmp.build();
             // ====================================================================================
             retrofit = new Retrofit.Builder()

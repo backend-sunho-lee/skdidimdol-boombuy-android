@@ -8,8 +8,10 @@ import com.taca.boombuy.Resmodel.ResItemDetail;
 import com.taca.boombuy.Resmodel.ResItems;
 import com.taca.boombuy.Resmodel.ResMyProfile;
 import com.taca.boombuy.Resmodel.ResSearchBrands;
+import com.taca.boombuy.Resmodel.ResSelectedSendOrder;
 import com.taca.boombuy.networkmodel.GiftDTO;
 import com.taca.boombuy.networkmodel.LoginDTO;
+import com.taca.boombuy.Resmodel.ResSimpleSendOrders;
 import com.taca.boombuy.networkmodel.SignUpDTO;
 
 import java.util.Map;
@@ -78,6 +80,7 @@ public interface MemberImpFactory {
     @GET("/items/{iid}")
     Call<ResItemDetail> NetSearchItemDetail(@Path("iid") int iid);
 
+
     // 친구 목록 전송
     /*@POST("/friends")
     Call<ResBasic> NetSendContacts(@Body String list);*/
@@ -92,4 +95,13 @@ public interface MemberImpFactory {
     @Multipart
     @PUT("/users/me")
     Call<ResBasic> NetChangeImage(@PartMap Map<String, RequestBody> params);
+
+    //보낸선물목록 조회
+    @GET("/orders/sendlist")
+    Call<ResSimpleSendOrders> NetSimpleSendOrders();
+
+    // 선택한 보낸 선물 목록 조회
+    @GET("/orders/{oid}/send")
+    Call<ResSelectedSendOrder> NetSelectSendOrder(@Path("oid") int temp);
+
 }

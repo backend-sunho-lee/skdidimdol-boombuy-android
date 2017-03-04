@@ -23,7 +23,6 @@ import com.squareup.otto.Subscribe;
 import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResItems;
-import com.taca.boombuy.evt.OTTOBusTEST;
 import com.taca.boombuy.evt.OttoBus;
 import com.taca.boombuy.networkmodel.ItemDTO;
 import com.taca.boombuy.singleton.item_single;
@@ -44,6 +43,12 @@ public class totalfrag extends Fragment {
     CustomListAdapter listAdapter;
     ListView listView;
     boolean ottoFlag = false;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        OttoBus.getInstance().getSearchItems_Bus().register(this);
+    }
 
     @Nullable
     @Override
@@ -77,16 +82,6 @@ public class totalfrag extends Fragment {
 
             }
         });
-
-
-
-
-        OttoBus.getInstance().getSearchItems_Bus().register(this);
-
-        if(!ottoFlag){
-            OTTOBusTEST.getInstance().getSearch_items_bus().register(this);
-            ottoFlag = true;
-        }
 
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -237,9 +232,8 @@ public class totalfrag extends Fragment {
     @Subscribe
     public void FinishLoad(ResItems data){
         resItems = data;
+
         listView.setAdapter(listAdapter);
         ((totalfrag.CustomListAdapter)listView.getAdapter()).notifyDataSetChanged();
-
-        OttoBus.getInstance().getSearchItems_Bus().unregister(this);
     }
 }

@@ -15,11 +15,11 @@ import android.view.MenuItem;
 
 import com.taca.boombuy.R;
 import com.taca.boombuy.Single_Value;
-import com.taca.boombuy.ui.mainview.fragment.ReceivedGift;
-import com.taca.boombuy.ui.mainview.fragment.SentGift;
+import com.taca.boombuy.ui.mainview.fragment.ReceivedGiftFrag;
+import com.taca.boombuy.ui.mainview.fragment.SentGiftFrag;
 
-public class GiftManageActivity extends AppCompatActivity implements ReceivedGift.OnFragmentInteractionListener,
-SentGift.OnFragmentInteractionListener{
+public class GiftManageActivity extends AppCompatActivity implements SentGiftFrag.OnFragmentInteractionListener,
+ReceivedGiftFrag.OnFragmentInteractionListener{
 
     @Override
     public void onFragmentInteraction(Uri uri) {
@@ -51,6 +51,8 @@ SentGift.OnFragmentInteractionListener{
 
         tabLayout.setupWithViewPager(mViewPager);
 
+
+
     }
 
 
@@ -75,7 +77,7 @@ SentGift.OnFragmentInteractionListener{
     class FragmentAdapter extends FragmentPagerAdapter {
 
         Fragment[] frags = new Fragment[]{
-                new ReceivedGift(), new SentGift()
+                new SentGiftFrag(), new ReceivedGiftFrag()
         };
 
         public FragmentAdapter(FragmentManager fm) {
@@ -92,7 +94,17 @@ SentGift.OnFragmentInteractionListener{
             return frags.length;
         }
 
+        @Override
+        public CharSequence getPageTitle(int position) {
 
+            if(position == 0) {
+
+                return "보낸 선물";
+
+            }else{
+                return "받은 선물";
+            }
+        }
     }
 
 }

@@ -80,7 +80,6 @@ public interface MemberImpFactory {
     @GET("/items/{iid}")
     Call<ResItemDetail> NetSearchItemDetail(@Path("iid") int iid);
 
-
     // 친구 목록 전송
     /*@POST("/friends")
     Call<ResBasic> NetSendContacts(@Body String list);*/
@@ -103,5 +102,10 @@ public interface MemberImpFactory {
     // 선택한 보낸 선물 목록 조회
     @GET("/orders/{oid}/send")
     Call<ResSelectedSendOrder> NetSelectSendOrder(@Path("oid") int temp);
+
+    // 받은 선물 정보 조회
+//    @GET("/orders/receive")
+//    Call<> NetReceivedItem();
+
 
 }

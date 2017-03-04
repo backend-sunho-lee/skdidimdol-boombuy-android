@@ -27,7 +27,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class ReceivedGift extends Fragment {
+public class SentGiftFrag extends Fragment {
 
 
 
@@ -39,11 +39,11 @@ public class ReceivedGift extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public ReceivedGift() {
+    public SentGiftFrag() {
     }
 
-    public static ReceivedGift newInstance(String param1, String param2) {
-        ReceivedGift fragment = new ReceivedGift();
+    public static SentGiftFrag newInstance(String param1, String param2) {
+        SentGiftFrag fragment = new SentGiftFrag();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);

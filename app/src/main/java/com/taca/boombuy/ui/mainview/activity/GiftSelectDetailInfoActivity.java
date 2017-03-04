@@ -80,7 +80,7 @@ public class GiftSelectDetailInfoActivity extends AppCompatActivity {
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
 
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.gift_select_detail_tabs);
         tabLayout.setupWithViewPager(mViewPager);
 
     }

@@ -10,13 +10,12 @@
     tools:context="com.taca.boombuy.ui.mainview.activity.GiftSelectDetailInfoActivity">
 
     <ImageView
-
         android:id="@+id/selected_gift_imageview"
         android:layout_width="match_parent"
         android:layout_height="202dp" />
 
     <android.support.design.widget.TabLayout
-        android:id="@+id/tabs"
+        android:id="@+id/gift_select_detail_tabs"
         android:layout_width="match_parent"
         android:layout_height="48dp" />
 

@@ -1,6 +1,5 @@
 package com.taca.boombuy.NetRetrofit;
 
-import com.taca.boombuy.Reqmodel.ReqChangeState;
 import com.taca.boombuy.Reqmodel.ReqChangeToken;
 import com.taca.boombuy.Reqmodel.ReqSendContacts;
 import com.taca.boombuy.Resmodel.ResBasic;
@@ -10,9 +9,9 @@ import com.taca.boombuy.Resmodel.ResItems;
 import com.taca.boombuy.Resmodel.ResMyProfile;
 import com.taca.boombuy.Resmodel.ResSearchBrands;
 import com.taca.boombuy.Resmodel.ResSelectedSendOrder;
+import com.taca.boombuy.Resmodel.ResSimpleSendOrders;
 import com.taca.boombuy.networkmodel.GiftDTO;
 import com.taca.boombuy.networkmodel.LoginDTO;
-import com.taca.boombuy.Resmodel.ResSimpleSendOrders;
 import com.taca.boombuy.networkmodel.SignUpDTO;
 
 import java.util.Map;
@@ -103,13 +102,12 @@ public interface MemberImpFactory {
     // 선택한 보낸 선물 목록 조회
     @GET("/orders/{oid}/send")
     Call<ResSelectedSendOrder> NetSelectSendOrder(@Path("oid") int temp);
-
     // 받은 선물 정보 조회
 //    @GET("/orders/receive")
 //    Call<> NetReceivedItem();
 
     // 결제 완료 후 전송
-    @PUT("/???????")
-    Call<ResBasic> NetChangeState(@Body ReqChangeState reqChangeState);
+    @PUT("/orders/{oid}")
+    Call<ResBasic> NetChangeState(@Path("oid") int temp);
 
 }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.otto.Subscribe;
 import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
@@ -61,7 +62,8 @@ public class SignUpPopupActivity extends AppCompatActivity {
         // 서버에 로그인 시도
         LoginDTO loginDTO = new LoginDTO(
                 StorageHelper.getInstance().getString(SignUpPopupActivity.this, "my_phone_number"),
-                StorageHelper.getInstance().getString(SignUpPopupActivity.this, "auto_login_password")
+                StorageHelper.getInstance().getString(SignUpPopupActivity.this, "auto_login_password"),
+                FirebaseInstanceId.getInstance().getToken()
         );
 
         Call<ResBasic> NetLogin = NetSSL.getInstance().getMemberImpFactory().NetLogin(loginDTO);

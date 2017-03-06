@@ -8,6 +8,16 @@ public class LoginDTO {
 
     String phone;
     String password;
+    String token;
+
+    @Override
+    public String toString() {
+        return "LoginDTO{" +
+                "phone='" + phone + '\'' +
+                ", password='" + password + '\'' +
+                ", token='" + token + '\'' +
+                '}';
+    }
 
     public String getPhone() {
         return phone;
@@ -25,12 +35,22 @@ public class LoginDTO {
         this.password = password;
     }
 
-
-    public LoginDTO() {
+    public String getToken() {
+        return token;
     }
 
-    public LoginDTO(String phone, String password) {
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public LoginDTO(String phone, String password, String token) {
+
         this.phone = phone;
         this.password = password;
+        this.token = token;
+    }
+
+    public LoginDTO() {
+
     }
 }

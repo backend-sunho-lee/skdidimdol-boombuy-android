@@ -14,6 +14,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.otto.Subscribe;
 import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
@@ -59,7 +60,8 @@ public class LoginActivity extends AppCompatActivity {
             // 서버에 로그인 시도
             LoginDTO loginDTO = new LoginDTO(
                     StorageHelper.getInstance().getString(LoginActivity.this, "my_phone_number"),
-                    StorageHelper.getInstance().getString(LoginActivity.this, "auto_login_password")
+                    StorageHelper.getInstance().getString(LoginActivity.this, "auto_login_password"),
+                    FirebaseInstanceId.getInstance().getToken()
             );
 
             Call<ResBasic> NetLogin = NetSSL.getInstance().getMemberImpFactory().NetLogin(loginDTO);
@@ -106,7 +108,8 @@ public class LoginActivity extends AppCompatActivity {
                 // 서버 로그인 시도
                 LoginDTO loginDTO = new LoginDTO(
                         et_signin_id.getText().toString(),
-                        et_signin_password.getText().toString()
+                        et_signin_password.getText().toString(),
+                        FirebaseInstanceId.getInstance().getToken()
                 );
                 Call<ResBasic> NetLogin = NetSSL.getInstance().getMemberImpFactory().NetLogin(loginDTO);
 

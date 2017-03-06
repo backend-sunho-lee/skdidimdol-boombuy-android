@@ -15,7 +15,6 @@ import android.widget.Toast;
 
 import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
-import com.taca.boombuy.Reqmodel.ReqChangeState;
 import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.Resmodel.ResSelectedSendOrder;
 import com.taca.boombuy.database.StorageHelper;
@@ -157,7 +156,7 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
     }
 
     public void changeState() {
-        Call<ResBasic> NetChangeState = NetSSL.getInstance().getMemberImpFactory().NetChangeState(new ReqChangeState(oid));
+        Call<ResBasic> NetChangeState = NetSSL.getInstance().getMemberImpFactory().NetChangeState(oid);
         NetChangeState.enqueue(new Callback<ResBasic>() {
             @Override
             public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
@@ -227,8 +226,9 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
 
             ImageProc.getInstance().drawImage(resSelectedSendOrder.getResult().getSettlements().get(position).getLocation(), holder.received_gift_cell_buyer_profile);
 
-            // 본인만 결제하러 갈 수 있도록
-            if (StorageHelper.getInstance().getString(getApplicationContext(), "user_name").equals(resSelectedSendOrder.getResult().getSettlements().get(position).getName())) {
+            // 본인만 결제하러 갈 수 있도록, 결제 완료후에는 터치 불가능
+            if (StorageHelper.getInstance().getString(getApplicationContext(), "user_name").equals(resSelectedSendOrder.getResult().getSettlements().get(position).getName())
+                    && resSelectedSendOrder.getResult().getSettlements().get(position).getState().equals("대기")) {
                 holder.received_gift_cell_sendPayBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

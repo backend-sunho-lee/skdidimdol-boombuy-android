@@ -100,6 +100,9 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
     }
 
     public void getSelectedData() {
+        total_price = 0;
+        completed_price = 0;
+
         Call<ResSelectedSendOrder> NetSelectSendOrder = NetSSL.getInstance().getMemberImpFactory().NetSelectSendOrder(oid);
         NetSelectSendOrder.enqueue(new Callback<ResSelectedSendOrder>() {
             @Override

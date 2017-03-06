@@ -10,7 +10,6 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:src="@drawable/img_basic_profile"
             android:id="@+id/received_gift_cell_buyer_profile"
             android:layout_width="0dp"
             android:layout_height="match_parent"

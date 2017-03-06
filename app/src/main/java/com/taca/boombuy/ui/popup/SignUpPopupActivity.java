@@ -104,7 +104,7 @@ public class SignUpPopupActivity extends AppCompatActivity {
         resBasic = data;
         if (resBasic.getMessage() != null) {
             overridePendingTransition(R.anim.end_enter, R.anim.end_exit);
-            Intent intent = new Intent(SignUpPopupActivity.this, MainActivity.class);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
             // 오토버스 썼으면 등록해제
             OttoBus.getInstance().getLogin_Bus().unregister(this);

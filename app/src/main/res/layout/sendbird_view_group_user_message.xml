@@ -182,7 +182,6 @@
 
             <ImageView
                 android:id="@+id/received_gift_cell_buyer_profile"
-                android:src="@drawable/img_basic_profile"
                 android:layout_gravity="center"
                 android:layout_height="40dp"
                 android:layout_width="40dp" />

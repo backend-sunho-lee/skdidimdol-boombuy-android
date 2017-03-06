@@ -158,6 +158,7 @@ public class LoginActivity extends AppCompatActivity {
 
     // 오토버스 이벤트 도착
     ResBasic resBasic;
+
     @Subscribe
     public void FinishLoad(ResBasic data) {
 

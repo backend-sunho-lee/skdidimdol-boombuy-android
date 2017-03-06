@@ -96,11 +96,12 @@ public interface MemberImpFactory {
     Call<ResBasic> NetChangeImage(@PartMap Map<String, RequestBody> params);
 
     //보낸선물목록 조회
-    @GET("/orders/sendlist")
+    @GET("/orders/send")
     Call<ResSimpleSendOrders> NetSimpleSendOrders();
 
     // 선택한 보낸 선물 목록 조회
-    @GET("/orders/{oid}/send")
+    @GET("/orders/{oid}" +
+            "")
     Call<ResSelectedSendOrder> NetSelectSendOrder(@Path("oid") int temp);
     // 받은 선물 정보 조회
 //    @GET("/orders/receive")

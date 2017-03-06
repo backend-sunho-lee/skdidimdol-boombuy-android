@@ -13,7 +13,7 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.taca.boombuy.R;
-import com.taca.boombuy.ui.mainview.activity.MainActivity;
+import com.taca.boombuy.ui.sign.LoginActivity;
 
 /**
  * Created by jimin on 2017-01-09.
@@ -49,7 +49,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     // 노티 창에 띄움
     private void sendNotification(String messageBody) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
@@ -63,8 +63,7 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 
-        NotificationManager notificationManager =
-                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }

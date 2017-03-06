@@ -127,6 +127,7 @@ public class SignUpActivity extends AppCompatActivity {
             StorageHelper.getInstance().setString(SignUpActivity.this, "auto_login_password", et_signup_password.getText().toString());
 
             Intent intent = new Intent(SignUpActivity.this, SignUpPopupActivity.class);
+            //intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
             // 오토버스 썼으면 등록해제
             OttoBus.getInstance().getSignUp_Bus().unregister(this);
             startActivity(intent);

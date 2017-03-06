@@ -124,6 +124,12 @@
                 android:background="@drawable/ic_progress" />
         </FrameLayout>
 
+        <!--가로줄-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:background="@color/addColor"
+            android:layout_height="1dp"/>
+
         <android.support.v7.widget.RecyclerView
             android:id="@+id/sender_recyclerview"
             android:layout_width="match_parent"
@@ -144,6 +150,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
         </LinearLayout>
+
         <include
                layout="@layout/include_selected_send_order_product_recyclerview"
                android:layout_width="match_parent"
@@ -152,9 +159,10 @@
         <LinearLayout
             android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="115dp">
+            android:layout_height="125dp">
 
             <LinearLayout
+                android:layout_marginTop="10dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginLeft="16dp"
                 android:orientation="horizontal"
@@ -176,6 +184,7 @@
                     android:layout_height="25dp" />
 
                 <TextView
+                    android:id="@+id/tv_selected_total_price"
                     android:textColor="@color/appColor"
                     android:textStyle="bold"
                     android:text="10,000원"
@@ -208,6 +217,7 @@
                     android:layout_height="25dp" />
 
                 <TextView
+                    android:id="@+id/tv_selected_completed_price"
                     android:textColor="@color/colorAccent"
                     android:textStyle="bold"
                     android:text="10,000원"

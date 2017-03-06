@@ -1,5 +1,6 @@
 package com.taca.boombuy.NetRetrofit;
 
+import com.taca.boombuy.Reqmodel.ReqChangeState;
 import com.taca.boombuy.Reqmodel.ReqChangeToken;
 import com.taca.boombuy.Reqmodel.ReqSendContacts;
 import com.taca.boombuy.Resmodel.ResBasic;
@@ -107,5 +108,8 @@ public interface MemberImpFactory {
 //    @GET("/orders/receive")
 //    Call<> NetReceivedItem();
 
+    // 결제 완료 후 전송
+    @PUT("/???????")
+    Call<ResBasic> NetChangeState(@Body ReqChangeState reqChangeState);
 
 }

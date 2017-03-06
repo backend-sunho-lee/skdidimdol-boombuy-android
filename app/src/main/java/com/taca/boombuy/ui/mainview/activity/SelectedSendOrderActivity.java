@@ -13,11 +13,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.otto.Subscribe;
 import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
+import com.taca.boombuy.Reqmodel.ReqChangeState;
+import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.Resmodel.ResSelectedSendOrder;
-import com.taca.boombuy.evt.OttoBus;
+import com.taca.boombuy.database.StorageHelper;
 import com.taca.boombuy.util.ImageProc;
 
 import butterknife.BindView;
@@ -29,12 +30,18 @@ import retrofit2.Response;
 public class SelectedSendOrderActivity extends AppCompatActivity {
 
     ResSelectedSendOrder resSelectedSendOrder;
+
     @Override
     protected void onStart() {
         super.onStart();
-        OttoBus.getInstance().getSelectSendOrder_Bus().register(this);
 
+        // 서버 통신
+        getSelectedData();
     }
+
+    int oid;
+    int total_price = 0;
+    int completed_price = 0;
 
     RecyclerView sender_recyclerview;
     SenderRecyclerAdapter senderRecyclerAdapter;
@@ -58,6 +65,10 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
     TextView gift_Senders;
     @BindView(R.id.gift_receivedPerson)
     TextView gift_receivedPerson;
+    @BindView(R.id.tv_selected_total_price)
+    TextView tv_selected_total_price;
+    @BindView(R.id.tv_selected_completed_price)
+    TextView tv_selected_completed_price;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +85,7 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
         gridLayoutManager = new GridLayoutManager(this, 1);
         gridLayoutManager.setOrientation(OrientationHelper.VERTICAL);
 
-        gridLayoutManager2 = new GridLayoutManager(this ,1);
+        gridLayoutManager2 = new GridLayoutManager(this, 1);
         gridLayoutManager2.setOrientation(OrientationHelper.VERTICAL);
 
         sender_recyclerview.setLayoutManager(gridLayoutManager);
@@ -84,25 +95,30 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
         product_recyclerview.setNestedScrollingEnabled(false);
 
 
-        int oid = getIntent().getIntExtra("oid", 0);
+        oid = getIntent().getIntExtra("oid", 0);
+
+
+    }
+
+    public void getSelectedData() {
         Call<ResSelectedSendOrder> NetSelectSendOrder = NetSSL.getInstance().getMemberImpFactory().NetSelectSendOrder(oid);
         NetSelectSendOrder.enqueue(new Callback<ResSelectedSendOrder>() {
             @Override
             public void onResponse(Call<ResSelectedSendOrder> call, Response<ResSelectedSendOrder> response) {
 
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
 
-                    if(response.body() != null && response.body().getResult() != null){
+                    if (response.body() != null && response.body().getResult() != null) {
 
                         Log.i("성공했다: ", response.body().getResult().toString());
 
-                        OttoBus.getInstance().getSelectSendOrder_Bus().post(response.body());
+                        FinishLoad(response.body());
 
 
-                    }else{
+                    } else {
                         Log.i("실패했어 제이슨안맞음 :", response.message());
                     }
-                }else{
+                } else {
                     Log.i("실패했어 틀안맞 :", response.message());
                 }
             }
@@ -114,11 +130,9 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
                 Log.i("통신실패", t.getMessage());
             }
         });
-
     }
 
-    @Subscribe
-    public void FinishLoad(ResSelectedSendOrder data){
+    public void FinishLoad(ResSelectedSendOrder data) {
         resSelectedSendOrder = data;
         sender_recyclerview.setAdapter(senderRecyclerAdapter);
         product_recyclerview.setAdapter(productRecyclerAdapter);
@@ -127,24 +141,49 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
         // 어뎁터 2개
 
         // 최상단 order 간략부분 데이터 삽입
-        received_gift_cell_tv_date.setText(resSelectedSendOrder.getResult().getOrders().getOrderstime().trim().substring(0,10).replace("-", "."));
+        received_gift_cell_tv_date.setText(resSelectedSendOrder.getResult().getOrders().getOrderstime().trim().substring(0, 10).replace("-", "."));
 
-        if(resSelectedSendOrder.getResult().getOrders().getState().trim().equals("진행중")){
+        if (resSelectedSendOrder.getResult().getOrders().getState().trim().equals("진행중")) {
             received_gift_cell_PayState.setBackgroundResource(R.drawable.ic_progress);
-        }else{
+        } else {
             received_gift_cell_PayState.setBackgroundResource(R.drawable.ic_payment);
         }
 
-        gift_Senders.setText(resSelectedSendOrder.getResult().getOrders().getSender() + "외 " + resSelectedSendOrder.getResult().getOrders().getCnt() +"명");
+        gift_Senders.setText(resSelectedSendOrder.getResult().getOrders().getSender() + "외 " + resSelectedSendOrder.getResult().getOrders().getCnt() + "명");
         gift_receivedPerson.setText(resSelectedSendOrder.getResult().getOrders().getReceiver());
 
         ImageProc.getInstance().drawImage(resSelectedSendOrder.getResult().getOrders().getReceiverphoto(), received_gift_cell_receivedMemberProfile);
         ImageProc.getInstance().drawImage(resSelectedSendOrder.getResult().getOrders().getSenderphoto(), received_gift_cell_sendMemberProfile);
-
-        OttoBus.getInstance().getSelectSendOrder_Bus().unregister(this);
     }
 
-    class SenderRecyclerViewholder extends RecyclerView.ViewHolder{
+    public void changeState() {
+        Call<ResBasic> NetChangeState = NetSSL.getInstance().getMemberImpFactory().NetChangeState(new ReqChangeState(oid));
+        NetChangeState.enqueue(new Callback<ResBasic>() {
+            @Override
+            public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
+
+                if (response.isSuccessful()) {
+                    if (response.body() != null && response.body().getMessage() != null) {
+                        Log.i("Result : ", response.body().getMessage());
+                        // 서버 통신
+                        getSelectedData();
+
+                    } else {
+                        Log.i("RESPONSE RESULT 1: ", response.message());
+                    }
+                } else {
+
+                    Log.i("RESPONSE RESULT 2 : ", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResBasic> call, Throwable t) {
+            }
+        });
+    }
+
+    class SenderRecyclerViewholder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.received_gift_cell_buyer_profile)
         ImageView received_gift_cell_buyer_profile;
@@ -164,7 +203,7 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
         }
     }
 
-    class SenderRecyclerAdapter extends RecyclerView.Adapter<SenderRecyclerViewholder>{
+    class SenderRecyclerAdapter extends RecyclerView.Adapter<SenderRecyclerViewholder> {
 
         @Override
         public SenderRecyclerViewholder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -176,24 +215,34 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
         public void onBindViewHolder(SenderRecyclerViewholder holder, int position) {
 
             holder.received_gift_cell_sendName.setText(resSelectedSendOrder.getResult().getSettlements().get(position).getName());
-            holder.received_gift_cell_sendPrice.setText(String.format("%,3d",resSelectedSendOrder.getResult().getSettlements().get(position).getCost())+" 원");
+            holder.received_gift_cell_sendPrice.setText(String.format("%,3d", resSelectedSendOrder.getResult().getSettlements().get(position).getCost()) + " 원");
 
-            if(resSelectedSendOrder.getResult().getSettlements().get(position).getState().trim().equals("대기")){
+            if (resSelectedSendOrder.getResult().getSettlements().get(position).getState().trim().equals("대기")) {
                 holder.received_gift_cell_sendPayBtn.setBackgroundResource(R.drawable.ic_progress);
-            }else{
+            } else {
                 holder.received_gift_cell_sendPayBtn.setBackgroundResource(R.drawable.ic_payment);
+                // 결제 완료한 금액 구하기
+                completed_price += resSelectedSendOrder.getResult().getSettlements().get(position).getCost();
             }
 
             ImageProc.getInstance().drawImage(resSelectedSendOrder.getResult().getSettlements().get(position).getLocation(), holder.received_gift_cell_buyer_profile);
-            
-            holder.received_gift_cell_sendPayBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                    Toast.makeText(SelectedSendOrderActivity.this, "결제 진행 모듈 실행", Toast.LENGTH_SHORT).show();
-                    
-                }
-            });
+            // 본인만 결제하러 갈 수 있도록
+            if (StorageHelper.getInstance().getString(getApplicationContext(), "user_name").equals(resSelectedSendOrder.getResult().getSettlements().get(position).getName())) {
+                holder.received_gift_cell_sendPayBtn.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(SelectedSendOrderActivity.this, "결제 진행 모듈 실행", Toast.LENGTH_SHORT).show();
+                        changeState();
+                    }
+                });
+            }
+
+
+            // 전체 결제할 금액 구하기
+            total_price += resSelectedSendOrder.getResult().getSettlements().get(position).getCost();
+            // 전체 결제할 금액, 결제 완료한 금액 setText
+            setPriceText();
         }
 
         @Override
@@ -202,7 +251,7 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
         }
     }
 
-    class ProductRecyclerViewHolder extends RecyclerView.ViewHolder{
+    class ProductRecyclerViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.received_gift_cell_product_img)
         ImageView received_gift_cell_product_img;
@@ -231,13 +280,18 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
         public void onBindViewHolder(ProductRecyclerViewHolder holder, int position) {
             ImageProc.getInstance().drawImage(resSelectedSendOrder.getResult().getCarts().get(position).getLocation(), holder.received_gift_cell_product_img);
             holder.received_gift_cell_product_name.setText(resSelectedSendOrder.getResult().getCarts().get(position).getName());
-            holder.received_gift_cell_product_price.setText(String.format("%,3d",resSelectedSendOrder.getResult().getCarts().get(position).getPrice())+"원/1개");
+            holder.received_gift_cell_product_price.setText(String.format("%,3d", resSelectedSendOrder.getResult().getCarts().get(position).getPrice()) + "원/1개");
         }
 
         @Override
         public int getItemCount() {
             return resSelectedSendOrder.getResult().getCarts().size();
         }
+    }
+
+    public void setPriceText() {
+        tv_selected_total_price.setText(String.format(String.format("%,3d", total_price) + "원"));
+        tv_selected_completed_price.setText(String.format(String.format("%,3d", completed_price) + "원"));
     }
 
 }

@@ -21,11 +21,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.otto.Subscribe;
 import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResItems;
-import com.taca.boombuy.evt.OttoBus;
 import com.taca.boombuy.networkmodel.ItemDTO;
 import com.taca.boombuy.ui.mainview.activity.GiftSelectDetailInfoActivity;
 import com.taca.boombuy.util.ImageProc;
@@ -44,13 +42,14 @@ public class brandSelectfrag extends Fragment {
     public brandSelectfrag() {
         // Required empty public constructor
     }
+
     ResItems resItems;
 
     RecyclerView selectedbrand_recyclerview;
     RecyclerAdapter recyclerAdapter;
 
     GridLayoutManager gridLayoutManager;
-    int bid =0;
+    int bid = 0;
 
     //////
 
@@ -58,12 +57,13 @@ public class brandSelectfrag extends Fragment {
     FragmentTransaction fragmentTransaction;
     //////
 
-
+    int page_num = 1;
+    int cur_page_num;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        OttoBus.getInstance().getSearchBrandItem_Bus().register(this);
+        //OttoBus.getInstance().getSearchBrandItem_Bus().register(this);
     }
 
     @Override
@@ -95,34 +95,39 @@ public class brandSelectfrag extends Fragment {
 
         //fragmentTransaction.commit();
 
-        Bundle bundle= getArguments();
+        Bundle bundle = getArguments();
 
-        Log.i("선택된 프레그먼트 ", bid+"제발");
+        Log.i("선택된 프레그먼트 ", bid + "제발");
         bid = bundle.getInt("bid");
 
-        Log.i("브랜드번호 : " ,  bid +"");
+        Log.i("브랜드번호 : ", bid + "");
 
-        Call<ResItems> NetSearchBrandItem = NetSSL.getInstance().getMemberImpFactory().NetSearchBrandItem(bid);
+        getSelectedbrands();
 
+        return view;
+    }
+
+    public void getSelectedbrands() {
+        Call<ResItems> NetSearchBrandItem = NetSSL.getInstance().getMemberImpFactory().NetSearchBrandItem(bid, page_num, 20);
         NetSearchBrandItem.enqueue(new Callback<ResItems>() {
             @Override
             public void onResponse(Call<ResItems> call, Response<ResItems> response) {
 
-                if(response.isSuccessful() ){
-                    if(response.body() != null && response.body().getResult() != null){
-
-                        OttoBus.getInstance().getSearchBrandItem_Bus().post(response.body());
+                if (response.isSuccessful()) {
+                    if (response.body() != null && response.body().getResult() != null) {
+                        cur_page_num = page_num;
+                        //OttoBus.getInstance().getSearchBrandItem_Bus().post(response.body());
 
                         Log.i("DATA", response.body().toString());
+                        FinishLoad(response.body());
+                    } else {
 
-                    }else{
-
-                        Log.i("RESPONSE RESULT 1: " , response.message());
+                        Log.i("RESPONSE RESULT 1: ", response.message());
 
                     }
-                }else{
+                } else {
 
-                    Log.i("RESPONSE RESULT 2 : " , response.message());
+                    Log.i("RESPONSE RESULT 2 : ", response.message());
                 }
 
             }
@@ -133,15 +138,21 @@ public class brandSelectfrag extends Fragment {
                 Log.i("FAILURE : ", t.getMessage());
             }
         });
-
-        return view;
     }
 
-    @Subscribe
-    public void FinishLoad(ResItems data){
-        resItems = data;
+    public void FinishLoad(ResItems data) {
+        /*resItems = data;
         selectedbrand_recyclerview.setNestedScrollingEnabled(false);
-        selectedbrand_recyclerview.setAdapter(recyclerAdapter);
+        selectedbrand_recyclerview.setAdapter(recyclerAdapter);*/
+
+        if (page_num == 1) {
+            resItems = data;
+            selectedbrand_recyclerview.setNestedScrollingEnabled(false);
+            selectedbrand_recyclerview.setAdapter(recyclerAdapter);
+        } else {
+            resItems.getResult().addAll(data.getResult());
+            //((brandSelectfrag.RecyclerAdapter) rec.getAdapter()).notifyDataSetChanged();
+        }
     }
 
     class RecyclerViewHolder extends RecyclerView.ViewHolder {
@@ -164,7 +175,7 @@ public class brandSelectfrag extends Fragment {
     }
 
 
-    class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder>{
+    class RecyclerAdapter extends RecyclerView.Adapter<RecyclerViewHolder> {
 
 
         @Override
@@ -193,7 +204,7 @@ public class brandSelectfrag extends Fragment {
             });
 
             holder.lv_pname.setText(resItems.getResult().get(position).getName());
-            holder.lv_pprice.setText(resItems.getResult().get(position).getPrice()+"원");
+            holder.lv_pprice.setText(resItems.getResult().get(position).getPrice() + "원");
 
             holder.lv_detailinfo.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -205,8 +216,6 @@ public class brandSelectfrag extends Fragment {
                     startActivity(intent);
                 }
             });
-
-
 
 
         }

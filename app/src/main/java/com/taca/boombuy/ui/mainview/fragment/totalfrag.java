@@ -19,11 +19,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.otto.Subscribe;
 import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResItems;
-import com.taca.boombuy.evt.OttoBus;
 import com.taca.boombuy.networkmodel.ItemDTO;
 import com.taca.boombuy.singleton.item_single;
 import com.taca.boombuy.ui.mainview.activity.GiftSelectDetailInfoActivity;
@@ -42,12 +40,15 @@ public class totalfrag extends Fragment {
 
     CustomListAdapter listAdapter;
     ListView listView;
-    boolean ottoFlag = false;
+
+
+    int page_num = 1;
+    int cur_page_num;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        OttoBus.getInstance().getSearchItems_Bus().register(this);
+        //OttoBus.getInstance().getSearchItems_Bus().register(this);
     }
 
     @Nullable
@@ -56,32 +57,7 @@ public class totalfrag extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.activity_totalfrag, container, false);
 
-        Call<ResItems> NetSearchItems = NetSSL.getInstance().getMemberImpFactory().NetSearchItems();
-        NetSearchItems.enqueue(new Callback<ResItems>() {
-            @Override
-            public void onResponse(Call<ResItems> call, Response<ResItems> response) {
-
-                if(response.isSuccessful() ){
-                    if(response.body() != null && response.body().getResult() != null){
-
-                        OttoBus.getInstance().getSearchItems_Bus().post(response.body());
-
-                    }else{
-
-                        Log.i("RESPONSE RESULT 1: " , response.message());
-
-                    }
-                }else{
-
-                    Log.i("RESPONSE RESULT 2 : " , response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResItems> call, Throwable t) {
-
-            }
-        });
+        getTotalItems();
 
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -164,7 +140,7 @@ public class totalfrag extends Fragment {
 
             holder.lv_pname.setText(getItem(position).getName());
             // pcontent
-            holder.lv_pprice.setText(getItem(position).getPrice()+"원");
+            holder.lv_pprice.setText(getItem(position).getPrice() + "원");
 
             holder.lv_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
@@ -225,15 +201,57 @@ public class totalfrag extends Fragment {
                     Toast.makeText(getContext(), getItem(position).toString(), Toast.LENGTH_SHORT).show();
                 }
             });
+
+            // 마지막 체크
+            if (position == getCount() - 1) {
+                // 최종 페이지라면 더이상 목록이 없습니다.등 메세지 처리 하면 됨.
+                // 아니라면 다은 페이지를 가져온다.
+                //Toast.makeText(getActivity(), "마지막", Toast.LENGTH_SHORT).show();
+                Log.i("UI", "마지막");
+                if (page_num == cur_page_num) {
+                    page_num++;
+                    // 통신
+                    getTotalItems();
+                }
+            }
+
             return convertView;
         }
     }
 
-    @Subscribe
-    public void FinishLoad(ResItems data){
-        resItems = data;
+    public void getTotalItems() {
+        Call<ResItems> NetSearchItems = NetSSL.getInstance().getMemberImpFactory().NetSearchItems(page_num, 20);
+        NetSearchItems.enqueue(new Callback<ResItems>() {
+            @Override
+            public void onResponse(Call<ResItems> call, Response<ResItems> response) {
 
-        listView.setAdapter(listAdapter);
-        ((totalfrag.CustomListAdapter)listView.getAdapter()).notifyDataSetChanged();
+                if (response.isSuccessful()) {
+                    if (response.body() != null && response.body().getResult() != null) {
+                        cur_page_num = page_num;
+                        //OttoBus.getInstance().getSearchItems_Bus().post(response.body());
+                        FinishLoad(response.body());
+                    } else {
+                        Log.i("RESPONSE RESULT 1: ", response.message());
+                    }
+                } else {
+
+                    Log.i("RESPONSE RESULT 2 : ", response.message());
+                }
+            }
+            @Override
+            public void onFailure(Call<ResItems> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void FinishLoad(ResItems data) {
+        if (page_num == 1) {
+            resItems = data;
+            listView.setAdapter(listAdapter);
+        } else {
+            resItems.getResult().addAll(data.getResult());
+            ((totalfrag.CustomListAdapter) listView.getAdapter()).notifyDataSetChanged();
+        }
     }
 }

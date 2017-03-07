@@ -26,6 +26,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.PartMap;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 
 public interface MemberImpFactory {
@@ -61,20 +62,20 @@ public interface MemberImpFactory {
     Call<ResBasic> NetSendContacts(@Body ReqSendContacts reqSendContacts);
 
     // 전체 상품 목록 조회
-    @GET("/items")
-    Call<ResItems> NetSearchItems();
+    @GET("/items?")
+    Call<ResItems> NetSearchItems(@Query("page") int page_num, @Query("rows") int rows_num);
 
     // 브랜드 전체 목록 조회
-    @GET("/brands")
-    Call<ResSearchBrands> NetSearchBrands();
+    @GET("brands?")
+    Call<ResSearchBrands> NetSearchBrands(@Query("page") int page_num, @Query("rows") int rows_num);
 
     // 하나의 브랜드 상품 전체 조회
-    @GET("/brands/{bid}")
-    Call<ResItems> NetSearchBrandItem(@Path("bid") int bid);
+    @GET("/brands/{bid}?")
+    Call<ResItems> NetSearchBrandItem(@Path("bid") int bid, @Query("page") int page_num, @Query("rows") int rows_num);
 
     // 상품권 전체 목록 조회
-    @GET("/items/voucher")
-    Call<ResItems> NetSearchCoupon();
+    @GET("/items/voucher?")
+    Call<ResItems> NetSearchCoupon(@Query("page") int page_num, @Query("rows") int rows_num);
 
     // 하나의 상품 상세 조회
     @GET("/items/{iid}")

@@ -19,11 +19,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.squareup.otto.Subscribe;
 import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResItems;
-import com.taca.boombuy.evt.OttoBus;
 import com.taca.boombuy.networkmodel.ItemDTO;
 import com.taca.boombuy.singleton.item_single;
 import com.taca.boombuy.ui.mainview.activity.GiftSelectDetailInfoActivity;
@@ -65,6 +63,8 @@ public class couponfrag extends Fragment {
 
     ResItems resItems;
 
+    int page_num = 1;
+    int cur_page_num;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -76,33 +76,7 @@ public class couponfrag extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_couponfrag, container, false);
         couponAdapter = new CouponListViewAdapter();
 
-        Call<ResItems> NetSearchCoupon = NetSSL.getInstance().getMemberImpFactory().NetSearchCoupon();
-        NetSearchCoupon.enqueue(new Callback<ResItems>() {
-            @Override
-            public void onResponse(Call<ResItems> call, Response<ResItems> response) {
-
-                if (response.isSuccessful()) {
-                    if (response.body() != null && response.body().getResult() != null) {
-
-                        OttoBus.getInstance().getSearchCoupons_Bus().post(response.body());
-
-                    } else {
-                        Log.i("RESPONSE RESULT 1: ", response.message());
-                    }
-                } else {
-                    Log.i("RESPONSE RESULT 2 : ", response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResItems> call, Throwable t) {
-
-            }
-        });
-
-
-
-
+        getCoupon();
 
         listview = (ListView) view.findViewById(R.id.listview);
 
@@ -205,18 +179,62 @@ public class couponfrag extends Fragment {
                     startActivity(intent);
                 }
             });
+
+            // 마지막 체크
+            if (position == getCount() - 1) {
+                // 최종 페이지라면 더이상 목록이 없습니다.등 메세지 처리 하면 됨.
+                // 아니라면 다은 페이지를 가져온다.
+                //Toast.makeText(getActivity(), "마지막", Toast.LENGTH_SHORT).show();
+                Log.i("UI", "마지막");
+                if (page_num == cur_page_num) {
+                    page_num++;
+                    // 통신
+                    getCoupon();
+                }
+            }
+
             return convertView;
         }
     }
 
+    public void getCoupon() {
+        Call<ResItems> NetSearchCoupon = NetSSL.getInstance().getMemberImpFactory().NetSearchCoupon(page_num, 20);
+        NetSearchCoupon.enqueue(new Callback<ResItems>() {
+            @Override
+            public void onResponse(Call<ResItems> call, Response<ResItems> response) {
 
-    @Subscribe
+                if (response.isSuccessful()) {
+                    if (response.body() != null && response.body().getResult() != null) {
+                        cur_page_num = page_num;
+                        //OttoBus.getInstance().getSearchCoupons_Bus().post(response.body());
+                        FinishLoad(response.body());
+                    } else {
+                        Log.i("RESPONSE RESULT 1: ", response.message());
+                    }
+                } else {
+                    Log.i("RESPONSE RESULT 2 : ", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResItems> call, Throwable t) {
+
+            }
+        });
+    }
+
     public void FinishLoad(ResItems data){
-
-
-        resItems = data;
+        /*resItems = data;
         listview.setAdapter(couponAdapter);
-        ((couponfrag.CouponListViewAdapter)listview.getAdapter()).notifyDataSetChanged();
+        ((couponfrag.CouponListViewAdapter)listview.getAdapter()).notifyDataSetChanged();*/
+
+        if (page_num == 1) {
+            resItems = data;
+            listview.setAdapter(couponAdapter);
+        } else {
+            resItems.getResult().addAll(data.getResult());
+            ((couponfrag.CouponListViewAdapter)listview.getAdapter()).notifyDataSetChanged();
+        }
 
     }
 
@@ -236,7 +254,7 @@ public class couponfrag extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        OttoBus.getInstance().getSearchCoupons_Bus().register(this);
+        //OttoBus.getInstance().getSearchCoupons_Bus().register(this);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);

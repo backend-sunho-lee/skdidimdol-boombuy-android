@@ -15,11 +15,9 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 
-import com.squareup.otto.Subscribe;
 import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResSearchBrands;
-import com.taca.boombuy.evt.OttoBus;
 import com.taca.boombuy.networkmodel.BrandDTO;
 import com.taca.boombuy.ui.mainview.activity.MainProduct;
 import com.taca.boombuy.util.ImageProc;
@@ -55,44 +53,20 @@ public class brandfrag extends Fragment {
     GridViewAdapter myAdapter;
 
     ResSearchBrands resSearchBrands;
-    boolean ottoFlag = false;
 
-    Button btn1 ;
+    Button btn1;
+
+    int page_num = 1;
+    int cur_page_num;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         this.inflater = inflater;
         View view = inflater.inflate(R.layout.fragment_brandfrag, container, false);
 
-        Call<ResSearchBrands> NetSearchBrands = NetSSL.getInstance().getMemberImpFactory().NetSearchBrands();
-        NetSearchBrands.enqueue(new Callback<ResSearchBrands>() {
-            @Override
-            public void onResponse(Call<ResSearchBrands> call, Response<ResSearchBrands> response) {
+        getTotalBrands();
 
-                if (response.isSuccessful()) {
-                    if (response.body() != null && response.body().getResult() != null) {
-
-                        OttoBus.getInstance().getSearchBrands_Bus().post(response.body());
-
-                    } else {
-                        Log.i("RESPONSE RESULT 1: ", response.message());
-                    }
-                } else {
-                    Log.i("RESPONSE RESULT 2 : ", response.message());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResSearchBrands> call, Throwable t) {
-
-            }
-        });
-
-
-        if (!ottoFlag) {
-            OttoBus.getInstance().getSearchBrands_Bus().register(this);
-            ottoFlag = true;
-        }
 
         gridView = (GridView) view.findViewById(R.id.gridview);
         //gridView.setNumColumns(3);
@@ -117,7 +91,7 @@ public class brandfrag extends Fragment {
 
         @Override
         public int getCount() {
-            Log.i("Y","개수" + resSearchBrands.getResult().size());
+            Log.i("Y", "개수" + resSearchBrands.getResult().size());
             return resSearchBrands.getResult().size();
         }
 
@@ -134,18 +108,17 @@ public class brandfrag extends Fragment {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             //
-            Log.i("BRAND ITEMS : " , getItem(position).toString());
+            Log.i("BRAND ITEMS : ", getItem(position).toString());
 
             ViewHolder holder;
-            if( convertView == null) {
+            if (convertView == null) {
                 convertView = inflater.inflate(R.layout.cell_grid_layout, parent, false);
                 holder = new ViewHolder(convertView);
                 convertView.setTag(holder);
-            }else{
-                holder = (ViewHolder)convertView.getTag();
+            } else {
+                holder = (ViewHolder) convertView.getTag();
             }
             ImageProc.getInstance().drawImage(getItem(position).getLocation(), holder.brandimg);
-
 
 
             convertView.setOnClickListener(new View.OnClickListener() {
@@ -162,9 +135,24 @@ public class brandfrag extends Fragment {
                     FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
                     fragmentTransaction.replace(R.id.container_Frag, brandSelectfrag, "brandfrag");
                     fragmentTransaction.commit();
-                    ((MainProduct)getActivity()).secondMenuDepth=1;
+                    ((MainProduct) getActivity()).secondMenuDepth = 1;
                 }
             });
+
+
+            // 마지막 체크
+            if (position == getCount() - 1) {
+                // 최종 페이지라면 더이상 목록이 없습니다.등 메세지 처리 하면 됨.
+                // 아니라면 다은 페이지를 가져온다.
+                //Toast.makeText(getActivity(), "마지막", Toast.LENGTH_SHORT).show();
+                Log.i("UI", "마지막");
+                if (page_num == cur_page_num) {
+                    page_num++;
+                    // 통신
+                    getTotalBrands();
+                }
+            }
+
             return convertView;
         }
     }
@@ -184,7 +172,7 @@ public class brandfrag extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        OttoBus.getInstance().getSearchItems_Bus().register(this);
+        //OttoBus.getInstance().getSearchItems_Bus().register(this);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
@@ -219,12 +207,40 @@ public class brandfrag extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    @Subscribe
-    public void FinishLoad(ResSearchBrands data) {
+    public void getTotalBrands() {
+        Call<ResSearchBrands> NetSearchBrands = NetSSL.getInstance().getMemberImpFactory().NetSearchBrands(page_num, 5);
+        NetSearchBrands.enqueue(new Callback<ResSearchBrands>() {
+            @Override
+            public void onResponse(Call<ResSearchBrands> call, Response<ResSearchBrands> response) {
 
-        resSearchBrands = data;
-        gridView.setAdapter(myAdapter);
-        ((brandfrag.GridViewAdapter) gridView.getAdapter()).notifyDataSetChanged();
+                if (response.isSuccessful()) {
+                    if (response.body() != null && response.body().getResult() != null) {
+                        cur_page_num = page_num;
+                        //OttoBus.getInstance().getSearchBrands_Bus().post(response.body());
+                        FinishLoad(response.body());
+                    } else {
+                        Log.i("RESPONSE RESULT 1: ", response.message());
+                    }
+                } else {
+                    Log.i("RESPONSE RESULT 2 : ", response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResSearchBrands> call, Throwable t) {
+
+            }
+        });
+    }
+
+    public void FinishLoad(ResSearchBrands data) {
+        if (page_num == 1) {
+            resSearchBrands = data;
+            gridView.setAdapter(myAdapter);
+        } else {
+            resSearchBrands.getResult().addAll(data.getResult());
+            ((brandfrag.GridViewAdapter) gridView.getAdapter()).notifyDataSetChanged();
+        }
 
     }
 

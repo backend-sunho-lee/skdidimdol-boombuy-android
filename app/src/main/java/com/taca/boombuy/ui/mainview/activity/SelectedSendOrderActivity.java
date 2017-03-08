@@ -103,6 +103,7 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
         total_price = 0;
         completed_price = 0;
 
+        Log.i("oid확인 : ", oid+"");
         Call<ResSelectedSendOrder> NetSelectSendOrder = NetSSL.getInstance().getMemberImpFactory().NetSelectSendOrder(oid);
         NetSelectSendOrder.enqueue(new Callback<ResSelectedSendOrder>() {
             @Override
@@ -240,7 +241,6 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
                     }
                 });
             }
-
 
             // 전체 결제할 금액 구하기
             total_price += resSelectedSendOrder.getResult().getSettlements().get(position).getCost();

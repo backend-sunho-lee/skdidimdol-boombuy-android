@@ -235,7 +235,6 @@ public class couponfrag extends Fragment {
             resItems.getResult().addAll(data.getResult());
             ((couponfrag.CouponListViewAdapter)listview.getAdapter()).notifyDataSetChanged();
         }
-
     }
 
     public couponfrag() {

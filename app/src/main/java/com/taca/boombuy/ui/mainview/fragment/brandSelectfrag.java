@@ -151,7 +151,7 @@ public class brandSelectfrag extends Fragment {
             selectedbrand_recyclerview.setAdapter(recyclerAdapter);
         } else {
             resItems.getResult().addAll(data.getResult());
-            //((brandSelectfrag.RecyclerAdapter) rec.getAdapter()).notifyDataSetChanged();
+            (selectedbrand_recyclerview.getAdapter()).notifyDataSetChanged();
         }
     }
 
@@ -217,6 +217,18 @@ public class brandSelectfrag extends Fragment {
                 }
             });
 
+            // 마지막 체크
+            if (position == getItemCount() - 1) {
+                // 최종 페이지라면 더이상 목록이 없습니다.등 메세지 처리 하면 됨.
+                // 아니라면 다은 페이지를 가져온다.
+                //Toast.makeText(getActivity(), "마지막", Toast.LENGTH_SHORT).show();
+                Log.i("UI", "마지막");
+                if (page_num == cur_page_num) {
+                    page_num++;
+                    // 통신
+                    getSelectedbrands();
+                }
+            }
 
         }
 

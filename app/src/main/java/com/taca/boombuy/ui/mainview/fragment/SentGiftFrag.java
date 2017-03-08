@@ -30,7 +30,6 @@ import retrofit2.Response;
 public class SentGiftFrag extends Fragment {
 
 
-
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -81,9 +80,9 @@ public class SentGiftFrag extends Fragment {
             @Override
             public void onResponse(Call<ResSimpleSendOrders> call, Response<ResSimpleSendOrders> response) {
 
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
 
-                    if(response.body() != null && response.body().getResult() != null){
+                    if (response.body() != null && response.body().getResult() != null) {
 
                         resSimpleSendOrders = response.body();
                         Log.i("RES SIMPLE DATA : ", resSimpleSendOrders.toString());
@@ -91,10 +90,10 @@ public class SentGiftFrag extends Fragment {
                         received_gift_recyclerView.setAdapter(receivedAdapter);
                         receivedAdapter.notifyDataSetChanged();
 
-                    }else{
+                    } else {
                         Log.i("FAIL여기제발", "HERE 11");
                     }
-                }else{
+                } else {
                     Log.i("FAIL여기제발", "HERE 22");
                 }
             }
@@ -123,7 +122,7 @@ public class SentGiftFrag extends Fragment {
         return view;
     }
 
-    class ReceivedRecyclerViewHolder extends RecyclerView.ViewHolder{
+    class ReceivedRecyclerViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.received_gift_cell_tv_date)
         TextView received_gift_cell_tv_date;
         @BindView(R.id.received_gift_cell_PayState)
@@ -152,7 +151,7 @@ public class SentGiftFrag extends Fragment {
         }
     }
 
-    class ReceivedAdapter extends RecyclerView.Adapter<ReceivedRecyclerViewHolder>{
+    class ReceivedAdapter extends RecyclerView.Adapter<ReceivedRecyclerViewHolder> {
 
         @Override
         public ReceivedRecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -166,13 +165,13 @@ public class SentGiftFrag extends Fragment {
 
             holder.received_gift_cell_tv_date.setText(resSimpleSendOrders.getResult().get(position).getOrderstime().substring(0, 10).replace("-", "."));
 
-            if(resSimpleSendOrders.getResult().get(position).getState().trim().equals("진행중")){
+            if (resSimpleSendOrders.getResult().get(position).getState().trim().equals("진행중")) {
                 holder.received_gift_cell_PayState.setBackgroundResource(R.drawable.ic_progress);
-            }else{
+            } else {
                 holder.received_gift_cell_PayState.setBackgroundResource(R.drawable.ic_payment);
             }
 
-            switch (resSimpleSendOrders.getResult().get(position).getCnt()){
+            switch (resSimpleSendOrders.getResult().get(position).getCnt()) {
                 case 1:
                     holder.received_gift_cell_senders_count.setBackgroundResource(R.drawable.ic_1);
                     break;
@@ -205,11 +204,11 @@ public class SentGiftFrag extends Fragment {
                     break;
             }
 
-            holder.gift_Senders.setText(resSimpleSendOrders.getResult().get(position).getSender() + "외 " + resSimpleSendOrders.getResult().get(position).getCnt() +"명");
+            holder.gift_Senders.setText(resSimpleSendOrders.getResult().get(position).getSender() + "외 " + resSimpleSendOrders.getResult().get(position).getCnt() + "명");
             holder.gift_receivedPerson.setText(resSimpleSendOrders.getResult().get(position).getReceiver());
 
-            ImageProc.getInstance().drawImage( resSimpleSendOrders.getResult().get(position).getSenderphoto() ,holder.received_gift_cell_sendMemberProfile);
-            ImageProc.getInstance().drawImage( resSimpleSendOrders.getResult().get(position).getReceiverphoto() ,holder.received_gift_cell_receivedMemberProfile);
+            ImageProc.getInstance().drawImage(resSimpleSendOrders.getResult().get(position).getSenderphoto(), holder.received_gift_cell_sendMemberProfile);
+            ImageProc.getInstance().drawImage(resSimpleSendOrders.getResult().get(position).getReceiverphoto(), holder.received_gift_cell_receivedMemberProfile);
 
 
             holder.receivedfrag_linearlayout.setOnClickListener(new View.OnClickListener() {

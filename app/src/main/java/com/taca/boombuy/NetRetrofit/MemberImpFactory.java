@@ -87,7 +87,7 @@ public interface MemberImpFactory {
     @GET("/friends")
     Call<ResFriendList> NetSearchFriendList();
 
-        // 주문 정보 전송
+    // 주문 정보 전송
     @POST("/orders")
     Call<ResBasic> NetOrders(@Body GiftDTO giftDTO);
 
@@ -96,13 +96,16 @@ public interface MemberImpFactory {
     @PUT("/users/me")
     Call<ResBasic> NetChangeImage(@PartMap Map<String, RequestBody> params);
 
+    /*//보낸선물목록 조회 페이징
+    @GET("/orders/send?")
+    Call<ResSimpleSendOrders> NetSimpleSendOrders(@Query("page") int page_num, @Query("rows") int rows_num);*/
     //보낸선물목록 조회
     @GET("/orders/send")
     Call<ResSimpleSendOrders> NetSimpleSendOrders();
 
+
     // 선택한 보낸 선물 목록 조회
-    @GET("/orders/{oid}" +
-            "")
+    @GET("/orders/send/{oid}")
     Call<ResSelectedSendOrder> NetSelectSendOrder(@Path("oid") int temp);
     // 받은 선물 정보 조회
 //    @GET("/orders/receive")

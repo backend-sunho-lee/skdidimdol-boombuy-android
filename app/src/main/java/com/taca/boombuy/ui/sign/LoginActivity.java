@@ -38,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
     ImageButton btn_auto_signin;
     TextView btn_signup;
 
+    // 텍스트
     EditText et_signin_id;
     EditText et_signin_password;
 

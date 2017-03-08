@@ -49,7 +49,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
     // 노티 창에 띄움
     private void sendNotification(String messageBody) {
+        // 노티 번호
+        int msgID = (int)(Math.random()*10000);
+
         Intent intent = new Intent(this, LoginActivity.class);
+        intent.putExtra("NOTI_ID", msgID);  // 노티를 제거시 필요한 번호
+        intent.putExtra("FCM", messageBody);// 푸시내용을 액티비티로 전달
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
@@ -58,13 +63,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.mipmap.ic_launcher)
                 .setContentTitle("BOOMBUY")
-                .setContentText(messageBody)
-                .setAutoCancel(true)
+                .setContentText("결제해주세요요")
+               .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+        notificationManager.notify(msgID /* ID of notification */, notificationBuilder.build());
     }
 }

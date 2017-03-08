@@ -1,6 +1,8 @@
 package com.taca.boombuy.ui.sign;
 
 import android.Manifest;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -22,6 +24,7 @@ import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.database.StorageHelper;
 import com.taca.boombuy.evt.OttoBus;
 import com.taca.boombuy.networkmodel.LoginDTO;
+import com.taca.boombuy.ui.mainview.activity.GiftManageActivity;
 import com.taca.boombuy.ui.mainview.activity.MainActivity;
 import com.taca.boombuy.util.U;
 
@@ -48,6 +51,11 @@ public class LoginActivity extends AppCompatActivity {
 
         // 이벤트 받을 녀석(회원가입 완료 메시지)
         OttoBus.getInstance().getLogin_Bus().register(this);
+
+        // [1] 노티 관련 ===============================================================================
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        if (notificationManager != null)
+            notificationManager.cancel(getIntent().getIntExtra("NOTI_ID", 0));  // 노티 삭제
 
         et_signin_id = (EditText) findViewById(R.id.et_signin_id);
         et_signin_password = (EditText) findViewById(R.id.et_signin_password);
@@ -168,14 +176,21 @@ public class LoginActivity extends AppCompatActivity {
             StorageHelper.getInstance().setString(LoginActivity.this, "my_phone_number", et_signin_id.getText().toString());
             StorageHelper.getInstance().setString(LoginActivity.this, "auto_login_password", et_signin_password.getText().toString());
 
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            if (getIntent().getStringExtra("FCM") != null) {
+                // 푸시를 받고 자동로그인까지 했다
+                Intent intent = new Intent(LoginActivity.this, GiftManageActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            } else {
+                //그냥 왔다
+                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
             // 오토버스 썼으면 등록해제
             OttoBus.getInstance().getLogin_Bus().unregister(this);
-
-
-            startActivity(intent);
             finish();
+
         } else {
             Toast.makeText(LoginActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
         }

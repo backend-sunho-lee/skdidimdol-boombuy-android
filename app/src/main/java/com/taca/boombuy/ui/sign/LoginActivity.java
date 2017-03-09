@@ -24,8 +24,9 @@ import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.database.StorageHelper;
 import com.taca.boombuy.evt.OttoBus;
 import com.taca.boombuy.networkmodel.LoginDTO;
-import com.taca.boombuy.ui.mainview.activity.GiftManageActivity;
 import com.taca.boombuy.ui.mainview.activity.MainActivity;
+import com.taca.boombuy.ui.mainview.activity.SelectedSendOrderActivity;
+import com.taca.boombuy.util.ImageProc;
 import com.taca.boombuy.util.U;
 
 import retrofit2.Call;
@@ -46,7 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_in);
-
+        ImageProc.getInstance().getImageLoader(this);
         // READ_PHONE_STATE 퍼미션
         request_READ_PHONE_STATE_permission();
 
@@ -178,9 +179,8 @@ public class LoginActivity extends AppCompatActivity {
             StorageHelper.getInstance().setString(LoginActivity.this, "auto_login_password", et_signin_password.getText().toString());
 
             if (getIntent().getStringExtra("FCM") != null) {
-                // 푸시를 받고 자동로그인까지 했다
-                Intent intent = new Intent(LoginActivity.this, GiftManageActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                Intent intent = new Intent(LoginActivity.this, SelectedSendOrderActivity.class);
+                intent.putExtra("oid", Integer.parseInt(getIntent().getStringExtra("FCM")));
                 startActivity(intent);
             } else {
                 //그냥 왔다

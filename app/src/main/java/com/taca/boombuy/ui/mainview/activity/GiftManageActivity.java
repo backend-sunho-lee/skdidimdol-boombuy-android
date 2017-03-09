@@ -51,8 +51,6 @@ ReceivedGiftFrag.OnFragmentInteractionListener{
 
         tabLayout.setupWithViewPager(mViewPager);
 
-
-
     }
 
 

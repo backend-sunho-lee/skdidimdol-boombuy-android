@@ -69,7 +69,7 @@ public class brandfrag extends Fragment {
 
 
         gridView = (GridView) view.findViewById(R.id.gridview);
-        gridView.setNestedScrollingEnabled(false);
+        //gridView.setNestedScrollingEnabled(false);
         //gridView.setNumColumns(3);
 
         myAdapter = new GridViewAdapter();

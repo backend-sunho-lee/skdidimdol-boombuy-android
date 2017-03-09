@@ -7,7 +7,6 @@ package com.taca.boombuy.networkmodel;
 public class OrderReceivedBasicInfoDTO {
 
     int oid;
-    String sender;
     String name;  // ArrayList<String> name; <-- 이렇게 가야함
     String location;
     String time;

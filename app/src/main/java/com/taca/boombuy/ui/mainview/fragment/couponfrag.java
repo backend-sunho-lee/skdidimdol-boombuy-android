@@ -79,7 +79,7 @@ public class couponfrag extends Fragment {
         getCoupon(1);
 
         listview = (ListView) view.findViewById(R.id.listview);
-        listview.setNestedScrollingEnabled(false);
+        //listview.setNestedScrollingEnabled(false);
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -199,7 +199,7 @@ public class couponfrag extends Fragment {
     }
 
     public void getCoupon(final int getCount) {
-        Call<ResItems> NetSearchCoupon = NetSSL.getInstance().getMemberImpFactory().NetSearchCoupon(page_num, 3);
+        Call<ResItems> NetSearchCoupon = NetSSL.getInstance().getMemberImpFactory().NetSearchCoupon(page_num, 20);
         NetSearchCoupon.enqueue(new Callback<ResItems>() {
             @Override
             public void onResponse(Call<ResItems> call, Response<ResItems> response) {
@@ -232,11 +232,14 @@ public class couponfrag extends Fragment {
 
         if (page_num == 1) {
             resItems = data;
+            listview.setAdapter(couponAdapter);
         } else {
             resItems.getResult().addAll(data.getResult());
+            //listview.setAdapter(couponAdapter);
+            ((couponfrag.CouponListViewAdapter)listview.getAdapter()).notifyDataSetChanged();
         }
-        listview.setAdapter(couponAdapter);
-        ((couponfrag.CouponListViewAdapter)listview.getAdapter()).notifyDataSetChanged();
+
+
     }
 
     public couponfrag() {

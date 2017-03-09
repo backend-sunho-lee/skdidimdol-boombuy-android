@@ -194,16 +194,6 @@ public class totalfrag extends Fragment {
                 }
             });
 
-            convertView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-
-                    Log.i("FRAG : ", getItem(position).toString());
-
-                    Toast.makeText(getContext(), getItem(position).toString(), Toast.LENGTH_SHORT).show();
-                }
-            });
-
             // 마지막 체크
             if (position == getCount() - 1) {
                 // 최종 페이지라면 더이상 목록이 없습니다.등 메세지 처리 하면 됨.
@@ -250,8 +240,6 @@ public class totalfrag extends Fragment {
     public void FinishLoad(ResItems data, int getCount) {
         if (page_num == 1) {
             resItems = data;
-            //listView.setAdapter(listAdapter);
-            //listView.setSelection(getCount -1);
         } else {
             resItems.getResult().addAll(data.getResult());
         }
@@ -259,5 +247,6 @@ public class totalfrag extends Fragment {
         listView.setAdapter(listAdapter);
         listView.setSelection(getCount -1);
         ((totalfrag.CustomListAdapter) listView.getAdapter()).notifyDataSetChanged();
+
     }
 }

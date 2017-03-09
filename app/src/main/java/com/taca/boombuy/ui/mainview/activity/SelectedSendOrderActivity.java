@@ -241,14 +241,6 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-
-
-                        Intent intent = new Intent();
-                        startActivity(intent);
-
-
-
-
                         /*Intent intent = new Intent(SelectedSendOrderActivity.this, PaymentActivity.class);
                         intent.putExtra("name", resSelectedSendOrder.getResult().getSettlements().get(position).getName());
                         intent.putExtra("price", resSelectedSendOrder.getResult().getSettlements().get(position).getCost());

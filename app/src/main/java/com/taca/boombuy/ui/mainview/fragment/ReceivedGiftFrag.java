@@ -41,10 +41,6 @@ public class ReceivedGiftFrag extends Fragment {
     ReceivedItemAdapter receivedItemAdapter;
     GridLayoutManager gridLayoutManager;
 
-    int page_num = 1;
-    int cur_page_num;
-
-
     ResReceivedItem resReceivedItem;
 
     @Override
@@ -79,7 +75,7 @@ public class ReceivedGiftFrag extends Fragment {
 
     public void getReceivedItems(final int getItemCount){
 
-        Call<ResReceivedItem> NetReceivedItem = NetSSL.getInstance().getMemberImpFactory().NetReceivedItem(page_num, 20);
+        Call<ResReceivedItem> NetReceivedItem = NetSSL.getInstance().getMemberImpFactory().NetReceivedItem();
         NetReceivedItem.enqueue(new Callback<ResReceivedItem>() {
             @Override
             public void onResponse(Call<ResReceivedItem> call, Response<ResReceivedItem> response) {
@@ -88,18 +84,17 @@ public class ReceivedGiftFrag extends Fragment {
 
                     if(response.body() != null && response.body().getResult() != null){
 
-                        cur_page_num = page_num;
                         Log.i("MY RESULT", response.body().getResult().toString());
-                        FinishLoad(response.body() , getItemCount);
-
+                        FinishLoad(response.body());
 
                     }else{
 
-
+                        Log.i("FFFF", response.body().getError().toString());
                     }
 
                 }else{
 
+                    Log.i("FFFFffffff", response.message());
                 }
             }
 
@@ -113,17 +108,12 @@ public class ReceivedGiftFrag extends Fragment {
 
     }
 
-    public void FinishLoad(ResReceivedItem data, int getItemCount){
+    public void FinishLoad(ResReceivedItem data){
 
-        if (page_num == 1) {
-            resReceivedItem = data;
-        } else {
-            resReceivedItem.getResult().addAll(data.getResult());
-        }
-
+        resReceivedItem = data;
         receivedRecyclerView.setAdapter(receivedItemAdapter);
-        receivedRecyclerView.scrollToPosition(getItemCount-1);
-        (receivedRecyclerView.getAdapter()).notifyDataSetChanged();
+
+        //(receivedRecyclerView.getAdapter()).notifyDataSetChanged();
 
     }
 
@@ -177,7 +167,8 @@ public class ReceivedGiftFrag extends Fragment {
             //ImageProc.getInstance().drawImage(, holder.gift_using_statement);
 
 
-            // 마지막 체크 페이징
+
+         /*   // 마지막 체크 페이징
             if (position == getItemCount() - 1) {
                 // 최종 페이지라면 더이상 목록이 없습니다.등 메세지 처리 하면 됨.
                 // 아니라면 다은 페이지를 가져온다.
@@ -189,7 +180,7 @@ public class ReceivedGiftFrag extends Fragment {
                     getReceivedItems(getItemCount());
                 }
             }
-
+*/
         }
 
         @Override

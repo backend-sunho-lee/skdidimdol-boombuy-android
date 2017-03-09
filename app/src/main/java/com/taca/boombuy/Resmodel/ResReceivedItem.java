@@ -10,17 +10,8 @@ import java.util.ArrayList;
 
 public class ResReceivedItem {
 
-    String message;
     ArrayList<ReceivedOrderDTO> result;
     ResError error;
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
 
     public ArrayList<ReceivedOrderDTO> getResult() {
         return result;
@@ -38,11 +29,11 @@ public class ResReceivedItem {
         this.error = error;
     }
 
+
     @Override
     public String toString() {
         return "ResReceivedItem{" +
-                "message='" + message + '\'' +
-                ", result=" + result +
+                "result=" + result +
                 ", error=" + error +
                 '}';
     }

@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,8 +26,11 @@ import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResItems;
 import com.taca.boombuy.networkmodel.ItemDTO;
+import com.taca.boombuy.singleton.item_single;
 import com.taca.boombuy.ui.mainview.activity.GiftSelectDetailInfoActivity;
 import com.taca.boombuy.util.ImageProc;
+
+import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -87,7 +91,7 @@ public class brandSelectfrag extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //getActivity().finish();
+                getActivity().finish();
 
                 //onBackPressed();
 
@@ -219,6 +223,47 @@ public class brandSelectfrag extends Fragment {
                     intent.putExtra("item", item);
                     startActivity(intent);
                 }
+            });
+
+            holder.lv_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                    item_single.getInstance().itemDTO = new ItemDTO(
+                            resItems.getResult().get(position).getId(),
+                            resItems.getResult().get(position).getBid(),
+                            resItems.getResult().get(position).getName(),
+                            resItems.getResult().get(position).getPrice(),
+                            resItems.getResult().get(position).getDetail(),
+                            resItems.getResult().get(position).getLocation()
+                    );
+                    if (isChecked) {
+                        Collections.reverse(item_single.getInstance().itemDTOArrayList); // 새로운 데이터를 리스트의 앞에 추가 해야하므로 리버스한 후 추가 후 다시 리버스
+                        item_single.getInstance().itemDTOArrayList.add(item_single.getInstance().itemDTO);
+                        Collections.reverse(item_single.getInstance().itemDTOArrayList);
+/*
+*//*
+                        Single_Value.getInstance().vo_giftitem_list = new VO_giftitem_list();
+                        Single_Value.getInstance().vo_giftitem_list.setProduct_imageView_cell(getItem(position).getProduct_imageView_cell());
+                        Single_Value.getInstance().vo_giftitem_list.setProduct_title_cell(getItem(position).getProduct_title_cell());
+                        Single_Value.getInstance().vo_giftitem_list.setProduct_price_cell(getItem(position).getProduct_price_cell());
+                        Single_Value.getInstance().vo_giftitem_lists.add(Single_Value.getInstance().vo_giftitem_list);
+*//*
+                        Collections.reverse(Single_Value.getInstance().vo_giftitem_lists);*/
+
+                        // 준범]] giftStorage 파트
+                        // 체크한것들은 저장해야지
+
+                        // 선택한 곳
+                        //Toast.makeText(getActivity(), "선택", Toast.LENGTH_SHORT).show();
+
+                    } else {
+
+                        item_single.getInstance().itemDTOArrayList.remove(item_single.getInstance().itemDTO);
+                        Toast.makeText(getActivity(), position + "번째 선택 취소", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
             });
 
             // 마지막 체크

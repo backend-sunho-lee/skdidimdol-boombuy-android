@@ -13,6 +13,7 @@
         android:layout_weight="100">
 
         <CheckBox
+            android:theme="@style/MyCheckBox"
             android:id="@+id/lv_checkbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -42,15 +43,16 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:layout_marginTop="10dp"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="2">
 
             <TextView
-                android:layout_marginLeft="10dp"
                 android:id="@+id/lv_pname"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
                 android:gravity="center|left"
                 android:text="상품 이름"
                 android:textSize="15dp"
@@ -59,28 +61,30 @@
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
+            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_weight="1"
+            android:orientation="horizontal">
 
             <TextView
-                android:layout_weight="2"
-                android:layout_marginLeft="10dp"
                 android:id="@+id/lv_pprice"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="2"
                 android:gravity="center|left"
                 android:text="상품 가격"
                 android:textSize="15dp"
                 android:textStyle="bold" />
 
             <Button
-                android:layout_weight="1"
+                android:layout_margin="1dp"
                 android:id="@+id/lv_detailinfo"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="25dp"
                 android:layout_gravity="center"
+                android:layout_weight="1"
                 android:background="@drawable/btn_detail" />
 
         </LinearLayout>

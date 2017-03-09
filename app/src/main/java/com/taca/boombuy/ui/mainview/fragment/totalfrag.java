@@ -60,7 +60,7 @@ public class totalfrag extends Fragment {
         listAdapter = null;
 
 
-        getTotalItems(1);
+
 
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +74,7 @@ public class totalfrag extends Fragment {
         listView = (ListView) rootView.findViewById(R.id.listview);
         listAdapter = new CustomListAdapter();
 
+        getTotalItems(1);
         //listView.setAdapter(listAdapter);
         return rootView;
     }

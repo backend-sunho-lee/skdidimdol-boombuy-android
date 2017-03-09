@@ -7,6 +7,7 @@ import com.taca.boombuy.Resmodel.ResFriendList;
 import com.taca.boombuy.Resmodel.ResItemDetail;
 import com.taca.boombuy.Resmodel.ResItems;
 import com.taca.boombuy.Resmodel.ResMyProfile;
+import com.taca.boombuy.Resmodel.ResReceivedItem;
 import com.taca.boombuy.Resmodel.ResSearchBrands;
 import com.taca.boombuy.Resmodel.ResSelectedSendOrder;
 import com.taca.boombuy.Resmodel.ResSimpleSendOrders;
@@ -111,7 +112,7 @@ public interface MemberImpFactory {
 
     // 받은 선물 정보 조회
     @GET("/orders/receive")
-    Call<> NetReceivedItem(@Query("page") int page_num, @Query("rows") int rows_num);
+    Call<ResReceivedItem> NetReceivedItem(@Query("page") int page_num, @Query("rows") int rows_num);
 
 
 

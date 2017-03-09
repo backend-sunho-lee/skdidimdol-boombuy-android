@@ -1,5 +1,6 @@
 package com.taca.boombuy.ui.mainview.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -68,6 +69,7 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
     TextView tv_selected_total_price;
     @BindView(R.id.tv_selected_completed_price)
     TextView tv_selected_completed_price;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -236,6 +238,14 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
                 holder.received_gift_cell_sendPayBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+
+                        Intent intent = new Intent();
+                        startActivity(intent);
+
+
+
+
                         Toast.makeText(SelectedSendOrderActivity.this, "결제 진행 모듈 실행", Toast.LENGTH_SHORT).show();
                         changeState();
                     }

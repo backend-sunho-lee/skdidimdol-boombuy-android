@@ -1,7 +1,6 @@
 package com.taca.boombuy.Resmodel;
 
-import com.taca.boombuy.networkmodel.OrderReceivedBasicInfoDTO;
-import com.taca.boombuy.networkmodel.OrderReceivedProductInfoDTO;
+import com.taca.boombuy.networkmodel.ReceivedOrderDTO;
 
 import java.util.ArrayList;
 
@@ -11,38 +10,40 @@ import java.util.ArrayList;
 
 public class ResReceivedItem {
 
-    ArrayList<OrderReceivedBasicInfoDTO> settlements;
-    ArrayList<OrderReceivedProductInfoDTO> carts;
+    String message;
+    ArrayList<ReceivedOrderDTO> result;
+    ResError error;
 
-    public ResReceivedItem() {
+    public String getMessage() {
+        return message;
     }
 
-    public ResReceivedItem(ArrayList<OrderReceivedBasicInfoDTO> settlements, ArrayList<OrderReceivedProductInfoDTO> carts) {
-        this.settlements = settlements;
-        this.carts = carts;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public ArrayList<OrderReceivedBasicInfoDTO> getSettlements() {
-        return settlements;
+    public ArrayList<ReceivedOrderDTO> getResult() {
+        return result;
     }
 
-    public void setSettlements(ArrayList<OrderReceivedBasicInfoDTO> settlements) {
-        this.settlements = settlements;
+    public void setResult(ArrayList<ReceivedOrderDTO> result) {
+        this.result = result;
     }
 
-    public ArrayList<OrderReceivedProductInfoDTO> getCarts() {
-        return carts;
+    public ResError getError() {
+        return error;
     }
 
-    public void setCarts(ArrayList<OrderReceivedProductInfoDTO> carts) {
-        this.carts = carts;
+    public void setError(ResError error) {
+        this.error = error;
     }
 
     @Override
     public String toString() {
         return "ResReceivedItem{" +
-                "settlements=" + settlements +
-                ", carts=" + carts +
+                "message='" + message + '\'' +
+                ", result=" + result +
+                ", error=" + error +
                 '}';
     }
 }

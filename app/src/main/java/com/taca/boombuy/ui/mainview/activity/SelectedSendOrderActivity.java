@@ -169,6 +169,8 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
 
                 if (response.isSuccessful()) {
                     if (response.body() != null && response.body().getMessage() != null) {
+
+
                         Log.i("Result : ", response.body().getMessage());
                         // 서버 통신
                         getSelectedData();

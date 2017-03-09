@@ -87,21 +87,19 @@ public class ReceivedGiftFrag extends Fragment {
                 if(response.isSuccessful()){
 
                     if(response.body() != null && response.body().getResult() != null){
+
                         cur_page_num = page_num;
-
                         Log.i("MY RESULT", response.body().getResult().toString());
-
                         FinishLoad(response.body() , getItemCount);
+
 
                     }else{
 
-                        Log.i("MY RESULT11", response.message());
 
                     }
 
                 }else{
 
-                    Log.i("MY RESULT22", response.message());
                 }
             }
 

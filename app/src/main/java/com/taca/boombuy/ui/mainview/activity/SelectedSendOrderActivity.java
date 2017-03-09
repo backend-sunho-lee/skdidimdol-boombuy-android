@@ -1,5 +1,6 @@
 package com.taca.boombuy.ui.mainview.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -215,7 +216,7 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(SenderRecyclerViewholder holder, int position) {
+        public void onBindViewHolder(SenderRecyclerViewholder holder, final int position) {
 
             holder.received_gift_cell_sendName.setText(resSelectedSendOrder.getResult().getSettlements().get(position).getName());
             holder.received_gift_cell_sendPrice.setText(String.format("%,3d", resSelectedSendOrder.getResult().getSettlements().get(position).getCost()) + " 원");
@@ -236,6 +237,14 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
                 holder.received_gift_cell_sendPayBtn.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        /*Intent intent = new Intent(SelectedSendOrderActivity.this, PaymentActivity.class);
+                        intent.putExtra("name", resSelectedSendOrder.getResult().getSettlements().get(position).getName());
+                        intent.putExtra("price", resSelectedSendOrder.getResult().getSettlements().get(position).getCost());
+                        // 결제후 결과를 돌려 받는다
+                        // 1000 : 요청코드 (임의로 지정)
+                        startActivityForResult(intent, 1000);*/
+
                         Toast.makeText(SelectedSendOrderActivity.this, "결제 진행 모듈 실행", Toast.LENGTH_SHORT).show();
                         changeState();
                     }
@@ -251,6 +260,19 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
         @Override
         public int getItemCount() {
             return resSelectedSendOrder.getResult().getSettlements().size();
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if( requestCode == 1000 && resultCode == 1001) {
+            Toast.makeText(this, data.getStringExtra("err"), Toast.LENGTH_SHORT).show();
+        }else if( requestCode == 1000 && resultCode == 1) {
+            // 결제 후 결과를 받는 위치
+            Toast.makeText(this, data.getStringExtra("suc"), Toast.LENGTH_SHORT).show();
+            // 결제 결과 서버로 전송
+            changeState();
         }
     }
 

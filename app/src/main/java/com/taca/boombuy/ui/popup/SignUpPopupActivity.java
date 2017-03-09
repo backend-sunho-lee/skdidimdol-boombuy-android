@@ -59,7 +59,7 @@ public class SignUpPopupActivity extends AppCompatActivity {
     }
 
     public void goMain() {
-        // 서버에 로그인 시도
+        /*// 서버에 로그인 시도
         LoginDTO loginDTO = new LoginDTO(
                 StorageHelper.getInstance().getString(SignUpPopupActivity.this, "my_phone_number"),
                 StorageHelper.getInstance().getString(SignUpPopupActivity.this, "auto_login_password"),
@@ -92,13 +92,14 @@ public class SignUpPopupActivity extends AppCompatActivity {
                 t.printStackTrace();
                 Log.i("ERROR : ", t.getMessage());
             }
-        });
+        });*/
+        setResult(0);
+        finish();
     }
 
-    // 오토버스 이벤트 도착
-    ResBasic resBasic;
 
-    @Subscribe
+
+    /*@Subscribe
     public void FinishLoad(ResBasic data) {
 
         resBasic = data;
@@ -113,5 +114,5 @@ public class SignUpPopupActivity extends AppCompatActivity {
         } else {
             Toast.makeText(SignUpPopupActivity.this, "로그인 실패", Toast.LENGTH_SHORT).show();
         }
-    }
+    }*/
 }

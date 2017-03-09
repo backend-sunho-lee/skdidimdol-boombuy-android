@@ -40,9 +40,6 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        // 이벤트 받을 녀석(회원가입 완료 메시지)
-        OttoBus.getInstance().getSignUp_Bus().register(this);
-
         // EditText 매칭
         et_signup_name = (EditText) findViewById(R.id.et_signup_name);
         et_signup_id = (EditText) findViewById(R.id.et_signup_id);
@@ -89,7 +86,8 @@ public class SignUpActivity extends AppCompatActivity {
                                 if (response.body() != null && response.body().getMessage() != null) {
 
                                     Log.i("RES SUC", response.body().getMessage());
-                                    OttoBus.getInstance().getSignUp_Bus().post(response.body());
+                                    FinishConnect(response.body());
+
                                 } else {
                                     Log.i("RES FAIl", response.message().toString());
                                 }
@@ -118,8 +116,7 @@ public class SignUpActivity extends AppCompatActivity {
 
     ResBasic resBasic;
 
-    @Subscribe
-    public void FinishLoad(ResBasic data) {
+    public void FinishConnect(ResBasic data) {
         resBasic = data;
         // 회원가입 성공하면 sharedpreference에 저장
         if (resBasic.getMessage() != null) {
@@ -127,13 +124,16 @@ public class SignUpActivity extends AppCompatActivity {
             StorageHelper.getInstance().setString(SignUpActivity.this, "auto_login_password", et_signup_password.getText().toString());
 
             Intent intent = new Intent(SignUpActivity.this, SignUpPopupActivity.class);
-            //intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-            // 오토버스 썼으면 등록해제
-            OttoBus.getInstance().getSignUp_Bus().unregister(this);
-            startActivity(intent);
-            //
+            startActivityForResult(intent, 1004);
         } else {
             Toast.makeText(SignUpActivity.this, "회원가입 실패", Toast.LENGTH_SHORT).show();
+        }
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 1004) {
+            finish();
         }
     }
 }

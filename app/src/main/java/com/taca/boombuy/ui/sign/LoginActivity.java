@@ -24,6 +24,7 @@ import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.database.StorageHelper;
 import com.taca.boombuy.evt.OttoBus;
 import com.taca.boombuy.networkmodel.LoginDTO;
+import com.taca.boombuy.ui.mainview.activity.GiftManageActivity;
 import com.taca.boombuy.ui.mainview.activity.MainActivity;
 import com.taca.boombuy.ui.mainview.activity.SelectedSendOrderActivity;
 import com.taca.boombuy.util.ImageProc;
@@ -179,9 +180,16 @@ public class LoginActivity extends AppCompatActivity {
             StorageHelper.getInstance().setString(LoginActivity.this, "auto_login_password", et_signin_password.getText().toString());
 
             if (getIntent().getStringExtra("FCM") != null) {
-                Intent intent = new Intent(LoginActivity.this, SelectedSendOrderActivity.class);
-                intent.putExtra("oid", Integer.parseInt(getIntent().getStringExtra("FCM")));
-                startActivity(intent);
+                if(getIntent().getStringExtra("FCM").contains("/")) {
+                    // 받은 선물함으로
+                    Intent intent = new Intent(LoginActivity.this, GiftManageActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(LoginActivity.this, SelectedSendOrderActivity.class);
+                    intent.putExtra("oid", Integer.parseInt(getIntent().getStringExtra("FCM")));
+                    startActivity(intent);
+                }
+
             } else {
                 //그냥 왔다
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);

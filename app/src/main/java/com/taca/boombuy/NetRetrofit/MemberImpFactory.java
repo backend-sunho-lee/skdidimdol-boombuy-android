@@ -99,17 +99,21 @@ public interface MemberImpFactory {
     /*//보낸선물목록 조회 페이징
     @GET("/orders/send?")
     Call<ResSimpleSendOrders> NetSimpleSendOrders(@Query("page") int page_num, @Query("rows") int rows_num);*/
+
     //보낸선물목록 조회
     @GET("/orders/send")
     Call<ResSimpleSendOrders> NetSimpleSendOrders();
 
-
     // 선택한 보낸 선물 목록 조회
     @GET("/orders/send/{oid}")
     Call<ResSelectedSendOrder> NetSelectSendOrder(@Path("oid") int temp);
+
+
     // 받은 선물 정보 조회
-//    @GET("/orders/receive")
-//    Call<> NetReceivedItem();
+    @GET("/orders/receive")
+    Call<> NetReceivedItem(@Query("page") int page_num, @Query("rows") int rows_num);
+
+
 
     // 결제 완료 후 전송
     @PUT("/orders/{oid}")

@@ -4,8 +4,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/frag_container"
+    android:layout_gravity="center"
     tools:context="com.taca.boombuy.ui.mainview.fragment.brandfrag">
-
 
     <GridView
         android:id="@+id/gridview"
@@ -14,6 +14,5 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:numColumns="3"></GridView>
-
 
 </LinearLayout>

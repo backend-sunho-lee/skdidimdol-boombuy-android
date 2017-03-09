@@ -80,6 +80,7 @@ public class brandSelectfrag extends Fragment {
         gridLayoutManager.setOrientation(OrientationHelper.VERTICAL);
 
         selectedbrand_recyclerview.setLayoutManager(gridLayoutManager);
+        selectedbrand_recyclerview.setNestedScrollingEnabled(false);
 
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
@@ -102,12 +103,12 @@ public class brandSelectfrag extends Fragment {
 
         Log.i("브랜드번호 : ", bid + "");
 
-        getSelectedbrands();
+        getSelectedbrands(1);
 
         return view;
     }
 
-    public void getSelectedbrands() {
+    public void getSelectedbrands(final int getItemCount) {
         Call<ResItems> NetSearchBrandItem = NetSSL.getInstance().getMemberImpFactory().NetSearchBrandItem(bid, page_num, 20);
         NetSearchBrandItem.enqueue(new Callback<ResItems>() {
             @Override
@@ -119,7 +120,7 @@ public class brandSelectfrag extends Fragment {
                         //OttoBus.getInstance().getSearchBrandItem_Bus().post(response.body());
 
                         Log.i("DATA", response.body().toString());
-                        FinishLoad(response.body());
+                        FinishLoad(response.body(), getItemCount);
                     } else {
 
                         Log.i("RESPONSE RESULT 1: ", response.message());
@@ -140,7 +141,7 @@ public class brandSelectfrag extends Fragment {
         });
     }
 
-    public void FinishLoad(ResItems data) {
+    public void FinishLoad(ResItems data, int getItemCount) {
         /*resItems = data;
         selectedbrand_recyclerview.setNestedScrollingEnabled(false);
         selectedbrand_recyclerview.setAdapter(recyclerAdapter);*/
@@ -149,8 +150,11 @@ public class brandSelectfrag extends Fragment {
             resItems = data;
             selectedbrand_recyclerview.setNestedScrollingEnabled(false);
             selectedbrand_recyclerview.setAdapter(recyclerAdapter);
+            selectedbrand_recyclerview.scrollToPosition(getItemCount-1);
         } else {
             resItems.getResult().addAll(data.getResult());
+            selectedbrand_recyclerview.setAdapter(recyclerAdapter);
+            selectedbrand_recyclerview.scrollToPosition(getItemCount-1);
             (selectedbrand_recyclerview.getAdapter()).notifyDataSetChanged();
         }
     }
@@ -226,7 +230,7 @@ public class brandSelectfrag extends Fragment {
                 if (page_num == cur_page_num) {
                     page_num++;
                     // 통신
-                    getSelectedbrands();
+                    getSelectedbrands(getItemCount());
                 }
             }
 

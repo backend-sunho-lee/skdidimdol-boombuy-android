@@ -65,10 +65,11 @@ public class brandfrag extends Fragment {
         this.inflater = inflater;
         View view = inflater.inflate(R.layout.fragment_brandfrag, container, false);
 
-        getTotalBrands();
+        getTotalBrands(1);
 
 
         gridView = (GridView) view.findViewById(R.id.gridview);
+        gridView.setNestedScrollingEnabled(false);
         //gridView.setNumColumns(3);
 
         myAdapter = new GridViewAdapter();
@@ -149,7 +150,7 @@ public class brandfrag extends Fragment {
                 if (page_num == cur_page_num) {
                     page_num++;
                     // 통신
-                    getTotalBrands();
+                    getTotalBrands(getCount());
                 }
             }
 
@@ -207,8 +208,8 @@ public class brandfrag extends Fragment {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void getTotalBrands() {
-        Call<ResSearchBrands> NetSearchBrands = NetSSL.getInstance().getMemberImpFactory().NetSearchBrands(page_num, 5);
+    public void getTotalBrands(final int getCount) {
+        Call<ResSearchBrands> NetSearchBrands = NetSSL.getInstance().getMemberImpFactory().NetSearchBrands(page_num, 9);
         NetSearchBrands.enqueue(new Callback<ResSearchBrands>() {
             @Override
             public void onResponse(Call<ResSearchBrands> call, Response<ResSearchBrands> response) {
@@ -217,7 +218,7 @@ public class brandfrag extends Fragment {
                     if (response.body() != null && response.body().getResult() != null) {
                         cur_page_num = page_num;
                         //OttoBus.getInstance().getSearchBrands_Bus().post(response.body());
-                        FinishLoad(response.body());
+                        FinishLoad(response.body(), getCount);
                     } else {
                         Log.i("RESPONSE RESULT 1: ", response.message());
                     }
@@ -233,14 +234,18 @@ public class brandfrag extends Fragment {
         });
     }
 
-    public void FinishLoad(ResSearchBrands data) {
+    public void FinishLoad(ResSearchBrands data, int getCount) {
         if (page_num == 1) {
             resSearchBrands = data;
-            gridView.setAdapter(myAdapter);
+
         } else {
             resSearchBrands.getResult().addAll(data.getResult());
-            ((brandfrag.GridViewAdapter) gridView.getAdapter()).notifyDataSetChanged();
+
         }
+
+        gridView.setAdapter(myAdapter);
+        gridView.setSelection(getCount-1);
+        ((brandfrag.GridViewAdapter) gridView.getAdapter()).notifyDataSetChanged();
 
     }
 

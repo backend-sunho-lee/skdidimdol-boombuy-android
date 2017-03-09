@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         setContentView(R.layout.activity_main);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        ImageProc.getInstance().getImageLoader(this);
         Single_Value.getInstance().SenderNReceiver = new VO_Gift_Total_SendernReceiver();
 
         // 네비게이션 //////////////////////////////////////////////////////////////////////////////////

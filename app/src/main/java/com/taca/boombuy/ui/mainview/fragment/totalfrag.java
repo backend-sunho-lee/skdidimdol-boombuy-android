@@ -1,6 +1,5 @@
 package com.taca.boombuy.ui.mainview.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -48,6 +47,7 @@ public class totalfrag extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         //OttoBus.getInstance().getSearchItems_Bus().register(this);
     }
 
@@ -57,7 +57,10 @@ public class totalfrag extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.activity_totalfrag, container, false);
 
-        getTotalItems();
+        listAdapter = null;
+
+
+        getTotalItems(1);
 
         FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -69,8 +72,7 @@ public class totalfrag extends Fragment {
         });
 
         listView = (ListView) rootView.findViewById(R.id.listview);
-
-        listAdapter = new CustomListAdapter(getActivity());
+        listAdapter = new CustomListAdapter();
 
         //listView.setAdapter(listAdapter);
         return rootView;
@@ -88,12 +90,12 @@ public class totalfrag extends Fragment {
 
     // 상품 리스트 어뎁터
     class CustomListAdapter extends BaseAdapter {
-
+/*
         private LayoutInflater layoutInflater;
 
         public CustomListAdapter(Context context) {
             layoutInflater = LayoutInflater.from(context);
-        }
+        }*/
 
         @Override
         public int getCount() {
@@ -211,7 +213,7 @@ public class totalfrag extends Fragment {
                 if (page_num == cur_page_num) {
                     page_num++;
                     // 통신
-                    getTotalItems();
+                    getTotalItems(getCount());
                 }
             }
 
@@ -219,7 +221,7 @@ public class totalfrag extends Fragment {
         }
     }
 
-    public void getTotalItems() {
+    public void getTotalItems(final int getCount) {
         Call<ResItems> NetSearchItems = NetSSL.getInstance().getMemberImpFactory().NetSearchItems(page_num, 20);
         NetSearchItems.enqueue(new Callback<ResItems>() {
             @Override
@@ -229,7 +231,7 @@ public class totalfrag extends Fragment {
                     if (response.body() != null && response.body().getResult() != null) {
                         cur_page_num = page_num;
                         //OttoBus.getInstance().getSearchItems_Bus().post(response.body());
-                        FinishLoad(response.body());
+                        FinishLoad(response.body(), getCount);
                     } else {
                         Log.i("RESPONSE RESULT 1: ", response.message());
                     }
@@ -245,13 +247,17 @@ public class totalfrag extends Fragment {
         });
     }
 
-    public void FinishLoad(ResItems data) {
+    public void FinishLoad(ResItems data, int getCount) {
         if (page_num == 1) {
             resItems = data;
-            listView.setAdapter(listAdapter);
+            //listView.setAdapter(listAdapter);
+            //listView.setSelection(getCount -1);
         } else {
             resItems.getResult().addAll(data.getResult());
-            ((totalfrag.CustomListAdapter) listView.getAdapter()).notifyDataSetChanged();
         }
+
+        listView.setAdapter(listAdapter);
+        listView.setSelection(getCount -1);
+        ((totalfrag.CustomListAdapter) listView.getAdapter()).notifyDataSetChanged();
     }
 }

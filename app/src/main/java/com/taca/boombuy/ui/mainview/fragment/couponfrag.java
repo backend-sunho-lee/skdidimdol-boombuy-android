@@ -76,9 +76,10 @@ public class couponfrag extends Fragment {
         View view =  inflater.inflate(R.layout.fragment_couponfrag, container, false);
         couponAdapter = new CouponListViewAdapter();
 
-        getCoupon();
+        getCoupon(1);
 
         listview = (ListView) view.findViewById(R.id.listview);
+        listview.setNestedScrollingEnabled(false);
 
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -189,7 +190,7 @@ public class couponfrag extends Fragment {
                 if (page_num == cur_page_num) {
                     page_num++;
                     // 통신
-                    getCoupon();
+                    getCoupon(getCount());
                 }
             }
 
@@ -197,8 +198,8 @@ public class couponfrag extends Fragment {
         }
     }
 
-    public void getCoupon() {
-        Call<ResItems> NetSearchCoupon = NetSSL.getInstance().getMemberImpFactory().NetSearchCoupon(page_num, 20);
+    public void getCoupon(final int getCount) {
+        Call<ResItems> NetSearchCoupon = NetSSL.getInstance().getMemberImpFactory().NetSearchCoupon(page_num, 3);
         NetSearchCoupon.enqueue(new Callback<ResItems>() {
             @Override
             public void onResponse(Call<ResItems> call, Response<ResItems> response) {
@@ -207,7 +208,7 @@ public class couponfrag extends Fragment {
                     if (response.body() != null && response.body().getResult() != null) {
                         cur_page_num = page_num;
                         //OttoBus.getInstance().getSearchCoupons_Bus().post(response.body());
-                        FinishLoad(response.body());
+                        FinishLoad(response.body(), getCount);
                     } else {
                         Log.i("RESPONSE RESULT 1: ", response.message());
                     }
@@ -223,18 +224,19 @@ public class couponfrag extends Fragment {
         });
     }
 
-    public void FinishLoad(ResItems data){
+
+    public void FinishLoad(ResItems data, int getCount){
         /*resItems = data;
         listview.setAdapter(couponAdapter);
         ((couponfrag.CouponListViewAdapter)listview.getAdapter()).notifyDataSetChanged();*/
 
         if (page_num == 1) {
             resItems = data;
-            listview.setAdapter(couponAdapter);
         } else {
             resItems.getResult().addAll(data.getResult());
-            ((couponfrag.CouponListViewAdapter)listview.getAdapter()).notifyDataSetChanged();
         }
+        listview.setAdapter(couponAdapter);
+        ((couponfrag.CouponListViewAdapter)listview.getAdapter()).notifyDataSetChanged();
     }
 
     public couponfrag() {

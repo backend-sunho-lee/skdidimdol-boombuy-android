@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
@@ -55,25 +53,17 @@ public class brandSelectfrag extends Fragment {
     GridLayoutManager gridLayoutManager;
     int bid = 0;
 
-    //////
-
-    FragmentManager fragmentManager;
-    FragmentTransaction fragmentTransaction;
-    //////
-
     int page_num = 1;
     int cur_page_num;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //OttoBus.getInstance().getSearchBrandItem_Bus().register(this);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_selectbrandsitem, container, false);
 
@@ -86,27 +76,18 @@ public class brandSelectfrag extends Fragment {
         selectedbrand_recyclerview.setLayoutManager(gridLayoutManager);
         selectedbrand_recyclerview.setNestedScrollingEnabled(false);
 
-
         FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getActivity().finish();
-
-                //onBackPressed();
-
             }
         });
 
-        //fragmentTransaction.commit();
-
         Bundle bundle = getArguments();
-
         Log.i("선택된 프레그먼트 ", bid + "제발");
         bid = bundle.getInt("bid");
-
         Log.i("브랜드번호 : ", bid + "");
-
         getSelectedbrands(1);
 
         return view;
@@ -121,8 +102,6 @@ public class brandSelectfrag extends Fragment {
                 if (response.isSuccessful()) {
                     if (response.body() != null && response.body().getResult() != null) {
                         cur_page_num = page_num;
-                        //OttoBus.getInstance().getSearchBrandItem_Bus().post(response.body());
-
                         Log.i("DATA", response.body().toString());
                         FinishLoad(response.body(), getItemCount);
                     } else {
@@ -131,15 +110,12 @@ public class brandSelectfrag extends Fragment {
 
                     }
                 } else {
-
                     Log.i("RESPONSE RESULT 2 : ", response.message());
                 }
-
             }
 
             @Override
             public void onFailure(Call<ResItems> call, Throwable t) {
-
                 Log.i("FAILURE : ", t.getMessage());
             }
         });
@@ -241,26 +217,9 @@ public class brandSelectfrag extends Fragment {
                         Collections.reverse(item_single.getInstance().itemDTOArrayList); // 새로운 데이터를 리스트의 앞에 추가 해야하므로 리버스한 후 추가 후 다시 리버스
                         item_single.getInstance().itemDTOArrayList.add(item_single.getInstance().itemDTO);
                         Collections.reverse(item_single.getInstance().itemDTOArrayList);
-/*
-*//*
-                        Single_Value.getInstance().vo_giftitem_list = new VO_giftitem_list();
-                        Single_Value.getInstance().vo_giftitem_list.setProduct_imageView_cell(getItem(position).getProduct_imageView_cell());
-                        Single_Value.getInstance().vo_giftitem_list.setProduct_title_cell(getItem(position).getProduct_title_cell());
-                        Single_Value.getInstance().vo_giftitem_list.setProduct_price_cell(getItem(position).getProduct_price_cell());
-                        Single_Value.getInstance().vo_giftitem_lists.add(Single_Value.getInstance().vo_giftitem_list);
-*//*
-                        Collections.reverse(Single_Value.getInstance().vo_giftitem_lists);*/
-
-                        // 준범]] giftStorage 파트
-                        // 체크한것들은 저장해야지
-
-                        // 선택한 곳
-                        //Toast.makeText(getActivity(), "선택", Toast.LENGTH_SHORT).show();
 
                     } else {
-
                         item_single.getInstance().itemDTOArrayList.remove(item_single.getInstance().itemDTO);
-                        Toast.makeText(getActivity(), position + "번째 선택 취소", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -286,13 +245,7 @@ public class brandSelectfrag extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-//
-//        Fragment brandfrag = new brandfrag();
-//        FragmentManager fragmentManager = getFragmentManager();
-//        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-//
-//        fragmentTransaction.add(R.id.container_Frag, brandfrag);
-//        fragmentTransaction.commit();
+
     }
 
 

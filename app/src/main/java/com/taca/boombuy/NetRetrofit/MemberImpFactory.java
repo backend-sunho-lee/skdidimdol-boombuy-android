@@ -111,8 +111,10 @@ public interface MemberImpFactory {
 
 
     // 받은 선물 정보 조회
+
     @GET("/orders/receive")
     Call<ResReceivedItem> NetReceivedItem(@Query("page") int page_num, @Query("rows") int rows_num);
+
 
 
 

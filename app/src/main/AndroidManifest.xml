@@ -93,6 +93,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".ui.mainview.activity.SelectedSendOrderActivity" />
 
+        <activity android:name=".ui.payment.PaymentActivity"></activity>
 
     </application>
 

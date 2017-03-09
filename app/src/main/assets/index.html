@@ -1,0 +1,80 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <style>
+body { background:#000000; }
+</style>
+    <!-- 아임포트 자바스크립트는 jQuery 기반으로 개발되었습니다 -->
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>
+    <script type="text/javascript" src="https://service.iamport.kr/js/iamport.payment-1.1.2.js" ></script>
+    <script type="text/javascript">
+
+var IMP = window.IMP;       // 생략가능
+
+//TODO URLScheme정의하는 부분 추가
+$(document).ready(function(){
+    //alert("setp 1");
+    /* 중략 */
+    IMP.init('imp44922343');    // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+});
+
+function paynow(name, price )
+{
+    //onclick, onload 등 원하는 이벤트에 호출합니다
+    var param = {
+        pg :            'lgu+', // version 1.1.0부터 지원.
+        pay_method :    'card',
+        merchant_uid :  'merchant_' + new Date().getTime(),
+        name :          'BOOMBUY',
+        amount :        price,//1004,
+        buyer_email :   'iamport@siot.do',
+        buyer_name :    name,//'홍길동',
+        buyer_tel :     '010-1234-5678',
+        buyer_addr :    '서울특별시 강남구 삼성동',
+        buyer_postcode : '123-456',
+        m_redirect_url : 'http://ec2-35-165-170-210.us-west-2.compute.amazonaws.com:3000/bb_Search_Items',
+        app_scheme :     'iamportapp'
+    };
+    //alert("setp 2");
+    IMP.request_pay(param, function(rsp)
+    {
+        alert("setp 3 : " + rsp.success);
+        if ( rsp.success )
+        {
+            var msg = '결제가 완료되었습니다.';
+            msg += '고유ID : ' + rsp.imp_uid;
+            msg += '상점 거래ID : ' + rsp.merchant_uid;
+            msg += '결제 금액 : ' + rsp.paid_amount;
+            msg += '카드 승인번호 : ' + rsp.apply_num;
+        } else {
+            var msg = '결제에 실패하였습니다.';
+            msg += '에러내용 : ' + rsp.error_msg;
+        }
+        window.my.showResult(msg);
+    });
+}
+</script>
+</head>
+<body>
+<!--<button onclick="javascript:paynow('김종필', 1004);">결제</button>-->
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

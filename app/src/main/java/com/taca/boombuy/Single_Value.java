@@ -1,11 +1,12 @@
 package com.taca.boombuy;
 
 
-import com.taca.boombuy.singleton.item_single;
-import com.taca.boombuy.vo.VO_Gift_Total_SendernReceiver;
 import com.taca.boombuy.netmodel.LoginModel;
 import com.taca.boombuy.netmodel.SignUpModel;
 import com.taca.boombuy.netmodel.UpdateTokenModel;
+import com.taca.boombuy.networkmodel.ItemDTO;
+import com.taca.boombuy.singleton.item_single;
+import com.taca.boombuy.vo.VO_Gift_Total_SendernReceiver;
 import com.taca.boombuy.vo.VO_from_friends_info;
 import com.taca.boombuy.vo.VO_from_friends_local_list;
 import com.taca.boombuy.vo.VO_giftitem_list;
@@ -112,6 +113,20 @@ public class Single_Value {
         devided_price = total / (Single_Value.getInstance().vo_from_friends_infos.size() + 1);
 
         return devided_price;
+    }
+
+    public void initValues() {
+        // 선물 가져오기 초기화
+        item_single.getInstance().itemDTOArrayList.clear();
+        item_single.getInstance().itemDTO = new ItemDTO(
+                0, 0, "", 0, "", ""
+        );
+        item_single.getInstance().itemDTOArrayList.add(item_single.getInstance().itemDTO);
+
+        // 선물 받을 친구 초기화
+        Single_Value.getInstance().vo_to_friend_infos.clear();
+        // 선물 보낼 친구들 초기화
+        Single_Value.getInstance().vo_from_friends_infos.clear();
     }
 
 }

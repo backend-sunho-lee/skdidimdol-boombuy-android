@@ -289,6 +289,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 if (response.isSuccessful()) {
                     if (response.body() != null && response.body().getMessage() != null) {
                         Log.i("Result : ", response.body().getMessage());
+
+                        Intent intent = new Intent(MainActivity.this, GiftManageActivity.class);
+                        startActivity(intent);
+                        // 초기값들 초기화
+                        Single_Value.getInstance().initValues();
+
                     } else {
                         Log.i("RESPONSE RESULT 1: ", response.message());
                     }

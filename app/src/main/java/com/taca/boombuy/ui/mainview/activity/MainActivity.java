@@ -28,6 +28,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.taca.boombuy.NetRetrofit.NetSSL;
@@ -263,51 +264,55 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void onMovePaymentActivity(View view) {
 
+        if(Single_Value.getInstance().vo_to_friend_infos.size()!=0
+                && item_single.getInstance().itemDTOArrayList.size()>1) {
+            ArrayList<Integer> cartNums = new ArrayList<>();
+            for (int i = 0; i < item_single.getInstance().itemDTOArrayList.size() - 1; i++) {
+                cartNums.add(item_single.getInstance().itemDTOArrayList.get(i).getId());
+            }
 
-        ArrayList<Integer> cartNums = new ArrayList<>();
-        for (int i = 0; i < item_single.getInstance().itemDTOArrayList.size() - 1; i++) {
-            cartNums.add(item_single.getInstance().itemDTOArrayList.get(i).getId());
-        }
+            ArrayList<GiftSenderDTO> senderDTOs = new ArrayList<>();
 
-        ArrayList<GiftSenderDTO> senderDTOs = new ArrayList<>();
+            senderDTOs.add(0, new GiftSenderDTO(StorageHelper.getInstance().getString(MainActivity.this, "my_phone_number"), Single_Value.getInstance().devided_master()));
+            for (int i = 0; i < Single_Value.getInstance().vo_from_friends_infos.size(); i++) {
+                GiftSenderDTO giftSenderDTO = new GiftSenderDTO(Single_Value.getInstance().vo_from_friends_infos.get(i).getPhone_num(), Single_Value.getInstance().devided_non_master());
+                senderDTOs.add(giftSenderDTO);
+            }
 
-        senderDTOs.add(0, new GiftSenderDTO(StorageHelper.getInstance().getString(MainActivity.this, "my_phone_number"), Single_Value.getInstance().devided_master()));
-        for (int i = 0; i < Single_Value.getInstance().vo_from_friends_infos.size(); i++) {
-            GiftSenderDTO giftSenderDTO = new GiftSenderDTO(Single_Value.getInstance().vo_from_friends_infos.get(i).getPhone_num(), Single_Value.getInstance().devided_non_master());
-            senderDTOs.add(giftSenderDTO);
-        }
+            GiftDTO giftDTO = new GiftDTO(cartNums, Single_Value.getInstance().vo_to_friend_infos.get(0).getPhone_num(), senderDTOs);
 
-        GiftDTO giftDTO = new GiftDTO(cartNums, Single_Value.getInstance().vo_to_friend_infos.get(0).getPhone_num(), senderDTOs);
+            Log.i(" 정보 조회 :", giftDTO.toString());
 
-        Log.i(" 정보 조회 :", giftDTO.toString());
+            Call<ResBasic> NetOrders = NetSSL.getInstance().getMemberImpFactory().NetOrders(giftDTO);
+            NetOrders.enqueue(new Callback<ResBasic>() {
+                @Override
+                public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
 
-        Call<ResBasic> NetOrders = NetSSL.getInstance().getMemberImpFactory().NetOrders(giftDTO);
-        NetOrders.enqueue(new Callback<ResBasic>() {
-            @Override
-            public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
+                    if (response.isSuccessful()) {
+                        if (response.body() != null && response.body().getMessage() != null) {
+                            Log.i("Result : ", response.body().getMessage());
 
-                if (response.isSuccessful()) {
-                    if (response.body() != null && response.body().getMessage() != null) {
-                        Log.i("Result : ", response.body().getMessage());
+                            Intent intent = new Intent(MainActivity.this, GiftManageActivity.class);
+                            startActivity(intent);
+                            // 초기값들 초기화
+                            Single_Value.getInstance().initValues();
 
-                        Intent intent = new Intent(MainActivity.this, GiftManageActivity.class);
-                        startActivity(intent);
-                        // 초기값들 초기화
-                        Single_Value.getInstance().initValues();
-
+                        } else {
+                            Log.i("RESPONSE RESULT 1: ", response.message());
+                        }
                     } else {
-                        Log.i("RESPONSE RESULT 1: ", response.message());
+
+                        Log.i("RESPONSE RESULT 2 : ", response.message());
                     }
-                } else {
-
-                    Log.i("RESPONSE RESULT 2 : ", response.message());
                 }
-            }
 
-            @Override
-            public void onFailure(Call<ResBasic> call, Throwable t) {
-            }
-        });
+                @Override
+                public void onFailure(Call<ResBasic> call, Throwable t) {
+                }
+            });
+        } else {
+            Toast.makeText(this, "선물과 받을 사람을 선택하세요", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void onAdd(View view) {
@@ -712,6 +717,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         if (Single_Value.getInstance().vo_to_friend_infos.size() != 0) {
             tv_to_friend_name.setText(Single_Value.getInstance().vo_to_friend_infos.get(0).getName());
+        } else {
+            tv_to_friend_name.setText("");
         }
 
         String full_selected = "";
@@ -723,11 +730,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     full_selected += ", " + Single_Value.getInstance().vo_from_friends_infos.get(i).getName();
                 }
             }
-            tv_from_friends_name.setText(full_selected);
-
-            //////////////////////////////////////////////메인 리스트뷰
-            rv_from_name_list.setAdapter(fromRecycleAdapter);
         }
+        tv_from_friends_name.setText(full_selected);
+
+        //////////////////////////////////////////////메인 리스트뷰
+        rv_from_name_list.setAdapter(fromRecycleAdapter);
+
         // 내가 결제할 금액 세팅
         tv_devided_master.setText(Single_Value.getInstance().devided_master() + "원");
 

@@ -186,6 +186,7 @@ public class LoginActivity extends AppCompatActivity {
                     intent.putExtra("receivedFCM", "받은선물바로");
                     startActivity(intent);
                 } else {
+                    // 해당 주문으로
                     Intent intent = new Intent(LoginActivity.this, SelectedSendOrderActivity.class);
                     intent.putExtra("oid", Integer.parseInt(getIntent().getStringExtra("FCM")));
                     startActivity(intent);

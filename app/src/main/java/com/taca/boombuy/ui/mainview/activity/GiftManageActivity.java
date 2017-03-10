@@ -49,7 +49,7 @@ ReceivedGiftFrag.OnFragmentInteractionListener{
         mViewPager.setAdapter(fragPagerAdapter);
 
         if(getIntent().getStringExtra("receivedFCM") != null){
-            tabLayout.setVerticalScrollbarPosition(1);
+            mViewPager.setCurrentItem(1);
         }
         tabLayout.setupWithViewPager(mViewPager);
     }

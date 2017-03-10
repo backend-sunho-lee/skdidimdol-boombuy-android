@@ -183,6 +183,7 @@ public class LoginActivity extends AppCompatActivity {
                 if(getIntent().getStringExtra("FCM").contains("/")) {
                     // 받은 선물함으로
                     Intent intent = new Intent(LoginActivity.this, GiftManageActivity.class);
+                    intent.putExtra("receivedFCM", "받은선물바로");
                     startActivity(intent);
                 } else {
                     Intent intent = new Intent(LoginActivity.this, SelectedSendOrderActivity.class);

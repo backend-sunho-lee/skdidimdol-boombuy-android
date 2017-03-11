@@ -41,16 +41,17 @@ ReceivedGiftFrag.OnFragmentInteractionListener{
 
         Log.i("TOTAL PRODUCT", Single_Value.getInstance().vo_gift_total_member.toString());
 
-        //viewPager = (ViewPager) findViewById(R.id.viewpager);
         mViewPager = (ViewPager) findViewById(R.id.container);
-        //tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
 
         fragPagerAdapter = new FragmentAdapter(getSupportFragmentManager());
+
         mViewPager.setAdapter(fragPagerAdapter);
 
+        if(getIntent().getStringExtra("receivedFCM") != null){
+            mViewPager.setCurrentItem(1);
+        }
         tabLayout.setupWithViewPager(mViewPager);
-
     }
 
 

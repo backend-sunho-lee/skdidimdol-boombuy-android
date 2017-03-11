@@ -3,7 +3,6 @@ package com.taca.boombuy.ui.mainview.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,6 +39,7 @@ public class totalfrag extends Fragment {
     CustomListAdapter listAdapter;
     ListView listView;
 
+    ImageView circleImageView;
 
     int page_num = 1;
     int cur_page_num;
@@ -61,15 +61,22 @@ public class totalfrag extends Fragment {
 
 
 
+        circleImageView = (ImageView) rootView.findViewById(R.id.fab);
+        circleImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().finish();
+            }
+        });
 
-        FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(R.id.fab);
+        /*FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 getActivity().finish();
             }
-        });
+        });*/
 
         listView = (ListView) rootView.findViewById(R.id.listview);
         listAdapter = new CustomListAdapter();
@@ -125,7 +132,11 @@ public class totalfrag extends Fragment {
                 holder = new ViewHolder();
 
 
+
+
                 holder.lv_checkbox = (CheckBox) convertView.findViewById(R.id.lv_checkbox);
+
+
                 holder.lv_imageview = (ImageView) convertView.findViewById(R.id.lv_imageview);
                 holder.lv_pname = (TextView) convertView.findViewById(R.id.lv_pname);
                 holder.lv_pprice = (TextView) convertView.findViewById(R.id.lv_pprice);
@@ -149,6 +160,7 @@ public class totalfrag extends Fragment {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
+                    //buttonView.setTag(position, "checked"); // 태ㅔ그를 이용해서 체크된것들의 값들을 가져올수있나?
                     item_single.getInstance().itemDTO = new ItemDTO(
                             getItem(position).getId(),
                             getItem(position).getBid(),

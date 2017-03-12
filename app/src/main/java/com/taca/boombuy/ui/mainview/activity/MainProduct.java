@@ -169,8 +169,6 @@ public class MainProduct extends AppCompatActivity implements
                     break;
             }
         }
-
-
     }
     public void onGoHome(View view) {
         /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -180,8 +178,6 @@ public class MainProduct extends AppCompatActivity implements
         } else {
             super.onBackPressed();
         }*/
-        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
         finish();
     }
 
@@ -294,17 +290,6 @@ public class MainProduct extends AppCompatActivity implements
     }
     ///////////////////////////////////////////////////////////////////////////////////////////////
 
-    /*// 네비게이션 백버튼 눌렀을 때 이벤트
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
-    }*/
     // 네비게이션 아이템 클릭했을 때 이벤트
     @SuppressWarnings("StatementWithEmptyBody")
     @Override

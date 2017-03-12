@@ -640,7 +640,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         int id = item.getItemId();
 
         if (id == R.id.nav_boombuy_shop) {
-            // Handle the camera action
+            Intent intent = new Intent(MainActivity.this, MainProduct.class);
+            startActivity(intent);
         } else if (id == R.id.nav_gift_manage) {
             Intent intent = new Intent(MainActivity.this, GiftManageActivity.class);
             startActivity(intent);
@@ -708,6 +709,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onResume() {
         super.onResume();
         refreshMainView();
+        getProfile();
     }
 
     @Override

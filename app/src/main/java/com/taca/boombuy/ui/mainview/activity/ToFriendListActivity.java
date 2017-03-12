@@ -1,7 +1,10 @@
 package com.taca.boombuy.ui.mainview.activity;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -55,6 +58,8 @@ public class ToFriendListActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_to_friend_list);
+
+
 
         lv_to_friend_local_list = (ListView) findViewById(R.id.lv_to_friend_local_list);
         lv_to_friend_local_list.setOnItemClickListener(itemClickListenerOfToFriendList);

@@ -244,7 +244,6 @@ public class brandfrag extends Fragment {
         }
 
         gridView.setAdapter(myAdapter);
-        gridView.setSelection(getCount-1);
         ((brandfrag.GridViewAdapter) gridView.getAdapter()).notifyDataSetChanged();
 
     }

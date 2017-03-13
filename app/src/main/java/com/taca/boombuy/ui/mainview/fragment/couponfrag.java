@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,7 +16,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
@@ -145,18 +143,14 @@ public class couponfrag extends Fragment {
             ImageProc.getInstance().drawImage(getItem(position).getLocation(), couponViewHolder.lv_imageview);
             couponViewHolder.lv_pprice.setText(getItem(position).getPrice()+"원");
 
+            couponViewHolder.lv_checkbox.setOnCheckedChangeListener(new MyCouponCheck(position));
+            couponViewHolder.lv_checkbox.setChecked(getItem(position).isChecked());
 
-            couponViewHolder.lv_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+           /* couponViewHolder.lv_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    item_single.getInstance().itemDTO = new ItemDTO(
-                            getItem(position).getId(),
-                            getItem(position).getBid(),
-                            getItem(position).getName(),
-                            getItem(position).getPrice(),
-                            getItem(position).getDetail(),
-                            getItem(position).getLocation(),false
-                    );
+
+
                     if (isChecked) {
                         Collections.reverse(item_single.getInstance().itemDTOArrayList); // 새로운 데이터를 리스트의 앞에 추가 해야하므로 리버스한 후 추가 후 다시 리버스
                         item_single.getInstance().itemDTOArrayList.add(item_single.getInstance().itemDTO);
@@ -170,7 +164,7 @@ public class couponfrag extends Fragment {
                         Toast.makeText(getActivity(), position + "번째 선택 취소", Toast.LENGTH_SHORT).show();
                     }
                 }
-            });
+            });*/
 
             couponViewHolder.lv_detailinfo.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -198,6 +192,44 @@ public class couponfrag extends Fragment {
             return convertView;
         }
     }
+
+    class MyCouponCheck implements  CompoundButton.OnCheckedChangeListener
+    {
+        ItemDTO itemDTO;
+        int position;
+        public MyCouponCheck(int position){
+            this.position = position;
+            itemDTO = resItems.getResult().get(position);
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+            if (isChecked) {
+                Collections.reverse(item_single.getInstance().itemDTOArrayList); // 새로운 데이터를 리스트의 앞에 추가 해야하므로 리버스한 후 추가 후 다시 리버스
+                boolean isDup = false;
+                for(ItemDTO it : item_single.getInstance().itemDTOArrayList){
+                    if( it.getId() == this.itemDTO.getId() ){
+                        isDup = true;
+                        break;
+                    }
+                }
+
+                if(!isDup)
+                    item_single.getInstance().itemDTOArrayList.add(this.itemDTO);
+                Collections.reverse(item_single.getInstance().itemDTOArrayList);
+
+                this.itemDTO.setChecked(true);
+
+
+            } else {
+                this.itemDTO.setChecked(false);
+                item_single.getInstance().itemDTOArrayList.remove(this.itemDTO);
+
+            }
+        }
+    };
+
 
     public void getCoupon(final int getCount) {
         Call<ResItems> NetSearchCoupon = NetSSL.getInstance().getMemberImpFactory().NetSearchCoupon(page_num, 20);
@@ -227,19 +259,22 @@ public class couponfrag extends Fragment {
 
 
     public void FinishLoad(ResItems data, int getCount){
-        /*resItems = data;
-        listview.setAdapter(couponAdapter);
-        ((couponfrag.CouponListViewAdapter)listview.getAdapter()).notifyDataSetChanged();*/
 
         if (page_num == 1) {
             resItems = data;
-            listview.setAdapter(couponAdapter);
+            for(ItemDTO it : item_single.getInstance().itemDTOArrayList){
+                for(ItemDTO newIt : resItems.getResult()){
+                    if( it.getId()== newIt.getId() ){
+                        newIt.setChecked(true);
+                    }
+                }
+            }
         } else {
             resItems.getResult().addAll(data.getResult());
-            //listview.setAdapter(couponAdapter);
-            ((couponfrag.CouponListViewAdapter)listview.getAdapter()).notifyDataSetChanged();
         }
 
+        listview.setAdapter(couponAdapter);
+        ((couponfrag.CouponListViewAdapter)listview.getAdapter()).notifyDataSetChanged();
 
     }
 

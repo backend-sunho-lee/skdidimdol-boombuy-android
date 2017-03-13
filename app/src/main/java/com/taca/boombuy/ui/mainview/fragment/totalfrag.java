@@ -25,7 +25,6 @@ import com.taca.boombuy.ui.mainview.activity.GiftSelectDetailInfoActivity;
 import com.taca.boombuy.util.ImageProc;
 
 import java.util.Collections;
-import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,13 +43,9 @@ public class totalfrag extends Fragment {
     int page_num = 1;
     int cur_page_num;
 
-    HashMap<Integer, Boolean> map = new HashMap<>();
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //OttoBus.getInstance().getSearchItems_Bus().register(this);
     }
 
     @Nullable
@@ -88,12 +83,6 @@ public class totalfrag extends Fragment {
 
     // 상품 리스트 어뎁터
     class CustomListAdapter extends BaseAdapter {
-/*
-        private LayoutInflater layoutInflater;
-
-        public CustomListAdapter(Context context) {
-            layoutInflater = LayoutInflater.from(context);
-        }*/
 
         @Override
         public int getCount() {
@@ -138,7 +127,7 @@ public class totalfrag extends Fragment {
             holder.lv_pname.setText(getItem(position).getName());
             // pcontent
             holder.lv_pprice.setText(getItem(position).getPrice() + "원");
-            holder.lv_checkbox.setOnCheckedChangeListener(new MyCheck(position));
+            holder.lv_checkbox.setOnCheckedChangeListener(new MyTotalCheck(position));
             holder.lv_checkbox.setChecked(getItem(position).isChecked());
 
             holder.lv_detailinfo.setOnClickListener(new View.OnClickListener() {
@@ -167,73 +156,38 @@ public class totalfrag extends Fragment {
             return convertView;
         }
     }
-    class MyCheck implements  CompoundButton.OnCheckedChangeListener, View.OnClickListener
+    class MyTotalCheck implements  CompoundButton.OnCheckedChangeListener
     {
         ItemDTO itemDTO;
         int position;
-        public MyCheck(int position){
+        public MyTotalCheck(int position){
             this.position = position;
             itemDTO = resItems.getResult().get(position);
         }
-        @Override
-        public void onClick(View v) {
-            CheckBox cb = (CheckBox)v;
-            Log.i("UI", position + " : 클릭 ; " + itemDTO.isChecked());
 
-            item_single.getInstance().itemDTO = new ItemDTO(
-                    itemDTO.getId(),
-                    itemDTO.getBid(),
-                    itemDTO.getName(),
-                    itemDTO.getPrice(),
-                    itemDTO.getDetail(),
-                    itemDTO.getLocation(), false
-            );
-
-            if(cb.isChecked()){
-                cb.setChecked(false);
-                itemDTO.setChecked(false);
-                Log.i("UI", position + " :  넌체크 ; " + itemDTO.isChecked());
-                item_single.getInstance().itemDTOArrayList.remove(item_single.getInstance().itemDTO);
-
-            }else{
-                cb.setChecked(true);
-                Collections.reverse(item_single.getInstance().itemDTOArrayList); // 새로운 데이터를 리스트의 앞에 추가 해야하므로 리버스한 후 추가 후 다시 리버스
-                item_single.getInstance().itemDTOArrayList.add(item_single.getInstance().itemDTO);
-                Collections.reverse(item_single.getInstance().itemDTOArrayList);
-                //map.put(itemDTO.getId(), true);
-                itemDTO.setChecked(true);
-                Log.i("UI", position + " : 체크 ; " + itemDTO.isChecked());
-            }
-        }
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
-            //buttonView.setTag(position, "checked"); // 태ㅔ그를 이용해서 체크된것들의 값들을 가져올수있나?
-            item_single.getInstance().itemDTO = new ItemDTO(
-                    itemDTO.getId(),
-                    itemDTO.getBid(),
-                    itemDTO.getName(),
-                    itemDTO.getPrice(),
-                    itemDTO.getDetail(),
-                    itemDTO.getLocation(), false
-            );
-
             if (isChecked) {
                 Collections.reverse(item_single.getInstance().itemDTOArrayList); // 새로운 데이터를 리스트의 앞에 추가 해야하므로 리버스한 후 추가 후 다시 리버스
-                item_single.getInstance().itemDTOArrayList.add(item_single.getInstance().itemDTO);
+                boolean isDup = false;
+                for(ItemDTO it : item_single.getInstance().itemDTOArrayList){
+                    if( it.getId() == this.itemDTO.getId() ){
+                        isDup = true;
+                        break;
+                    }
+                }
+
+                if(!isDup)
+                    item_single.getInstance().itemDTOArrayList.add(this.itemDTO);
                 Collections.reverse(item_single.getInstance().itemDTOArrayList);
 
-                //map.put(itemDTO.getId(), true);
-
                 this.itemDTO.setChecked(true);
-                Log.i("UI", position + " : 체크 ; " + itemDTO.isChecked());
+
 
             } else {
                 this.itemDTO.setChecked(false);
-                Log.i("UI", position + " :  넌체크 ; " + itemDTO.isChecked());
-                item_single.getInstance().itemDTOArrayList.remove(item_single.getInstance().itemDTO);
-
-                //map.put(itemDTO.getId(), false);
+                item_single.getInstance().itemDTOArrayList.remove(this.itemDTO);
 
             }
         }
@@ -253,7 +207,6 @@ public class totalfrag extends Fragment {
                         Log.i("RESPONSE RESULT 1: ", response.message());
                     }
                 } else {
-
                     Log.i("RESPONSE RESULT 2 : ", response.message());
                 }
             }
@@ -267,6 +220,13 @@ public class totalfrag extends Fragment {
     public void FinishLoad(ResItems data, int getCount) {
         if (page_num == 1) {
             resItems = data;
+            for(ItemDTO it : item_single.getInstance().itemDTOArrayList){
+                for(ItemDTO newIt : resItems.getResult()){
+                    if( it.getId()== newIt.getId() ){
+                        newIt.setChecked(true);
+                    }
+                }
+            }
         } else {
             resItems.getResult().addAll(data.getResult());
         }

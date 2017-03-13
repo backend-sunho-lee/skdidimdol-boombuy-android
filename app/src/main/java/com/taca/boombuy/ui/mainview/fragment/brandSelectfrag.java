@@ -4,7 +4,6 @@ package com.taca.boombuy.ui.mainview.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.OrientationHelper;
@@ -127,9 +126,18 @@ public class brandSelectfrag extends Fragment {
         selectedbrand_recyclerview.setNestedScrollingEnabled(false);
         selectedbrand_recyclerview.setAdapter(recyclerAdapter);*/
 
+
+        selectedbrand_recyclerview.setNestedScrollingEnabled(false);
+
         if (page_num == 1) {
             resItems = data;
-            selectedbrand_recyclerview.setNestedScrollingEnabled(false);
+            for(ItemDTO it : item_single.getInstance().itemDTOArrayList){
+                for(ItemDTO newIt : resItems.getResult()){
+                    if( it.getId()== newIt.getId() ){
+                        newIt.setChecked(true);
+                    }
+                }
+            }
             selectedbrand_recyclerview.setAdapter(recyclerAdapter);
             selectedbrand_recyclerview.scrollToPosition(getItemCount-1);
         } else {
@@ -138,6 +146,7 @@ public class brandSelectfrag extends Fragment {
             selectedbrand_recyclerview.scrollToPosition(getItemCount-1);
             (selectedbrand_recyclerview.getAdapter()).notifyDataSetChanged();
         }
+
     }
 
     class RecyclerViewHolder extends RecyclerView.ViewHolder {
@@ -202,7 +211,11 @@ public class brandSelectfrag extends Fragment {
                 }
             });
 
-            holder.lv_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            holder.lv_checkbox.setOnCheckedChangeListener(new MyBrandSelectedCheck(position));
+            holder.lv_checkbox.setChecked(resItems.getResult().get(position).isChecked());
+
+            /*holder.lv_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
@@ -224,7 +237,7 @@ public class brandSelectfrag extends Fragment {
                     }
                 }
 
-            });
+            });*/
 
             // 마지막 체크
             if (position == getItemCount() - 1) {
@@ -242,6 +255,45 @@ public class brandSelectfrag extends Fragment {
         }
 
     }
+
+
+    class MyBrandSelectedCheck implements  CompoundButton.OnCheckedChangeListener
+    {
+        ItemDTO itemDTO;
+        int position;
+        public MyBrandSelectedCheck(int position){
+            this.position = position;
+            itemDTO = resItems.getResult().get(position);
+        }
+
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+            if (isChecked) {
+                Collections.reverse(item_single.getInstance().itemDTOArrayList); // 새로운 데이터를 리스트의 앞에 추가 해야하므로 리버스한 후 추가 후 다시 리버스
+                boolean isDup = false;
+                for(ItemDTO it : item_single.getInstance().itemDTOArrayList){
+                    if( it.getId() == this.itemDTO.getId() ){
+                        isDup = true;
+                        break;
+                    }
+                }
+
+                if(!isDup)
+                    item_single.getInstance().itemDTOArrayList.add(this.itemDTO);
+                Collections.reverse(item_single.getInstance().itemDTOArrayList);
+
+                this.itemDTO.setChecked(true);
+
+
+            } else {
+                this.itemDTO.setChecked(false);
+                item_single.getInstance().itemDTOArrayList.remove(this.itemDTO);
+
+            }
+        }
+    };
+
 
     @Override
     public void onDetach() {

@@ -18,14 +18,28 @@
             android:layout_height="?attr/actionBarSize"
             android:background="@color/basic_white"
             app:popupTheme="@style/AppTheme.PopupOverlay">
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="24dp"
-                android:textStyle="bold"
-                android:textColor="@color/appColor"
-                android:gravity="center|center_horizontal"
-                android:text="선물 받을 친구"/>
+                android:orientation="horizontal"
+                android:layout_marginRight="8dp">
+                <TextView
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="24dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/appColor"
+                    android:gravity="center|center_horizontal"
+                    android:text="선물 받을 친구"/>
+                <ImageButton
+                    android:onClick="onSelectToFriend"
+                    android:layout_weight="0"
+                    android:layout_width="40dp"
+                    android:layout_height="35dp"
+                    android:background="@drawable/btn_check_48dp"/>
+            </LinearLayout>
+
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>
@@ -78,6 +92,7 @@
             android:layout_height="match_parent">
 
             <ListView
+                android:listSelector="@color/addColor"
                 android:id="@+id/lv_to_friend_local_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

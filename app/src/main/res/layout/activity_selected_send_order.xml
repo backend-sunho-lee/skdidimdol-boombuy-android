@@ -1,244 +1,275 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/insertWindowColor"
+    android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-
-    <LinearLayout
-        android:id="@+id/receivedfrag_linearlayout"
-        android:orientation="vertical"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginTop="8dp"
-
-        android:background="@drawable/my_custom_inner_layout_border"
+    <android.support.design.widget.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <TextView
-            android:id="@+id/received_gift_cell_tv_date"
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_weight="0"
-            android:text="2017 02 11"
-            android:textColor="@color/letterColor"
-            android:textSize="16.3sp" />
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <LinearLayout
-                android:layout_marginLeft="30dp"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/basic_white"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:textColor="@color/appColor"
+                android:gravity="center|center_horizontal"
+                android:text="보낸선물   "/>
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/insertWindowColor"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:id="@+id/receivedfrag_linearlayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+
+            android:layout_marginTop="8dp"
+            android:background="@drawable/my_custom_inner_layout_border"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/received_gift_cell_tv_date"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0"
+                android:text="2017 02 11"
+                android:textColor="@color/letterColor"
+                android:textSize="16.3sp" />
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
 
                 <LinearLayout
-                    android:layout_width="85dp"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
-                    <FrameLayout
-                        android:layout_width="70dp"
-                        android:layout_height="70dp">
-
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/received_gift_cell_sendMemberProfile"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="4dp"
-
-                            app:civ_border_color="@color/boderColor"
-                            app:civ_border_width="0.5dp" />
-                    </FrameLayout>
-
-                    <TextView
-                        android:id="@+id/gift_Senders"
-                        android:layout_width="80dp"
-                        android:layout_height="20dp"
+                    <LinearLayout
+                        android:layout_width="85dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center"
                         android:gravity="center"
-                        android:text="누구아"
-                        android:textColor="@color/letterColor"
-                        android:textSize="12sp" />
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:layout_width="70dp"
+                            android:layout_height="70dp">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/received_gift_cell_sendMemberProfile"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="4dp"
+
+                                app:civ_border_color="@color/boderColor"
+                                app:civ_border_width="0.5dp" />
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/gift_Senders"
+                            android:layout_width="80dp"
+                            android:layout_height="20dp"
+                            android:gravity="center"
+                            android:text="누구아"
+                            android:textColor="@color/letterColor"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
+                        android:background="@drawable/ic_right_color_33dp" />
+
+                    <LinearLayout
+                        android:layout_width="85dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:orientation="vertical">
+
+                        <FrameLayout
+                            android:layout_width="70dp"
+                            android:layout_height="70dp">
+
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:id="@+id/received_gift_cell_receivedMemberProfile"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_margin="4dp"
+
+                                app:civ_border_color="@color/boderColor"
+                                app:civ_border_width="0.5dp" />
+
+                        </FrameLayout>
+
+                        <TextView
+                            android:id="@+id/gift_receivedPerson"
+                            android:layout_width="80dp"
+                            android:layout_height="20dp"
+                            android:gravity="center"
+                            android:text="라라라 외 1명"
+                            android:textColor="@color/letterColor"
+                            android:textSize="12sp" />
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
                 <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="35dp"
-                    android:layout_gravity="center"
-                    android:layout_marginLeft="25dp"
-                    android:layout_marginRight="25dp"
-                    android:background="@drawable/ic_right_color_33dp" />
+                    android:id="@+id/received_gift_cell_PayState"
+                    android:layout_width="72dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_marginTop="-3dp"
+                    android:background="@drawable/ic_progress" />
+            </FrameLayout>
 
-                <LinearLayout
-                    android:layout_width="85dp"
-                    android:layout_height="120dp"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:orientation="vertical">
+            <!--가로줄-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/addColor" />
 
-                    <FrameLayout
-                        android:layout_width="70dp"
-                        android:layout_height="70dp">
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/sender_recyclerview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:id="@+id/received_gift_cell_receivedMemberProfile"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_margin="4dp"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="15.7dp">
 
-                            app:civ_border_color="@color/boderColor"
-                            app:civ_border_width="0.5dp" />
-
-                    </FrameLayout>
-
-                    <TextView
-                        android:id="@+id/gift_receivedPerson"
-                        android:layout_width="80dp"
-                        android:layout_height="20dp"
-                        android:gravity="center"
-                        android:text="라라라 외 1명"
-                        android:textColor="@color/letterColor"
-                        android:textSize="12sp" />
-
-                </LinearLayout>
-
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="left|center"
+                    android:text="구매 상품 정보"
+                    android:textColor="@color/letterColor"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/received_gift_cell_PayState"
-                android:layout_width="72dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="2dp"
-                android:layout_marginTop="-3dp"
-                android:background="@drawable/ic_progress" />
-        </FrameLayout>
-
-        <!--가로줄-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:background="@color/addColor"
-            android:layout_height="1dp"/>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/sender_recyclerview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </android.support.v7.widget.RecyclerView>
-
-        <LinearLayout
-            android:layout_marginLeft="15.7dp"
-            android:layout_width="match_parent"
-            android:layout_height="30dp">
-
-            <TextView
-                android:textColor="@color/letterColor"
-                android:textStyle="bold"
-                android:textSize="17sp"
-                android:gravity="left|center"
-                android:text="구매 상품 정보"
+            <include
+                layout="@layout/include_selected_send_order_product_recyclerview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-        </LinearLayout>
-
-        <include
-               layout="@layout/include_selected_send_order_product_recyclerview"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"/>
-
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="125dp">
 
             <LinearLayout
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"
-                android:orientation="horizontal"
                 android:layout_width="match_parent"
-                android:layout_height="25dp">
+                android:layout_height="125dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:gravity="left|center"
+                        android:text="총 결제 금액"
+                        android:textColor="@color/letterColor"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="25dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_selected_total_price"
+                        android:layout_width="100dp"
+                        android:layout_height="25dp"
+                        android:gravity="end|center"
+                        android:text="10,000원"
+                        android:textColor="@color/appColor"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="25dp"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:gravity="left|center"
+                        android:text="결제 완료 금액"
+                        android:textColor="@color/letterColor"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="25dp"
+                        android:layout_weight="1" />
+
+                    <TextView
+                        android:id="@+id/tv_selected_completed_price"
+                        android:layout_width="100dp"
+                        android:layout_height="25dp"
+                        android:gravity="end|center"
+                        android:text="10,000원"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="17sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
 
                 <TextView
-                    android:textStyle="bold"
-                    android:gravity="left|center"
-                    android:textSize="17sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="15dp"
+                    android:gravity="start"
+                    android:text="@string/sendorder_info"
                     android:textColor="@color/letterColor"
-                    android:text="총 결제 금액"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp" />
+                    android:textSize="12sp" />
 
-                <TextView
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="25dp" />
-
-                <TextView
-                    android:id="@+id/tv_selected_total_price"
-                    android:textColor="@color/appColor"
-                    android:textStyle="bold"
-                    android:text="10,000원"
-                    android:gravity="end|center"
-                    android:textSize="17sp"
-                    android:layout_width="100dp"
-                    android:layout_height="25dp" />
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="16dp"
-                android:layout_marginLeft="16dp"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="25dp">
-
-                <TextView
-                    android:textStyle="bold"
-                    android:gravity="left|center"
-                    android:textSize="17sp"
-                    android:textColor="@color/letterColor"
-                    android:text="결제 완료 금액"
-                    android:layout_width="wrap_content"
-                    android:layout_height="25dp" />
-
-                <TextView
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="25dp" />
-
-                <TextView
-                    android:id="@+id/tv_selected_completed_price"
-                    android:textColor="@color/colorAccent"
-                    android:textStyle="bold"
-                    android:text="10,000원"
-                    android:gravity="end|center"
-                    android:textSize="17sp"
-                    android:layout_width="100dp"
-                    android:layout_height="25dp" />
-            </LinearLayout>
-
-            <TextView
-                android:gravity="start"
-                android:textColor="@color/letterColor"
-                android:textSize="12sp"
-                android:layout_margin="15dp"
-                android:text="@string/sendorder_info"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
 
         </LinearLayout>
 
-
-    </LinearLayout>
-
-</android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

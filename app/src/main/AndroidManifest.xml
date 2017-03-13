@@ -93,7 +93,9 @@
             android:label="@string/title_activity_gift_select_detail_info"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".ui.mainview.activity.SelectedSendOrderActivity" />
+
+        <activity android:name=".ui.mainview.activity.SelectedSendOrderActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
 
         <activity android:name=".ui.payment.PaymentActivity"></activity>
 

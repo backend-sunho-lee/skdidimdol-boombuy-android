@@ -87,11 +87,14 @@ public class LoginActivity extends AppCompatActivity {
                             Log.i("RES SUC", response.body().getMessage());
                             OttoBus.getInstance().getLogin_Bus().post(response.body());
                         } else {
+
+                            Toast.makeText(LoginActivity.this, "서버 점검 중입니다", Toast.LENGTH_SHORT).show();
                             Log.i("RF", "로그인실패:" + response.message());
                         }
                     } else {
-
                         Log.i("RF", "로그인실패11:" + response.message());
+
+                        Toast.makeText(LoginActivity.this, "서버 점검 중입니다", Toast.LENGTH_SHORT).show();
                     }
                 }
 
@@ -136,10 +139,12 @@ public class LoginActivity extends AppCompatActivity {
                                 OttoBus.getInstance().getLogin_Bus().post(response.body());
                             } else {
                                 Log.i("RF", "로그인실패:" + response.message());
+                                Toast.makeText(LoginActivity.this, "서버 점검 중입니다", Toast.LENGTH_SHORT).show();
                             }
                         } else {
 
                             Log.i("RF", "로그인실패11:" + response.message());
+                            Toast.makeText(LoginActivity.this, "서버 점검 중입니다", Toast.LENGTH_SHORT).show();
                         }
                     }
 

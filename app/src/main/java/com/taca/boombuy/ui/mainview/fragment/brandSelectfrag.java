@@ -32,6 +32,7 @@ import java.util.Collections;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -76,7 +77,7 @@ public class brandSelectfrag extends Fragment {
         selectedbrand_recyclerview.setLayoutManager(gridLayoutManager);
         selectedbrand_recyclerview.setNestedScrollingEnabled(false);
 
-        FloatingActionButton fab = (FloatingActionButton) view.findViewById(R.id.fab);
+        CircleImageView fab = (CircleImageView) view.findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

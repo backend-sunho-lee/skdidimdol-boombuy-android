@@ -9,17 +9,55 @@
     android:background="#ffffff"
     tools:context="com.taca.boombuy.ui.mainview.activity.GiftSelectDetailInfoActivity">
 
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/basic_white"
+            app:popupTheme="@style/AppTheme.PopupOverlay">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:textStyle="bold"
+                android:textColor="@color/appColor"
+                android:gravity="center|center_horizontal"
+                android:text="상품상세   "/>
+        </android.support.v7.widget.Toolbar>
+
+    </android.support.design.widget.AppBarLayout>
+
     <ImageView
         android:id="@+id/selected_gift_imageview"
         android:layout_width="match_parent"
         android:layout_height="202dp" />
 
+    <!--가로줄-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/addColor"
+        android:layout_height="2dp"/>
+
     <android.support.design.widget.TabLayout
         android:id="@+id/gift_select_detail_tabs"
         android:layout_width="match_parent"
-        android:layout_height="48dp" />
+        android:layout_height="48dp"
+        app:tabIndicatorColor="@color/basic_transparent"
+        app:tabSelectedTextColor="@color/tab_selected_color"/>
+
+    <!--가로줄-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:background="@color/addColor"
+        android:layout_height="2dp"/>
 
     <android.support.v4.view.ViewPager
+        android:layout_margin="8dp"
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

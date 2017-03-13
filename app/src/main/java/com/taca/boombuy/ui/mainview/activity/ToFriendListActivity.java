@@ -117,6 +117,10 @@ public class ToFriendListActivity extends AppCompatActivity {
         });
     }
 
+    public void onSelectToFriend(View view) {
+        finish();
+    }
+
     // 전화번호부에서 특정 키워드를 포함하는 리스트를 다시 불러와서 뿌려줌
     public void refreshList() {
         auto_resFriendDTOArrayList.clear();
@@ -145,7 +149,7 @@ public class ToFriendListActivity extends AppCompatActivity {
 
             Single_Value.getInstance().vo_to_friend_infos.add(Single_Value.getInstance().vo_to_friend_info);
 
-            finish();
+            //finish();
         }
     };
 

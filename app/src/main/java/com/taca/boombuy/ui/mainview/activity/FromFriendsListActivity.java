@@ -22,6 +22,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
@@ -138,6 +139,10 @@ public class FromFriendsListActivity extends AppCompatActivity {
         rv_selected_friends.setAdapter(recycleAdapter);
     }
 
+    public void onSelectFromFriends(View view) {
+        finish();
+    }
+
     // 리싸이클뷰 아답터
     class RecycleAdapter extends RecyclerView.Adapter {
         // 데이터의 개수
@@ -209,19 +214,29 @@ public class FromFriendsListActivity extends AppCompatActivity {
     /*
      * 리스트뷰 클릭 리스너
      */
+    boolean exist_item = false;
     private AdapterView.OnItemClickListener itemClickListenerOfFromFriendsList = new AdapterView.OnItemClickListener() {
         public void onItemClick(AdapterView<?> adapterView, View clickedView, int pos, long id) {
-            //Single_Value.getInstance().vo_from_friends_infos.clear();
-            Single_Value.getInstance().vo_from_friends_info = new VO_from_friends_info(
-                    auto_resFriendDTOArrayList.get(pos).getName(),
-                    auto_resFriendDTOArrayList.get(pos).getPhone(),
-                    auto_resFriendDTOArrayList.get(pos).getLocation()
-            );
+            exist_item = false;
+            for(int i = 0; i<Single_Value.getInstance().vo_from_friends_infos.size();i++) {
+                if(Single_Value.getInstance().vo_from_friends_infos.get(i).getPhone_num().equals(auto_resFriendDTOArrayList.get(pos).getPhone())) {
+                    exist_item = true;
+                    Toast.makeText(FromFriendsListActivity.this, "중복된 친구입니다", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
 
-            Single_Value.getInstance().vo_from_friends_infos.add(Single_Value.getInstance().vo_from_friends_info);
-            rv_selected_friends.setAdapter(recycleAdapter);
-            refreshList();
+            if(!exist_item) {
+                Single_Value.getInstance().vo_from_friends_info = new VO_from_friends_info(
+                        auto_resFriendDTOArrayList.get(pos).getName(),
+                        auto_resFriendDTOArrayList.get(pos).getPhone(),
+                        auto_resFriendDTOArrayList.get(pos).getLocation()
+                );
 
+                Single_Value.getInstance().vo_from_friends_infos.add(Single_Value.getInstance().vo_from_friends_info);
+                rv_selected_friends.setAdapter(recycleAdapter);
+                refreshList();
+            }
         }
     };
     /*

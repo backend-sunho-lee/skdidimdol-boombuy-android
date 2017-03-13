@@ -87,7 +87,8 @@ public class brandBaseFrag extends Fragment {
         FragmentManager fragmentManager = getFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
-        fragmentTransaction.add(R.id.container_Frag, brandfrag);
+        fragmentTransaction.replace(R.id.container_Frag, brandfrag);
+
         //fragmentTransaction.replace(R.id.container_Frag, brandfrag);
         //fragmentTransaction.addToBackStack(null);
 

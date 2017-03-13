@@ -15,7 +15,6 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
@@ -26,6 +25,7 @@ import com.taca.boombuy.ui.mainview.activity.GiftSelectDetailInfoActivity;
 import com.taca.boombuy.util.ImageProc;
 
 import java.util.Collections;
+import java.util.HashMap;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,6 +44,8 @@ public class totalfrag extends Fragment {
     int page_num = 1;
     int cur_page_num;
 
+    HashMap<Integer, Boolean> map = new HashMap<>();
+
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,8 +61,6 @@ public class totalfrag extends Fragment {
 
         listAdapter = null;
 
-
-
         circleImageView = (ImageView) rootView.findViewById(R.id.fab);
         circleImageView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -69,20 +69,10 @@ public class totalfrag extends Fragment {
             }
         });
 
-        /*FloatingActionButton fab = (FloatingActionButton) rootView.findViewById(fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                getActivity().finish();
-            }
-        });*/
-
         listView = (ListView) rootView.findViewById(R.id.listview);
         listAdapter = new CustomListAdapter();
 
         getTotalItems(1);
-        //listView.setAdapter(listAdapter);
         return rootView;
     }
 
@@ -125,18 +115,11 @@ public class totalfrag extends Fragment {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
 
-
             if (convertView == null) {
                 convertView = getActivity().getLayoutInflater().inflate(R.layout.custom_listview_cell, null);
 
                 holder = new ViewHolder();
-
-
-
-
                 holder.lv_checkbox = (CheckBox) convertView.findViewById(R.id.lv_checkbox);
-
-
                 holder.lv_imageview = (ImageView) convertView.findViewById(R.id.lv_imageview);
                 holder.lv_pname = (TextView) convertView.findViewById(R.id.lv_pname);
                 holder.lv_pprice = (TextView) convertView.findViewById(R.id.lv_pprice);
@@ -155,47 +138,8 @@ public class totalfrag extends Fragment {
             holder.lv_pname.setText(getItem(position).getName());
             // pcontent
             holder.lv_pprice.setText(getItem(position).getPrice() + "원");
-
-            holder.lv_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                    //buttonView.setTag(position, "checked"); // 태ㅔ그를 이용해서 체크된것들의 값들을 가져올수있나?
-                    item_single.getInstance().itemDTO = new ItemDTO(
-                            getItem(position).getId(),
-                            getItem(position).getBid(),
-                            getItem(position).getName(),
-                            getItem(position).getPrice(),
-                            getItem(position).getDetail(),
-                            getItem(position).getLocation()
-                    );
-                    if (isChecked) {
-                        Collections.reverse(item_single.getInstance().itemDTOArrayList); // 새로운 데이터를 리스트의 앞에 추가 해야하므로 리버스한 후 추가 후 다시 리버스
-                        item_single.getInstance().itemDTOArrayList.add(item_single.getInstance().itemDTO);
-                        Collections.reverse(item_single.getInstance().itemDTOArrayList);
-/*
-*//*
-                        Single_Value.getInstance().vo_giftitem_list = new VO_giftitem_list();
-                        Single_Value.getInstance().vo_giftitem_list.setProduct_imageView_cell(getItem(position).getProduct_imageView_cell());
-                        Single_Value.getInstance().vo_giftitem_list.setProduct_title_cell(getItem(position).getProduct_title_cell());
-                        Single_Value.getInstance().vo_giftitem_list.setProduct_price_cell(getItem(position).getProduct_price_cell());
-                        Single_Value.getInstance().vo_giftitem_lists.add(Single_Value.getInstance().vo_giftitem_list);
-*//*
-                        Collections.reverse(Single_Value.getInstance().vo_giftitem_lists);*/
-
-                        // 준범]] giftStorage 파트
-                        // 체크한것들은 저장해야지
-
-                        // 선택한 곳
-                        Toast.makeText(getActivity(), "선택", Toast.LENGTH_SHORT).show();
-
-                    } else {
-
-                        item_single.getInstance().itemDTOArrayList.remove(item_single.getInstance().itemDTO);
-                        Toast.makeText(getActivity(), position + "번째 선택 취소", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+            holder.lv_checkbox.setOnCheckedChangeListener(new MyCheck(position));
+            holder.lv_checkbox.setChecked(getItem(position).isChecked());
 
             holder.lv_detailinfo.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -223,7 +167,77 @@ public class totalfrag extends Fragment {
             return convertView;
         }
     }
+    class MyCheck implements  CompoundButton.OnCheckedChangeListener, View.OnClickListener
+    {
+        ItemDTO itemDTO;
+        int position;
+        public MyCheck(int position){
+            this.position = position;
+            itemDTO = resItems.getResult().get(position);
+        }
+        @Override
+        public void onClick(View v) {
+            CheckBox cb = (CheckBox)v;
+            Log.i("UI", position + " : 클릭 ; " + itemDTO.isChecked());
 
+            item_single.getInstance().itemDTO = new ItemDTO(
+                    itemDTO.getId(),
+                    itemDTO.getBid(),
+                    itemDTO.getName(),
+                    itemDTO.getPrice(),
+                    itemDTO.getDetail(),
+                    itemDTO.getLocation(), false
+            );
+
+            if(cb.isChecked()){
+                cb.setChecked(false);
+                itemDTO.setChecked(false);
+                Log.i("UI", position + " :  넌체크 ; " + itemDTO.isChecked());
+                item_single.getInstance().itemDTOArrayList.remove(item_single.getInstance().itemDTO);
+
+            }else{
+                cb.setChecked(true);
+                Collections.reverse(item_single.getInstance().itemDTOArrayList); // 새로운 데이터를 리스트의 앞에 추가 해야하므로 리버스한 후 추가 후 다시 리버스
+                item_single.getInstance().itemDTOArrayList.add(item_single.getInstance().itemDTO);
+                Collections.reverse(item_single.getInstance().itemDTOArrayList);
+                //map.put(itemDTO.getId(), true);
+                itemDTO.setChecked(true);
+                Log.i("UI", position + " : 체크 ; " + itemDTO.isChecked());
+            }
+        }
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+            //buttonView.setTag(position, "checked"); // 태ㅔ그를 이용해서 체크된것들의 값들을 가져올수있나?
+            item_single.getInstance().itemDTO = new ItemDTO(
+                    itemDTO.getId(),
+                    itemDTO.getBid(),
+                    itemDTO.getName(),
+                    itemDTO.getPrice(),
+                    itemDTO.getDetail(),
+                    itemDTO.getLocation(), false
+            );
+
+            if (isChecked) {
+                Collections.reverse(item_single.getInstance().itemDTOArrayList); // 새로운 데이터를 리스트의 앞에 추가 해야하므로 리버스한 후 추가 후 다시 리버스
+                item_single.getInstance().itemDTOArrayList.add(item_single.getInstance().itemDTO);
+                Collections.reverse(item_single.getInstance().itemDTOArrayList);
+
+                //map.put(itemDTO.getId(), true);
+
+                this.itemDTO.setChecked(true);
+                Log.i("UI", position + " : 체크 ; " + itemDTO.isChecked());
+
+            } else {
+                this.itemDTO.setChecked(false);
+                Log.i("UI", position + " :  넌체크 ; " + itemDTO.isChecked());
+                item_single.getInstance().itemDTOArrayList.remove(item_single.getInstance().itemDTO);
+
+                //map.put(itemDTO.getId(), false);
+
+            }
+        }
+    };
     public void getTotalItems(final int getCount) {
         Call<ResItems> NetSearchItems = NetSSL.getInstance().getMemberImpFactory().NetSearchItems(page_num, 20);
         NetSearchItems.enqueue(new Callback<ResItems>() {

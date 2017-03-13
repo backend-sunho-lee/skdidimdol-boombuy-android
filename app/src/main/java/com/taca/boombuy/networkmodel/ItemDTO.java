@@ -15,16 +15,27 @@ public class ItemDTO implements Serializable {
     String detail;
     String location;
 
+    boolean isChecked;
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
     public ItemDTO() {
     }
 
-    public ItemDTO(int id, int bid, String name, int price, String detail, String location) {
+    public ItemDTO(int id, int bid, String name, int price, String detail, String location, boolean isChecked) {
         this.id = id;
         this.bid = bid;
         this.name = name;
         this.price = price;
         this.detail = detail;
         this.location = location;
+        this.isChecked =  isChecked;
     }
 
     public int getId() {

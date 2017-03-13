@@ -119,7 +119,7 @@ public class Single_Value {
         // 선물 가져오기 초기화
         item_single.getInstance().itemDTOArrayList.clear();
         item_single.getInstance().itemDTO = new ItemDTO(
-                0, 0, "", 0, "", ""
+                0, 0, "", 0, "", "", false
         );
         item_single.getInstance().itemDTOArrayList.add(item_single.getInstance().itemDTO);
 

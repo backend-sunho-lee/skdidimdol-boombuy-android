@@ -211,7 +211,7 @@ public class brandSelectfrag extends Fragment {
                             resItems.getResult().get(position).getName(),
                             resItems.getResult().get(position).getPrice(),
                             resItems.getResult().get(position).getDetail(),
-                            resItems.getResult().get(position).getLocation()
+                            resItems.getResult().get(position).getLocation(),false
                     );
                     if (isChecked) {
                         Collections.reverse(item_single.getInstance().itemDTOArrayList); // 새로운 데이터를 리스트의 앞에 추가 해야하므로 리버스한 후 추가 후 다시 리버스

@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BoomBuy_android.iml" filepath="$PROJECT_DIR$/BoomBuy_android.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/boombuy_android_team.iml" filepath="$PROJECT_DIR$/boombuy_android_team.iml" />
     </modules>
   </component>
 </project>

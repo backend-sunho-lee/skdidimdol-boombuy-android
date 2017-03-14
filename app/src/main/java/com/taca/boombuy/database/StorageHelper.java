@@ -64,6 +64,10 @@ public class StorageHelper {
         // 커밋
         editor.commit();
     }
+    public void setString(String key, String value)
+    {
+        this.setString(this.context, key, value);
+    }
     public String getString(Context context, String key)
     {
         return

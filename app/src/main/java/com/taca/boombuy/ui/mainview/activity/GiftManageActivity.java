@@ -30,7 +30,6 @@ import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.database.StorageHelper;
 import com.taca.boombuy.ui.mainview.fragment.ReceivedGiftFrag;
 import com.taca.boombuy.ui.mainview.fragment.SentGiftFrag;
-import com.taca.boombuy.ui.mainview.fragment.brandBaseFrag;
 import com.taca.boombuy.util.ImageProc;
 import com.taca.boombuy.util.U;
 
@@ -73,6 +72,8 @@ public class GiftManageActivity extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_gift_manage);
+
+        ImageProc.getInstance().getImageLoader(this);
 
         Log.i("TOTAL PRODUCT", Single_Value.getInstance().vo_gift_total_member.toString());
 

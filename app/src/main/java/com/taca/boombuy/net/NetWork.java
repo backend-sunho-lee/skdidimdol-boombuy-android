@@ -12,11 +12,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
+import com.taca.boombuy.Resmodel.PayCancelTokenModel;
 import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.Resmodel.ResItemDetail;
 import com.taca.boombuy.Resmodel.ResItems;
 import com.taca.boombuy.Resmodel.ResSearchBrands;
 import com.taca.boombuy.Resmodel.ResSearchProfile;
+import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.evt.OttoBus;
 import com.taca.boombuy.networkmodel.LoginDTO;
 import com.taca.boombuy.networkmodel.SignUpDTO;
@@ -52,10 +54,7 @@ public class NetWork {
         return requestQueue;
     }
 
-    String imp_uid = "imp33560986";
-
-    String token = "6e8997b0256dee015e3d1b3a3fc3588cc236108c";
-    public void NetGetCancelToken(Context context){
+    public void NetGetCancelToken(final Context context, final int oid){
 
         final String imp_key = "0621551347884684";
         final String imp_secret = "I1xaj3KoGXvfyDz1mpRK4Keo4O39OWLxYjHhmrF3pbjXOSZbhRWmCaLGZOPNLAkJT10gsGkSSDQHwPSO";
@@ -71,6 +70,13 @@ public class NetWork {
                         public void onResponse(String response) {
 
                             Log.i("API RES :" , response.toString());
+
+                            PayCancelTokenModel payCancelTokenModel = new Gson().fromJson(response.toString(), PayCancelTokenModel.class);
+                            String access_token = payCancelTokenModel.getResponse().getAccess_token();
+
+                            Log.i("ACCESS TOKEN : " ,  Single_Value.getInstance().access_token );
+                            NetWork.getInstance().NetCancelPayment(context, oid, access_token);
+
 
                         }
                     },
@@ -99,14 +105,23 @@ public class NetWork {
 
         }
 
-        //return token;
+        //return Single_Value.getInstance().access_token;
     }
 
-    public void NetCancelPayment(Context context, final Map<String, String> map){
+    public void NetCancelPayment(Context context, final int oid, String access_token){
 
-        Log.i("MAP DATA IN VOLLEY", map.get("imp_uid") + " : " + map.get("merchant_uid"));
+        /*final String imp_uid = oidiam.split("/")[0];
+        final String merchant_uid  = oidiam.split("/")[1];
+*/
+        //Log.i("MAP DATA IN VOLLEY", map.get("imp_uid") + " : " + map.get("merchant_uid"));
 
-        String url = "https://api.iamport.kr/payments/cancel?_token="+token;
+
+        Log.i("취소 시작부분 : " , access_token);
+
+        String url = "https://api.iamport.kr/payments/cancel?_token="+access_token;
+
+        Log.i("취소 URL ",  url);
+        //String url = "https://api.iamport.kr/payments/cancel?_token="+token;
         try{
             StringRequest stringRequest = new StringRequest(
                     Request.Method.POST,
@@ -115,8 +130,7 @@ public class NetWork {
                         @Override
                         public void onResponse(String response) {
 
-                            Log.i("API RES :" , response.toString());
-
+                            Log.i("API CANCEL RES :" , response.toString());
                         }
                     },
                     new Response.ErrorListener(){
@@ -129,6 +143,13 @@ public class NetWork {
 
                 @Override
                 protected Map<String, String> getParams() throws AuthFailureError {
+
+                    Log.i("CANCEL OID : ", oid+"");
+                    Map<String, String> map =  new HashMap<>();
+                    map.put("merchant_uid", oid+"");
+
+
+                    Log.i("CANCEL OID FF : ", map.get("merchant_uid"));
                     return map;
                 }
             };

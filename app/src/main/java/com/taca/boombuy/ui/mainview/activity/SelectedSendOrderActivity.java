@@ -23,9 +23,6 @@ import com.taca.boombuy.net.NetWork;
 import com.taca.boombuy.ui.payment.PaymentActivity;
 import com.taca.boombuy.util.ImageProc;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import retrofit2.Call;
@@ -34,6 +31,8 @@ import retrofit2.Response;
 
 public class SelectedSendOrderActivity extends AppCompatActivity {
 
+
+    int myprice;
     ResSelectedSendOrder resSelectedSendOrder;
 
     @Override
@@ -227,7 +226,7 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onBindViewHolder(SenderRecyclerViewholder holder, final int position) {
+        public void onBindViewHolder(final SenderRecyclerViewholder holder, final int position) {
 
             holder.received_gift_cell_sendName.setText(resSelectedSendOrder.getResult().getSettlements().get(position).getName());
             holder.received_gift_cell_sendPrice.setText(String.format("%,3d", resSelectedSendOrder.getResult().getSettlements().get(position).getCost()) + " 원");
@@ -240,20 +239,25 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
                 String user_name = StorageHelper.getInstance().getString(getApplicationContext(), "user_name");
 
                 if (resSelectedSendOrder.getResult().getSettlements().get(position).getName().equals(user_name)) {
+
+                    myprice = resSelectedSendOrder.getResult().getSettlements().get(position).getCost();
                     holder.received_gift_cell_cancelPaybtn.setVisibility(View.VISIBLE);
                     holder.received_gift_cell_cancelPaybtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
 
-                            NetWork.getInstance().NetGetCancelToken(getApplicationContext());
+                            NetWork.getInstance().NetGetCancelToken(getApplicationContext(), resSelectedSendOrder.getResult().getSettlements().get(position).getOid());
 
-                            Map<String, String> map = new HashMap<String, String>();
-                            map.put("imp_uid", imp_uid);
-                            map.put("merchant_uid", merchant_uid);
+                            /*Handler handler = new Handler().postDelayed(new Runnable() {
+                                @Override
+                                public void run() {
 
-                            Log.i("MAP DATA", map.get("imp_uid") + " : " + map.get("merchant_uid"));
+                                }
+                            }, 1000);*/
 
-                            //NetWork.getInstance().NetCancelPayment(getApplicationContext(), map);
+
+                            //String oidiam = StorageHelper.getInstance().getString(getApplicationContext(), resSelectedSendOrder.getResult().getSettlements().get(position).getOid()+"iam");
+                            //NetWork.getInstance().NetCancelPayment(getApplicationContext(), oidiam, myprice);
 
                         }
                     });
@@ -311,6 +315,8 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
             imp_uid = data.getStringExtra("imp_uid");
             merchant_uid = data.getStringExtra("merchant_uid");
             state = data.getBooleanExtra("success", false);
+
+            StorageHelper.getInstance().setString(oid + "iam", imp_uid + "/" + merchant_uid);
 
             Toast.makeText(this, data.getStringExtra("suc"), Toast.LENGTH_SHORT).show();
             // 결제 결과 서버로 전송

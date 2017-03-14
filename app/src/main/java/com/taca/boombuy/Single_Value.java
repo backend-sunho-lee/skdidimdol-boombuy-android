@@ -28,6 +28,8 @@ public class Single_Value {
     private Single_Value() {
     }
 
+    public String access_token = "";
+
     // 선물 받을 사람 전화번호부 리스트, VO
     public ArrayList<VO_to_friend_local_list> vo_to_friend_local_lists = new ArrayList<VO_to_friend_local_list>();
     public VO_to_friend_local_list vo_to_friend_local_list;

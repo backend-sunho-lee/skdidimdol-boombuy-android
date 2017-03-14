@@ -112,12 +112,6 @@ public class LoginActivity extends AppCompatActivity {
         btn_auto_signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 서버로부터 로그인
-                /*Single_Value.getInstance().lonInModel = new LoginModel();
-                Single_Value.getInstance().lonInModel.setPhone(et_signin_id.getText().toString());
-                Single_Value.getInstance().lonInModel.setPassword(et_signin_password.getText().toString());*/
-
-                //NetworkTEST.getInstance().bb_Login(getApplicationContext(), Single_Value.getInstance().lonInModel);
 
                 // 서버 로그인 시도
                 LoginDTO loginDTO = new LoginDTO(
@@ -167,9 +161,53 @@ public class LoginActivity extends AppCompatActivity {
                 // my_phone_number 쉐어드프리퍼런스에 내 전화번호 저장
                 StorageHelper.getInstance().setString(LoginActivity.this, "my_phone_number", U.getInstance().getMyPhoneNum(LoginActivity.this));
                 Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(intent);
+                startActivityForResult(intent, 77);
             }
         });
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 77 && resultCode == 7) {
+            et_signin_id.setText(StorageHelper.getInstance().getString(LoginActivity.this, "my_phone_number"));
+            et_signin_password.setText(StorageHelper.getInstance().getString(LoginActivity.this, "auto_login_password"));
+            // 서버 로그인 시도
+            LoginDTO loginDTO = new LoginDTO(
+                    et_signin_id.getText().toString(),
+                    et_signin_password.getText().toString(),
+                    FirebaseInstanceId.getInstance().getToken()
+            );
+            Call<ResBasic> NetLogin = NetSSL.getInstance().getMemberImpFactory().NetLogin(loginDTO);
+
+            NetLogin.enqueue(new Callback<ResBasic>() {
+                @Override
+                public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
+
+                    Log.i("LOG RESPONSE", response.message().toString());
+
+                    if (response.isSuccessful()) {
+                        if (response.body() != null && response.body().getMessage() != null) {
+                            Log.i("RES SUC", response.body().getMessage());
+                            OttoBus.getInstance().getLogin_Bus().post(response.body());
+                        } else {
+                            Log.i("RF", "로그인실패:" + response.message());
+                            Toast.makeText(LoginActivity.this, "서버 점검 중입니다", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+
+                        Log.i("RF", "로그인실패11:" + response.message());
+                        Toast.makeText(LoginActivity.this, "서버 점검 중입니다", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ResBasic> call, Throwable t) {
+
+                    t.printStackTrace();
+                    Log.i("ERROR : ", t.getMessage());
+                }
+            });
+        }
     }
 
     // 오토버스 이벤트 도착

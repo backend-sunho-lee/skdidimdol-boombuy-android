@@ -24,6 +24,7 @@ import com.taca.boombuy.networkmodel.SignUpDTO;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -50,6 +51,99 @@ public class NetWork {
         }
         return requestQueue;
     }
+
+    String imp_uid = "imp33560986";
+
+    String token = "6e8997b0256dee015e3d1b3a3fc3588cc236108c";
+    public void NetGetCancelToken(Context context){
+
+        final String imp_key = "0621551347884684";
+        final String imp_secret = "I1xaj3KoGXvfyDz1mpRK4Keo4O39OWLxYjHhmrF3pbjXOSZbhRWmCaLGZOPNLAkJT10gsGkSSDQHwPSO";
+
+        String json = "{'imp_key':"+imp_key+", 'imp_secret':"+imp_secret+"}";
+
+        try{
+            StringRequest stringRequest = new StringRequest(
+                    Request.Method.POST,
+                    "https://api.iamport.kr/users/getToken",
+                    new Response.Listener<String>(){
+                        @Override
+                        public void onResponse(String response) {
+
+                            Log.i("API RES :" , response.toString());
+
+                        }
+                    },
+                    new Response.ErrorListener(){
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.i("API ERROR :" , error.getMessage());
+                        }
+                    }
+            ){
+
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> map =  new HashMap<>();
+                    map.put("imp_key", imp_key);
+                    map.put("imp_secret", imp_secret);
+                    return map;
+                }
+            };
+
+            getRequestQueue(context).add(stringRequest);
+
+        }catch (Exception e ){
+
+            e.printStackTrace();
+
+        }
+
+        //return token;
+    }
+
+    public void NetCancelPayment(Context context, final Map<String, String> map){
+
+        Log.i("MAP DATA IN VOLLEY", map.get("imp_uid") + " : " + map.get("merchant_uid"));
+
+        String url = "https://api.iamport.kr/payments/cancel?_token="+token;
+        try{
+            StringRequest stringRequest = new StringRequest(
+                    Request.Method.POST,
+                    url,
+                    new Response.Listener<String>(){
+                        @Override
+                        public void onResponse(String response) {
+
+                            Log.i("API RES :" , response.toString());
+
+                        }
+                    },
+                    new Response.ErrorListener(){
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            Log.i("API ERROR :" , error.getMessage());
+                        }
+                    }
+            ){
+
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    return map;
+                }
+            };
+
+            getRequestQueue(context).add(stringRequest);
+
+        }catch (Exception e ){
+
+            e.printStackTrace();
+
+        }
+
+
+    }
+
 
     // 회원가입 //////////////////////////////////////////////////////////////////////////////////////////
     public void NetSignUp(Context context, SignUpDTO signUpDTO){

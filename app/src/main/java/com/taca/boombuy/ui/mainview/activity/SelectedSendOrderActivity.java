@@ -19,11 +19,12 @@ import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.Resmodel.ResSelectedSendOrder;
 import com.taca.boombuy.database.StorageHelper;
+import com.taca.boombuy.net.NetWork;
 import com.taca.boombuy.ui.payment.PaymentActivity;
-import com.taca.boombuy.ui.popup.SignUpPopupActivity;
-import com.taca.boombuy.ui.sign.LoginActivity;
-import com.taca.boombuy.ui.sign.SignUpActivity;
 import com.taca.boombuy.util.ImageProc;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -208,6 +209,9 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
         @BindView(R.id.received_gift_cell_sendPayBtn)
         ImageView received_gift_cell_sendPayBtn;
 
+        @BindView(R.id.received_gift_cell_cancelPaybtn)
+        ImageView received_gift_cell_cancelPaybtn;
+
         public SenderRecyclerViewholder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
@@ -232,11 +236,35 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
                 holder.received_gift_cell_sendPayBtn.setBackgroundResource(R.drawable.ic_progress);
             } else {
                 holder.received_gift_cell_sendPayBtn.setBackgroundResource(R.drawable.ic_payment);
+
+                String user_name = StorageHelper.getInstance().getString(getApplicationContext(), "user_name");
+
+                if (resSelectedSendOrder.getResult().getSettlements().get(position).getName().equals(user_name)) {
+                    holder.received_gift_cell_cancelPaybtn.setVisibility(View.VISIBLE);
+                    holder.received_gift_cell_cancelPaybtn.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            NetWork.getInstance().NetGetCancelToken(getApplicationContext());
+
+                            Map<String, String> map = new HashMap<String, String>();
+                            map.put("imp_uid", imp_uid);
+                            map.put("merchant_uid", merchant_uid);
+
+                            Log.i("MAP DATA", map.get("imp_uid") + " : " + map.get("merchant_uid"));
+
+                            //NetWork.getInstance().NetCancelPayment(getApplicationContext(), map);
+
+                        }
+                    });
+                }
+
                 // 결제 완료한 금액 구하기
                 completed_price += resSelectedSendOrder.getResult().getSettlements().get(position).getCost();
             }
 
             ImageProc.getInstance().drawImage(resSelectedSendOrder.getResult().getSettlements().get(position).getLocation(), holder.received_gift_cell_buyer_profile);
+
 
             // 본인만 결제하러 갈 수 있도록, 결제 완료후에는 터치 불가능
             if (StorageHelper.getInstance().getString(getApplicationContext(), "user_name").equals(resSelectedSendOrder.getResult().getSettlements().get(position).getName())
@@ -248,6 +276,7 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
                         Intent intent = new Intent(SelectedSendOrderActivity.this, PaymentActivity.class);
                         intent.putExtra("payment_name", resSelectedSendOrder.getResult().getSettlements().get(position).getName());
                         intent.putExtra("payment_price", resSelectedSendOrder.getResult().getSettlements().get(position).getCost());
+                        intent.putExtra("payment_oid", resSelectedSendOrder.getResult().getSettlements().get(position).getOid());
                         // 결제후 결과를 돌려 받는다
                         // 1000 : 요청코드 (임의로 지정)
                         startActivityForResult(intent, 1000);
@@ -273,16 +302,26 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
+
         if (requestCode == 1000 && resultCode == 1001) {
             Toast.makeText(this, data.getStringExtra("err"), Toast.LENGTH_SHORT).show();
         } else if (requestCode == 1000 && resultCode == 1) {
             // 결제 후 결과를 받는 위치
+            imp_uid = data.getStringExtra("imp_uid");
+            merchant_uid = data.getStringExtra("merchant_uid");
+            state = data.getBooleanExtra("success", false);
+
             Toast.makeText(this, data.getStringExtra("suc"), Toast.LENGTH_SHORT).show();
             // 결제 결과 서버로 전송
-            //if(data.getStringExtra("suc").contains("true"))
-            changeState();
+            if (state)
+                changeState();
         }
     }
+
+    String imp_uid;
+    String merchant_uid;
+    boolean state;
 
     class ProductRecyclerViewHolder extends RecyclerView.ViewHolder {
 

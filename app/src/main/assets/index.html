@@ -19,27 +19,27 @@ $(document).ready(function(){
     IMP.init('imp33560986');    // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 });
 
-function paynow(name, price)
+function paynow(name, price, oid)
 {
     //onclick, onload 등 원하는 이벤트에 호출합니다
     var param = {
         pg :            'lgu+', // version 1.1.0부터 지원.
         pay_method :    'card',
-        merchant_uid :  'merchant_' + new Date().getTime(),
+        merchant_uid :  oid, // 상품 주문번호
         name :          'BOOMBUY',
-        amount :        price,//1004,
+        amount :        price, // 개인별 결제 가격
         buyer_email :   'iamport@siot.do',
-        buyer_name :    name,//'홍길동',
+        buyer_name :    name,// 구매자 이름
         buyer_tel :     '010-1234-5678',
         buyer_addr :    '서울특별시 강남구 삼성동',
         buyer_postcode : '123-456',
-        m_redirect_url : 'http://ec2-35-165-170-210.us-west-2.compute.amazonaws.com:3000/bb_Search_Items',
+        m_redirect_url : 'ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000/process_payment',
         app_scheme :     'iamportapp'
     };
-    //alert("setp 2");
+
     IMP.request_pay(param, function(rsp)
     {
-        /alert("setp 3 : " + rsp.success);
+
         if ( rsp.success )
         {
             var msg = '결제가 완료되었습니다.';
@@ -56,8 +56,8 @@ function paynow(name, price)
 }
 </script>
 </head>
-<body>
-<!--<button onclick="javascript:paynow('김종필', 1004);">결제</button>-->
+<body >
+
 </body>
 </html>
 

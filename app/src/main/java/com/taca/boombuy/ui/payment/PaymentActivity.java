@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.ConsoleMessage;
 import android.webkit.JavascriptInterface;
@@ -26,15 +27,22 @@ public class PaymentActivity extends BaseActivity
     WebView webView;
     String name;
     int price;
+    int oid;
     boolean isChargeFinsh;  // 결제 화면 로딩이 완전히 끝나면 true가 됨.
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
+
+
         name = getIntent().getStringExtra("payment_name");
         price = getIntent().getIntExtra("payment_price", 0);
-        if( name.length() == 0 || price == 0 ){
+        oid = getIntent().getIntExtra("payment_oid", 0);
+
+        Log.i("TEST RESULT", name + " : " + price + " : " + oid);
+
+        if( name.length() == 0 || price == 0  || oid == 0){
             // 결제 정보 오류
             Toast.makeText(this, "결제 정보가 누락되었습니다.", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
@@ -91,7 +99,7 @@ public class PaymentActivity extends BaseActivity
                 super.onProgressChanged(view, newProgress);
                 if( newProgress == 100 && !isChargeFinsh ){
                     isChargeFinsh = true;   // 결제 페이지가 로딩이 모두 완료되었다.
-                    webView.loadUrl("javascript:paynow('"+name+"', "+price+");");
+                    webView.loadUrl("javascript:paynow('"+name+"', "+price+" , "+oid+");");
                 }
             }
 
@@ -115,6 +123,11 @@ public class PaymentActivity extends BaseActivity
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
+                if(url.indexOf("http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000") >= 0){
+                    webView.addJavascriptInterface(new MyInter(), "my");
+                }
+
                 if (!url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("javascript:")) {
                     Intent intent = null;
 
@@ -163,9 +176,14 @@ public class PaymentActivity extends BaseActivity
         @JavascriptInterface
         public void end(String imp_uid, String merchant_uid, boolean success) {
             // 결제 결과 받기
+
+            Toast.makeText(PaymentActivity.this, imp_uid + " : " + merchant_uid + " : " + success, Toast.LENGTH_SHORT).show();
             String msg = imp_uid+"/"+merchant_uid+"/"+success;
-            Toast.makeText(getBaseContext(), msg,  Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getBaseContext(), msg,  Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
+            intent.putExtra("imp_uid", imp_uid);
+            intent.putExtra("merchant_uid", merchant_uid);
+            intent.putExtra("success", success);
             intent.putExtra("suc", msg);
             // 결과 돌려주기 응답 코드 : 1
             setResult(1, intent);

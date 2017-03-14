@@ -97,7 +97,9 @@
         <activity android:name=".ui.mainview.activity.SelectedSendOrderActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
 
-        <activity android:name=".ui.payment.PaymentActivity"></activity>
+        <activity android:name=".ui.payment.PaymentActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
 
     </application>
 

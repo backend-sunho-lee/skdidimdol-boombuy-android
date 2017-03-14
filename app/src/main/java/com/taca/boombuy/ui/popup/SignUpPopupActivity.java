@@ -1,29 +1,14 @@
 package com.taca.boombuy.ui.popup;
 
-import android.content.Intent;
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Toast;
-
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.squareup.otto.Subscribe;
-import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
-import com.taca.boombuy.Resmodel.ResBasic;
-import com.taca.boombuy.database.StorageHelper;
-import com.taca.boombuy.evt.OttoBus;
-import com.taca.boombuy.networkmodel.LoginDTO;
-import com.taca.boombuy.ui.mainview.activity.MainActivity;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class SignUpPopupActivity extends AppCompatActivity {
+public class SignUpPopupActivity extends Activity {
     /*// 백키 무시
     @Override
     public void onBackPressed() {
@@ -32,6 +17,9 @@ public class SignUpPopupActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+
         // 윈도우 설정 : 잠겨있어도 보이고, 화면을 유지하고, 뒤를 블러처리하고
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON
                 | WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);

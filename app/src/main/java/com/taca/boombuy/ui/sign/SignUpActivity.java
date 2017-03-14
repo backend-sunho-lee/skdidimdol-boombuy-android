@@ -121,6 +121,7 @@ public class SignUpActivity extends AppCompatActivity {
         // 회원가입 성공하면 sharedpreference에 저장
         if (resBasic.getMessage() != null) {
             StorageHelper.getInstance().setBoolean(SignUpActivity.this, "auto_login", true);
+            StorageHelper.getInstance().setString(SignUpActivity.this, "my_phone_number", et_signup_id.getText().toString());
             StorageHelper.getInstance().setString(SignUpActivity.this, "auto_login_password", et_signup_password.getText().toString());
 
             Intent intent = new Intent(SignUpActivity.this, SignUpPopupActivity.class);
@@ -133,6 +134,9 @@ public class SignUpActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == 1004) {
+            Intent intent = new Intent();
+            // 결과 돌려주기 응답 코드 : 1
+            setResult(7, intent);
             finish();
         }
     }

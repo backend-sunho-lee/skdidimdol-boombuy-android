@@ -19,6 +19,10 @@ import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.Resmodel.ResSelectedSendOrder;
 import com.taca.boombuy.database.StorageHelper;
+import com.taca.boombuy.ui.payment.PaymentActivity;
+import com.taca.boombuy.ui.popup.SignUpPopupActivity;
+import com.taca.boombuy.ui.sign.LoginActivity;
+import com.taca.boombuy.ui.sign.SignUpActivity;
 import com.taca.boombuy.util.ImageProc;
 
 import butterknife.BindView;
@@ -105,7 +109,7 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
         total_price = 0;
         completed_price = 0;
 
-        Log.i("oid확인 : ", oid+"");
+        Log.i("oid확인 : ", oid + "");
         Call<ResSelectedSendOrder> NetSelectSendOrder = NetSSL.getInstance().getMemberImpFactory().NetSelectSendOrder(oid);
         NetSelectSendOrder.enqueue(new Callback<ResSelectedSendOrder>() {
             @Override
@@ -241,16 +245,15 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
 
-                        /*Intent intent = new Intent(SelectedSendOrderActivity.this, PaymentActivity.class);
-                        intent.putExtra("name", resSelectedSendOrder.getResult().getSettlements().get(position).getName());
-                        intent.putExtra("price", resSelectedSendOrder.getResult().getSettlements().get(position).getCost());
+                        Intent intent = new Intent(SelectedSendOrderActivity.this, PaymentActivity.class);
+                        intent.putExtra("payment_name", resSelectedSendOrder.getResult().getSettlements().get(position).getName());
+                        intent.putExtra("payment_price", resSelectedSendOrder.getResult().getSettlements().get(position).getCost());
                         // 결제후 결과를 돌려 받는다
                         // 1000 : 요청코드 (임의로 지정)
-                        startActivityForResult(intent, 1000);*/
+                        startActivityForResult(intent, 1000);
 
-
-                        Toast.makeText(SelectedSendOrderActivity.this, "결제 진행 모듈 실행", Toast.LENGTH_SHORT).show();
-                        changeState();
+                        //Toast.makeText(SelectedSendOrderActivity.this, "결제 진행 모듈 실행", Toast.LENGTH_SHORT).show();
+                        //changeState();
                     }
                 });
             }
@@ -270,12 +273,13 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if( requestCode == 1000 && resultCode == 1001) {
+        if (requestCode == 1000 && resultCode == 1001) {
             Toast.makeText(this, data.getStringExtra("err"), Toast.LENGTH_SHORT).show();
-        }else if( requestCode == 1000 && resultCode == 1) {
+        } else if (requestCode == 1000 && resultCode == 1) {
             // 결제 후 결과를 받는 위치
             Toast.makeText(this, data.getStringExtra("suc"), Toast.LENGTH_SHORT).show();
             // 결제 결과 서버로 전송
+            //if(data.getStringExtra("suc").contains("true"))
             changeState();
         }
     }

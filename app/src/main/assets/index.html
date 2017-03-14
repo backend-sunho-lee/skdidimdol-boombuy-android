@@ -16,10 +16,10 @@ var IMP = window.IMP;       // 생략가능
 $(document).ready(function(){
     //alert("setp 1");
     /* 중략 */
-    IMP.init('imp44922343');    // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
+    IMP.init('imp33560986');    // 'iamport' 대신 부여받은 "가맹점 식별코드"를 사용
 });
 
-function paynow(name, price )
+function paynow(name, price)
 {
     //onclick, onload 등 원하는 이벤트에 호출합니다
     var param = {
@@ -39,7 +39,7 @@ function paynow(name, price )
     //alert("setp 2");
     IMP.request_pay(param, function(rsp)
     {
-        alert("setp 3 : " + rsp.success);
+        /alert("setp 3 : " + rsp.success);
         if ( rsp.success )
         {
             var msg = '결제가 완료되었습니다.';

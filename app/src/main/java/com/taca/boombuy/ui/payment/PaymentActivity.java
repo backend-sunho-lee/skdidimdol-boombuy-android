@@ -32,13 +32,13 @@ public class PaymentActivity extends BaseActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
-        name = getIntent().getStringExtra("name");
-        price = getIntent().getIntExtra("price", 0);
+        name = getIntent().getStringExtra("payment_name");
+        price = getIntent().getIntExtra("payment_price", 0);
         if( name.length() == 0 || price == 0 ){
             // 결제 정보 오류
-            Toast.makeText(this, "결제 정보가 누락되었습니다. 다시해!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "결제 정보가 누락되었습니다.", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
-            intent.putExtra("err", "결제 정보가 누락되었습니다. 다시해!");
+            intent.putExtra("err", "결제 정보가 누락되었습니다.");
             // 결과 돌려주기
             setResult(1001, intent);
             finish();
@@ -152,10 +152,21 @@ public class PaymentActivity extends BaseActivity
     {
         @JavascriptInterface
         public void showResult(String msg) {
-            // 결제 결과 받기
+            /*// 결제 결과 받기
             Toast.makeText(getBaseContext(), "결과 : " + msg,  Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();
-            intent.putExtra("sec", msg);
+            intent.putExtra("suc", msg);
+            // 결과 돌려주기 응답 코드 : 1
+            setResult(1, intent);
+            finish();*/
+        }
+        @JavascriptInterface
+        public void end(String imp_uid, String merchant_uid, boolean success) {
+            // 결제 결과 받기
+            String msg = imp_uid+"/"+merchant_uid+"/"+success;
+            Toast.makeText(getBaseContext(), msg,  Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent();
+            intent.putExtra("suc", msg);
             // 결과 돌려주기 응답 코드 : 1
             setResult(1, intent);
             finish();

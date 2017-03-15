@@ -44,6 +44,7 @@ import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.database.StorageHelper;
 import com.taca.boombuy.networkmodel.GiftDTO;
 import com.taca.boombuy.networkmodel.GiftSenderDTO;
+import com.taca.boombuy.networkmodel.ItemDTO;
 import com.taca.boombuy.singleton.item_single;
 import com.taca.boombuy.ui.popup.SignOutPopupActivity;
 import com.taca.boombuy.util.ImageProc;
@@ -53,6 +54,7 @@ import com.taca.boombuy.vo.VO_from_friends_info;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -185,8 +187,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         getProfile();
 
         ///////뷰페이저/////////////////////////////////////////////////////////////////////////////////
-        viewPager_main = (ViewPager)findViewById(R.id.viewPager_main);
-        curDot = (TextView)findViewById(R.id.curDot);
+        viewPager_main = (ViewPager) findViewById(R.id.viewPager_main);
+        curDot = (TextView) findViewById(R.id.curDot);
         myPageAdapter = new MyPageAdapter();
         viewPager_main.setAdapter(myPageAdapter); // 뷰페이져에  페이지어뎁터를 넣는다
         viewPager_main.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -308,8 +310,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     public void onMovePaymentActivity(View view) {
 
-        if(Single_Value.getInstance().vo_to_friend_infos.size()!=0
-                && item_single.getInstance().itemDTOArrayList.size()>1) {
+        if (Single_Value.getInstance().vo_to_friend_infos.size() != 0
+                && item_single.getInstance().itemDTOArrayList.size() > 1) {
             ArrayList<Integer> cartNums = new ArrayList<>();
             for (int i = 0; i < item_single.getInstance().itemDTOArrayList.size() - 1; i++) {
                 cartNums.add(item_single.getInstance().itemDTOArrayList.get(i).getId());
@@ -628,7 +630,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
                 break;
             case 404:
-
                 Call<ResBasic> NetWithdrawal = NetSSL.getInstance().getMemberImpFactory().NetWithdrawal();
                 NetWithdrawal.enqueue(new Callback<ResBasic>() {
                     @Override
@@ -643,11 +644,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                                 // 어플 종료
                                 StorageHelper.getInstance().setBoolean(MainActivity.this, "auto_login", false);
                                 StorageHelper.getInstance().setString(MainActivity.this, "auto_login_password", "");
-
-
                                 finish();
-
-
                             } else {
                                 Log.i("RESPONSE RESULT 1: ", response.message());
                             }
@@ -866,7 +863,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         // 뷰 추가
         @Override
-        public Object instantiateItem(View container, int position) {
+        public Object instantiateItem(View container, final int position) {
             // position => 요청페이지 > 요청 페이지별 뷰를 생성해서 처리
             // 요청페이지 해당하는 url 획득
             String url = poster[position];
@@ -877,6 +874,32 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             //이미지 셋팅
             ImageProc.getInstance().drawImage(url, imageView);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY); // x,y 축 꽉채우기
+
+            imageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(MainActivity.this, position + "째 그림", Toast.LENGTH_SHORT).show();
+                    if (position == 0) {
+                        ItemDTO itemDTO = new ItemDTO(
+                                38,
+                                4,
+                                "체리 블라썸 바디 케어 세트",
+                                70000,
+                                "",
+                                "https://boombuy.s3.ap-northeast-2.amazonaws.com/itemsPhotos/1487224442458_loccitane_0.5740165330325799",
+                                true
+                        );
+                        Collections.reverse(item_single.getInstance().itemDTOArrayList);
+                        item_single.getInstance().itemDTOArrayList.add(itemDTO);
+                        Collections.reverse(item_single.getInstance().itemDTOArrayList);
+                    } else if (position == 1) {
+
+                    } else {
+
+                    }
+                    refreshMainView();
+                }
+            });
 
             ((ViewPager) container).addView(imageView);
             return imageView;

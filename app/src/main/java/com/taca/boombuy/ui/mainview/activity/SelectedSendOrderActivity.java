@@ -174,7 +174,6 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body() != null && response.body().getMessage() != null) {
 
-
                         Log.i("Result : ", response.body().getMessage());
                         // 서버 통신
                         getSelectedData();
@@ -245,19 +244,13 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
                     holder.received_gift_cell_cancelPaybtn.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-
                             NetWork.getInstance().NetGetCancelToken(getApplicationContext(), resSelectedSendOrder.getResult().getSettlements().get(position).getOid());
 
-                            /*Handler handler = new Handler().postDelayed(new Runnable() {
-                                @Override
-                                public void run() {
 
-                                }
-                            }, 1000);*/
-
-
-                            //String oidiam = StorageHelper.getInstance().getString(getApplicationContext(), resSelectedSendOrder.getResult().getSettlements().get(position).getOid()+"iam");
-                            //NetWork.getInstance().NetCancelPayment(getApplicationContext(), oidiam, myprice);
+                            // 통신떄려서 결제상태 -> 결제 취소 바꿔주고
+                            holder.received_gift_cell_cancelPaybtn.setVisibility(View.GONE);
+                            holder.received_gift_cell_sendPayBtn.setBackgroundResource(R.drawable.ic_progress);
+                            // 결제 취소모양으로 버튼이미지 바꿔줘야함
 
                         }
                     });
@@ -268,7 +261,6 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
             }
 
             ImageProc.getInstance().drawImage(resSelectedSendOrder.getResult().getSettlements().get(position).getLocation(), holder.received_gift_cell_buyer_profile);
-
 
             // 본인만 결제하러 갈 수 있도록, 결제 완료후에는 터치 불가능
             if (StorageHelper.getInstance().getString(getApplicationContext(), "user_name").equals(resSelectedSendOrder.getResult().getSettlements().get(position).getName())

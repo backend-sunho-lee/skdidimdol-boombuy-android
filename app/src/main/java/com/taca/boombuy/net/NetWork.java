@@ -129,8 +129,8 @@ public class NetWork {
                     new Response.Listener<String>(){
                         @Override
                         public void onResponse(String response) {
-
                             Log.i("API CANCEL RES :" , response.toString());
+
                         }
                     },
                     new Response.ErrorListener(){

@@ -56,7 +56,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_weight="0"
-                android:text="2017 02 11"
+                android:text=""
                 android:textColor="@color/letterColor"
                 android:textSize="13sp" />
 
@@ -219,7 +219,7 @@
                         android:layout_width="100dp"
                         android:layout_height="25dp"
                         android:gravity="end|center"
-                        android:text="10,000원"
+                        android:text=""
                         android:textColor="@color/appColor"
                         android:textSize="17sp"
                         android:textStyle="bold" />
@@ -252,7 +252,7 @@
                         android:layout_width="100dp"
                         android:layout_height="25dp"
                         android:gravity="end|center"
-                        android:text="10,000원"
+                        android:text=""
                         android:textColor="@color/colorAccent"
                         android:textSize="17sp"
                         android:textStyle="bold" />

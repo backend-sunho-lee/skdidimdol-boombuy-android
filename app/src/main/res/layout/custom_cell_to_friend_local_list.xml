@@ -35,7 +35,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="left|bottom"
-                android:text="name"
+                android:text=""
                 android:textSize="15sp"
                 android:textStyle="bold" />
 
@@ -45,7 +45,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="left|top"
-                android:text="010-"
+                android:text=""
                 android:textSize="12sp" />
         </LinearLayout>
     </LinearLayout>

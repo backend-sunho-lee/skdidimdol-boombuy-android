@@ -25,7 +25,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_weight="0"
-            android:text="2017 02 11"
+            android:text=""
             android:textColor="@color/letterColor"
             android:textSize="13sp" />
 
@@ -75,7 +75,7 @@
                         android:layout_width="95dp"
                         android:layout_height="20dp"
                         android:gravity="center"
-                        android:text="누구아"
+                        android:text=""
                         android:textColor="@color/letterColor"
                         android:textSize="16sp" />
 
@@ -116,7 +116,7 @@
                         android:layout_width="95dp"
                         android:layout_height="20dp"
                         android:gravity="center"
-                        android:text="라라라 외 1명"
+                        android:text=""
                         android:textColor="@color/letterColor"
                         android:textSize="16sp" />
 

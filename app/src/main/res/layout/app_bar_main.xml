@@ -25,7 +25,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/appColor"
                 android:gravity="center|center_horizontal"
-                android:text="BOOMBUY　　　"/>
+                android:text="BOOMBUY　　　    "/>
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>

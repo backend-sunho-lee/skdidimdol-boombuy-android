@@ -1,5 +1,7 @@
 <resources>
 
+
+
     <style name="MyCheckBox" parent="Theme.AppCompat.NoActionBar">
         <item name="colorControlNormal">#cccccc</item>   <!-- normal border color change as you wish -->
         <item name="colorControlActivated">#fe4081</item> <!-- activated color change as you wish -->

@@ -27,7 +27,7 @@
             android:layout_weight="0"
             android:text="2017 02 11"
             android:textColor="@color/letterColor"
-            android:textSize="16.3sp" />
+            android:textSize="13sp" />
 
         <FrameLayout
 

@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -17,7 +18,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
-import android.support.design.widget.NavigationView;
 import android.view.View;
 import android.widget.TextView;
 
@@ -25,7 +25,6 @@ import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
 import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.Resmodel.ResMyProfile;
-import com.taca.boombuy.Single_Value;
 import com.taca.boombuy.database.StorageHelper;
 import com.taca.boombuy.evt.OttoBus;
 import com.taca.boombuy.ui.mainview.fragment.brandBaseFrag;
@@ -34,7 +33,6 @@ import com.taca.boombuy.ui.mainview.fragment.couponfrag;
 import com.taca.boombuy.ui.mainview.fragment.totalfrag;
 import com.taca.boombuy.util.ImageProc;
 import com.taca.boombuy.util.U;
-import com.taca.boombuy.vo.VO_Gift_Total_SendernReceiver;
 
 import java.io.File;
 import java.util.HashMap;
@@ -128,6 +126,10 @@ public class MainProduct extends AppCompatActivity implements
             }
             return null;
         }
+
+
+
+
     }
 
     @Override

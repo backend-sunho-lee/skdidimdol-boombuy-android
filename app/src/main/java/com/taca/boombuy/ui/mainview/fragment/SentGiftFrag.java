@@ -172,6 +172,9 @@ public class SentGiftFrag extends Fragment {
             }
 
             switch (resSimpleSendOrders.getResult().get(position).getCnt()) {
+                case 0:
+                    holder.received_gift_cell_senders_count.setVisibility(View.GONE);
+                    break;
                 case 1:
                     holder.received_gift_cell_senders_count.setBackgroundResource(R.drawable.ic_1);
                     break;
@@ -204,7 +207,12 @@ public class SentGiftFrag extends Fragment {
                     break;
             }
 
-            holder.gift_Senders.setText(resSimpleSendOrders.getResult().get(position).getSender() + "외 " + resSimpleSendOrders.getResult().get(position).getCnt() + "명");
+            if(resSimpleSendOrders.getResult().get(position).getCnt() == 0 ){
+                holder.gift_Senders.setText(resSimpleSendOrders.getResult().get(position).getSender());
+            }else {
+                holder.gift_Senders.setText(resSimpleSendOrders.getResult().get(position).getSender() + "외 " + resSimpleSendOrders.getResult().get(position).getCnt() + "명");
+            }
+
             holder.gift_receivedPerson.setText(resSimpleSendOrders.getResult().get(position).getReceiver());
 
             ImageProc.getInstance().drawImage(resSimpleSendOrders.getResult().get(position).getSenderphoto(), holder.received_gift_cell_sendMemberProfile);

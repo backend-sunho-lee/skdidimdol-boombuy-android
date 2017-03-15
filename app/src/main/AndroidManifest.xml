@@ -52,12 +52,12 @@
             android:theme="@style/Theme.AppCompat.DayNight.Dialog" />
         <activity
             android:name=".ui.mainview.activity.ToFriendListActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.mainview.activity.FromFriendsListActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.mainview.activity.MainProduct"
             android:screenOrientation="portrait"
@@ -87,24 +87,20 @@
             android:name=".ui.mainview.activity.GiftDetailInfoActivity"
             android:screenOrientation="portrait" />
 
-        <!--
-            android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.DayNight.Dialog"
-        -->
-
         <activity
             android:name=".ui.mainview.activity.GiftSelectDetailInfoActivity"
             android:label="@string/title_activity_gift_select_detail_info"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-
-        <activity android:name=".ui.mainview.activity.SelectedSendOrderActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-
-        <activity android:name=".ui.payment.PaymentActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+        <activity
+            android:name=".ui.mainview.activity.SelectedSendOrderActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.payment.PaymentActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".ui.mainview.activity.SettingActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

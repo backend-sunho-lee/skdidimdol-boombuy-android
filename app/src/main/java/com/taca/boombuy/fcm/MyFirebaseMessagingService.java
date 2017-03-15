@@ -13,6 +13,8 @@ import android.util.Log;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.taca.boombuy.R;
+import com.taca.boombuy.database.StorageHelper;
+import com.taca.boombuy.ui.mainview.activity.SettingActivity;
 import com.taca.boombuy.ui.sign.LoginActivity;
 
 /**
@@ -27,23 +29,13 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         Log.d(TAG, "From: " + remoteMessage.getFrom());
-
-        // Check if message contains a data payload.
-        /*if (remoteMessage.getData().size() > 0) {
-            Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-        }*/
         if (remoteMessage.getData().size() > 0) {
             Log.i(TAG, "Message data payload 1: " + remoteMessage.getData().get("key1"));
             //Log.i(TAG, "Message data payload 2: " + remoteMessage.getData().get("key2"));
-            sendNotification(remoteMessage.getData().get("key1"));
+            if (StorageHelper.getInstance().getBoolean(getApplicationContext(), "getPush")) {
+                sendNotification(remoteMessage.getData().get("key1"));
+            }
         }
-
-        // Check if message contains a notification payload.
-        /*if (remoteMessage.getNotification() != null) {
-            Log.i(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
-
-            sendNotification(remoteMessage.getNotification().getBody());
-        }*/
     }
     // [END receive_message]
 

@@ -726,7 +726,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             startActivity(intent);
             //finish();
         } else if (id == R.id.nav_setting) {
-
+            Intent intent = new Intent(MainActivity.this, SettingActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_sync_friends) {
             // 전화번호 동기화
             U.getInstance().sendPhoneNumber(this);

@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:weightSum="1000">
+        android:weightSum="985">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -64,9 +64,10 @@
         </LinearLayout>
 
         <ImageButton
+            android:id="@+id/imageButton"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="100"
+            android:layout_weight="85"
             android:background="@drawable/btn_pay"
             android:onClick="onMovePaymentActivity"
             android:orientation="vertical" />

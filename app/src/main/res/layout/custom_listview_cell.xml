@@ -1,37 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="#ffffff"
-    android:id="@+id/cell_linear"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
+    android:background="#ffffff"
     android:orientation="horizontal"
-    android:weightSum="1000">
+    android:weightSum="990">
+
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_weight="100">
+        android:layout_height="90dp"
+        android:layout_weight="90">
 
         <CheckBox
-            android:layout_marginTop="20dp"
-            android:theme="@style/MyCheckBox"
             android:id="@+id/lv_checkbox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center|top" />
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:theme="@style/MyCheckBox" />
     </LinearLayout>
 
     <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="90dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
         android:layout_weight="250">
 
         <ImageView
             android:id="@+id/lv_imageview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/product_icon" />
 
@@ -39,15 +40,14 @@
 
     <LinearLayout
         android:layout_width="0dp"
-        android:layout_height="100dp"
+        android:layout_height="90dp"
         android:layout_weight="650"
         android:orientation="vertical">
 
         <LinearLayout
-            android:layout_marginTop="10dp"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="2">
+            android:layout_weight="1.5">
 
             <TextView
                 android:id="@+id/lv_pname"
@@ -62,33 +62,68 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginBottom="10dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"
-            android:orientation="horizontal">
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/lv_pprice"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="10dp"
-                android:layout_weight="2"
+                android:layout_weight="1.8"
                 android:gravity="center|left"
                 android:text="상품 가격"
                 android:textSize="15dp"
                 android:textStyle="bold" />
 
-            <Button
-                android:layout_margin="1dp"
-                android:id="@+id/lv_detailinfo"
+
+            <LinearLayout
+                android:layout_marginRight="7dp"
                 android:layout_width="0dp"
-                android:layout_height="25dp"
+                android:layout_height="28dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
-                android:background="@drawable/btn_detail" />
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/lv_detailinfo"
+                    android:layout_width="60dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_margin="1dp"
+
+                    android:background="@drawable/btn_detail" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <!--
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="2">
+
+
+
+
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="10dp"
+            android:layout_weight="1"
+            android:orientation="horizontal">
+
+
+        </LinearLayout>
+-->
+
 
     </LinearLayout>
 

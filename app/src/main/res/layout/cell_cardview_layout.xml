@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/wrapper"
-    android:layout_width="wrap_content"
-    android:layout_height="130dp"
+    android:layout_width="170dp"
+    android:layout_height="125dp"
     android:layout_margin="10dp"
     android:orientation="horizontal">
 
     <FrameLayout
-        android:layout_width="match_parent"
+        android:layout_width="170dp"
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/cell_basic"
-            android:layout_width="180dp"
+            android:layout_width="170dp"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
@@ -37,7 +37,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="190"
                         android:orientation="horizontal"
-                        android:weightSum="1000">
+                        android:weightSum="980">
 
                         <LinearLayout
                             android:layout_width="0dp"
@@ -48,7 +48,7 @@
                             android:id="@+id/btn_remove_gift"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_weight="170"
+                            android:layout_weight="150"
                             android:background="@drawable/btn_product_x" />
                     </LinearLayout>
 
@@ -95,7 +95,7 @@
 
         <ImageButton
             android:id="@+id/btn_add_gift_list"
-            android:layout_width="180dp"
+            android:layout_width="170dp"
             android:layout_height="match_parent"
             android:background="@drawable/btn_photo_plus"
             android:onClick="onAdd" />

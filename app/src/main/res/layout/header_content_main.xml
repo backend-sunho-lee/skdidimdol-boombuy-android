@@ -53,7 +53,7 @@
     <!--선택한 상품 리싸이클러뷰-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="158.3dp">
+        android:layout_height="146dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"

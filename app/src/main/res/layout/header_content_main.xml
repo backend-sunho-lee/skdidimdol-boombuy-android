@@ -3,9 +3,63 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="514.9dp"
+    android:layout_height="636.54dp"
     android:orientation="vertical"
     tools:context=".ui.mainview.activity.MainActivity">
+
+    <!--가로 줄-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1.32dp"
+        android:background="@color/boderColor" />
+
+    <!--추천 상품-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="39dp"
+        android:background="@color/basic_white"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="16dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="추천 상품"
+            android:textSize="14sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!--가로 줄-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1.32dp"
+        android:background="@color/boderColor" />
+
+
+    <!--뷰페이저-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp">
+        <!-- 화면을 꽉채워서 좌우 스크롤( 페이지 단위) -->
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewPager_main"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"/>
+
+        <TextView
+            android:id="@+id/curDot"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp"
+            android:text="● ○ ○"
+            android:textColor="#ffffff"
+            android:textSize="20dp" />
+    </RelativeLayout>
 
     <!--가로 줄-->
     <LinearLayout

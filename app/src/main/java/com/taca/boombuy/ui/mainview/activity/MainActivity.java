@@ -6,11 +6,15 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
@@ -61,6 +65,16 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+
+    ViewPager viewPager_main;
+    TextView curDot;
+    MyPageAdapter myPageAdapter;
+    String poster[] =
+            {
+                    "http://cfile79.uf.daum.net/image/194DBF4F50456DD81E380D",
+                    "http://cfile78.uf.daum.net/image/1353344C50456E9808D0AD",
+                    "http://cfile76.uf.daum.net/image/153AE3114C603347047CC6"
+            };
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
     // 기본 UI 틀
@@ -169,6 +183,35 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // 내 프로필 가져오기//////////////////////////////////////////////////////////////////////////////
         getProfile();
 
+        ///////뷰페이저/////////////////////////////////////////////////////////////////////////////////
+        viewPager_main = (ViewPager)findViewById(R.id.viewPager_main);
+        curDot = (TextView)findViewById(R.id.curDot);
+        myPageAdapter = new MyPageAdapter();
+        viewPager_main.setAdapter(myPageAdapter); // 뷰페이져에  페이지어뎁터를 넣는다
+        viewPager_main.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                Log.i("SCPAGE", position + " : " + positionOffset + " : " + positionOffsetPixels);
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                //Toast.makeText(MainActivity.this, position + "째 그림", Toast.LENGTH_SHORT).show();
+                changeDot(position);
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+                Log.i("SCSTATE", "변경 : " + state);
+
+            }
+        });
+
+        pageCurPage = 0;
+        handler.sendEmptyMessageDelayed(0, 2000);
 
     }
 
@@ -759,6 +802,91 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         tv_from_count.setText(Single_Value.getInstance().vo_from_friends_infos.size() + 1 + "명");
     }
 
+    // 하단 페이지 도트 변경 view pager에서
+
+    int pageCurPage;
+
+    Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+
+            switch (msg.what) {
+                case 0:
+                    pageCurPage++;
+                    int page = pageCurPage % poster.length;
+                    viewPager_main.setCurrentItem(page);
+                    sendEmptyMessageDelayed(0, 2000);
+                    break;
+            }
+        }
+    };
+
+    public void changeDot(int position) {
+
+        StringBuffer sb = new StringBuffer();
+        for (int i = 0; i < poster.length; i++) {
+
+            if (i == position)
+                sb.append("● ");
+            else
+                sb.append("○ ");
+        }
+        curDot.setText(sb.toString().trim());
+    }
+
+
+    class MyPageAdapter extends PagerAdapter {
+
+        @Override
+        public int getCount() {
+            return poster.length;
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+
+        // 뷰 추가
+        @Override
+        public Object instantiateItem(View container, int position) {
+            // position => 요청페이지 > 요청 페이지별 뷰를 생성해서 처리
+            // 요청페이지 해당하는 url 획득
+            String url = poster[position];
+
+            //이미지뷰 생성
+            ImageView imageView = new ImageView(MainActivity.this);
+
+            //이미지 셋팅
+            ImageProc.getInstance().drawImage(url, imageView);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY); // x,y 축 꽉채우기
+
+            ((ViewPager) container).addView(imageView);
+            return imageView;
+        }
+
+        // 뷰 제거
+        @Override
+        public void destroyItem(View container, int position, Object object) {
+            // super.destroyItem(container, position, object);
+            ((ViewPager) container).removeView((View) object);
+        }
+
+/*
+        @Override
+        public Object instantiateItem(ViewGroup container, int position) {
+            return super.instantiateItem(container, position);
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            super.destroyItem(container, position, object);
+        }
+*/
+
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
 

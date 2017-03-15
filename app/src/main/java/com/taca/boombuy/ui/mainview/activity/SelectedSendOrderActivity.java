@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import com.taca.boombuy.NetRetrofit.NetSSL;
 import com.taca.boombuy.R;
+import com.taca.boombuy.Reqmodel.ReqChangePayState;
 import com.taca.boombuy.Resmodel.ResBasic;
 import com.taca.boombuy.Resmodel.ResSelectedSendOrder;
 import com.taca.boombuy.database.StorageHelper;
@@ -174,8 +175,8 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
         // 1-> 취소 2-> 완료
     public void changeState(int state) {
 
-        ReqTemp temp = new ReqTemp(state);
-        Call<ResBasic> NetChangeState = NetSSL.getInstance().getMemberImpFactory().NetChangeState(oid, temp);
+        ReqChangePayState reqChangePayState = new ReqChangePayState(state);
+        Call<ResBasic> NetChangeState = NetSSL.getInstance().getMemberImpFactory().NetChangeState(oid, reqChangePayState);
         NetChangeState.enqueue(new Callback<ResBasic>() {
             @Override
             public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
@@ -183,7 +184,7 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     if (response.body() != null && response.body().getMessage() != null) {
 
-                        Log.i("Result : ", response.body().getMessage());
+                        Log.i("ChangeState Result : ", response.body().getMessage());
                         // 서버 통신
                         getSelectedData();
 

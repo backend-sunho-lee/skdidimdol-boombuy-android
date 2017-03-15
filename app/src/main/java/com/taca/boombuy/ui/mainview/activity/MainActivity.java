@@ -72,11 +72,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     ViewPager viewPager_main;
     TextView curDot;
     MyPageAdapter myPageAdapter;
-    String poster[] =
+    int poster[] =
             {
-                    "http://cfile79.uf.daum.net/image/194DBF4F50456DD81E380D",
-                    "http://cfile78.uf.daum.net/image/1353344C50456E9808D0AD",
-                    "http://cfile76.uf.daum.net/image/153AE3114C603347047CC6"
+                    R.drawable.banner_1,
+                    R.drawable.banner_2,
+                    R.drawable.banner_3
             };
 
     ///////////////////////////////////////////////////////////////////////////////////////////////
@@ -214,7 +214,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         });
 
         pageCurPage = 0;
-        handler.sendEmptyMessageDelayed(0, 2000);
+        handler.sendEmptyMessageDelayed(0, 2500);
 
     }
 
@@ -829,7 +829,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     pageCurPage++;
                     int page = pageCurPage % poster.length;
                     viewPager_main.setCurrentItem(page);
-                    sendEmptyMessageDelayed(0, 2000);
+                    sendEmptyMessageDelayed(0, 2500);
                     break;
             }
         }
@@ -867,19 +867,18 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         public Object instantiateItem(View container, final int position) {
             // position => 요청페이지 > 요청 페이지별 뷰를 생성해서 처리
             // 요청페이지 해당하는 url 획득
-            String url = poster[position];
+            int banner_image = poster[position];
 
             //이미지뷰 생성
             ImageView imageView = new ImageView(MainActivity.this);
 
             //이미지 셋팅
-            ImageProc.getInstance().drawImage(url, imageView);
+            imageView.setBackgroundResource(banner_image);
             imageView.setScaleType(ImageView.ScaleType.FIT_XY); // x,y 축 꽉채우기
 
             imageView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(MainActivity.this, position + "째 그림", Toast.LENGTH_SHORT).show();
                     if (position == 0) {
                         ItemDTO itemDTO = new ItemDTO(
                                 38,

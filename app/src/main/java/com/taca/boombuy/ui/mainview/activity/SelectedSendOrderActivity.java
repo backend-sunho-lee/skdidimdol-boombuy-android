@@ -171,9 +171,11 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
         ImageProc.getInstance().drawImage(resSelectedSendOrder.getResult().getOrders().getReceiverphoto(), received_gift_cell_receivedMemberProfile);
         ImageProc.getInstance().drawImage(resSelectedSendOrder.getResult().getOrders().getSenderphoto(), received_gift_cell_sendMemberProfile);
     }
+        // 1-> 취소 2-> 완료
+    public void changeState(int state) {
 
-    public void changeState() {
-        Call<ResBasic> NetChangeState = NetSSL.getInstance().getMemberImpFactory().NetChangeState(oid);
+        ReqTemp temp = new ReqTemp(state);
+        Call<ResBasic> NetChangeState = NetSSL.getInstance().getMemberImpFactory().NetChangeState(oid, temp);
         NetChangeState.enqueue(new Callback<ResBasic>() {
             @Override
             public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
@@ -253,7 +255,7 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
                         public void onClick(View v) {
                             NetWork.getInstance().NetGetCancelToken(getApplicationContext(), resSelectedSendOrder.getResult().getSettlements().get(position).getOid());
 
-
+                            changeState(1);
                             // 통신떄려서 결제상태 -> 결제 취소 바꿔주고
                             holder.received_gift_cell_cancelPaybtn.setVisibility(View.GONE);
                             holder.received_gift_cell_sendPayBtn.setBackgroundResource(R.drawable.ic_progress);
@@ -320,7 +322,7 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
             Toast.makeText(this, data.getStringExtra("suc"), Toast.LENGTH_SHORT).show();
             // 결제 결과 서버로 전송
             if (state)
-                changeState();
+                changeState(2);
         }
     }
 
@@ -369,6 +371,16 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
     public void setPriceText() {
         tv_selected_total_price.setText(String.format(String.format("%,3d", total_price) + "원"));
         tv_selected_completed_price.setText(String.format(String.format("%,3d", completed_price) + "원"));
+    }
+
+    public class ReqTemp{
+
+        int state;
+
+        public ReqTemp(int state) {
+            this.state = state;
+        }
+
     }
 
 }

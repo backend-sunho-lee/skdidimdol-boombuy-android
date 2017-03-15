@@ -14,6 +14,7 @@ import com.taca.boombuy.Resmodel.ResSimpleSendOrders;
 import com.taca.boombuy.networkmodel.GiftDTO;
 import com.taca.boombuy.networkmodel.LoginDTO;
 import com.taca.boombuy.networkmodel.SignUpDTO;
+import com.taca.boombuy.ui.mainview.activity.SelectedSendOrderActivity;
 
 import java.util.Map;
 
@@ -117,9 +118,8 @@ public interface MemberImpFactory {
 
 
 
-
     // 결제 완료 후 전송
     @PUT("/orders/{oid}")
-    Call<ResBasic> NetChangeState(@Path("oid") int temp);
+    Call<ResBasic> NetChangeState(@Path("oid") int temp, @Body SelectedSendOrderActivity.ReqTemp state);
 
 }

@@ -125,6 +125,8 @@ public class PaymentActivity extends BaseActivity
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
 
                 if(url.indexOf("http://ec2-35-166-158-25.us-west-2.compute.amazonaws.com:3000") >= 0){
+
+
                     webView.addJavascriptInterface(new MyInter(), "my");
                 }
 

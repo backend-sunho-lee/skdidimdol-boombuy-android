@@ -56,8 +56,8 @@ public class NetWork {
 
     public void NetGetCancelToken(final Context context, final int oid){
 
-        final String imp_key = "0621551347884684";
-        final String imp_secret = "I1xaj3KoGXvfyDz1mpRK4Keo4O39OWLxYjHhmrF3pbjXOSZbhRWmCaLGZOPNLAkJT10gsGkSSDQHwPSO";
+        final String imp_key = "6100896026056933";
+        final String imp_secret = "qgxZjZsX7u0XoFZEl3bYYvlkKQE59Q1A7zzqy2oFxpDW4CApFLoEhJY1AC6Jt7jAGT1fWpVtOypSbZiR";
 
         String json = "{'imp_key':"+imp_key+", 'imp_secret':"+imp_secret+"}";
 

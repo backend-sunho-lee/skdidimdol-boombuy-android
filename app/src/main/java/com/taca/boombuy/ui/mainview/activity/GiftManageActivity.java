@@ -242,7 +242,9 @@ public class GiftManageActivity extends AppCompatActivity implements
         } else if (id == R.id.nav_gift_manage) {
 
         } else if (id == R.id.nav_setting) {
-
+            Intent intent = new Intent(GiftManageActivity.this, SettingActivity.class);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.nav_sync_friends) {
             // 전화번호 동기화
             U.getInstance().sendPhoneNumber(this);

@@ -306,7 +306,9 @@ public class MainProduct extends AppCompatActivity implements
             startActivity(intent);
             finish();
         } else if (id == R.id.nav_setting) {
-
+            Intent intent = new Intent(MainProduct.this, SettingActivity.class);
+            startActivity(intent);
+            finish();
         } else if (id == R.id.nav_sync_friends) {
             // 전화번호 동기화
             U.getInstance().sendPhoneNumber(this);

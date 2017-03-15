@@ -311,7 +311,7 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
 
 
         if (requestCode == 1000 && resultCode == 1001) {
-            Toast.makeText(this, data.getStringExtra("err"), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, data.getStringExtra("err"), Toast.LENGTH_SHORT).show();
         } else if (requestCode == 1000 && resultCode == 1) {
             // 결제 후 결과를 받는 위치
             imp_uid = data.getStringExtra("imp_uid");
@@ -320,7 +320,7 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
 
             StorageHelper.getInstance().setString(oid + "iam", imp_uid + "/" + merchant_uid);
 
-            Toast.makeText(this, data.getStringExtra("suc"), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, data.getStringExtra("suc"), Toast.LENGTH_SHORT).show();
             // 결제 결과 서버로 전송
             if (state)
                 changeState(2);

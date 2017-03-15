@@ -179,7 +179,7 @@ public class PaymentActivity extends BaseActivity
         public void end(String imp_uid, String merchant_uid, boolean success) {
             // 결제 결과 받기
 
-            Toast.makeText(PaymentActivity.this, imp_uid + " : " + merchant_uid + " : " + success, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(PaymentActivity.this, imp_uid + " : " + merchant_uid + " : " + success, Toast.LENGTH_SHORT).show();
             String msg = imp_uid+"/"+merchant_uid+"/"+success;
             //Toast.makeText(getBaseContext(), msg,  Toast.LENGTH_SHORT).show();
             Intent intent = new Intent();

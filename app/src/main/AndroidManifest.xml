@@ -68,7 +68,8 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.mainview.activity.SignUpTermsActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
 
         <!-- FCM 메시징 수신 서비스 -->
         <service android:name=".fcm.MyFirebaseMessagingService">

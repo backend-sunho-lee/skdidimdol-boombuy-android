@@ -26,7 +26,7 @@
                 android:textStyle="bold"
                 android:textColor="@color/appColor"
                 android:gravity="center|center_horizontal"
-                android:text="설정    "/>
+                android:text="설정               "/>
         </android.support.v7.widget.Toolbar>
 
     </android.support.design.widget.AppBarLayout>

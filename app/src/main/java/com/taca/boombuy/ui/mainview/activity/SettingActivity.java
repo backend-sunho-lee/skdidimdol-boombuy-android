@@ -92,7 +92,8 @@ public class SettingActivity extends AppCompatActivity implements NavigationView
     }
 
     public void onConfirm(View view) {
-
+        Intent intent = new Intent(SettingActivity.this, SignUpTermsActivity.class);
+        startActivity(intent);
     }
 
     @Override
@@ -101,13 +102,6 @@ public class SettingActivity extends AppCompatActivity implements NavigationView
         getProfile();
     }
     public void onGoHome(View view) {
-        /*DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }*/
         finish();
     }
 

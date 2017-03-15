@@ -19,6 +19,7 @@
             android:icon="@drawable/btn_sync"
             android:title="친구 동기화" />
         <item
+            android:visible="false"
             android:id="@+id/nav_withdrawal"
             android:icon="@drawable/btn_out"
             android:title="회원탈퇴" />

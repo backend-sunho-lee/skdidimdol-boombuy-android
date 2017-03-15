@@ -45,6 +45,7 @@ import com.taca.boombuy.database.StorageHelper;
 import com.taca.boombuy.networkmodel.GiftDTO;
 import com.taca.boombuy.networkmodel.GiftSenderDTO;
 import com.taca.boombuy.singleton.item_single;
+import com.taca.boombuy.ui.popup.SignOutPopupActivity;
 import com.taca.boombuy.util.ImageProc;
 import com.taca.boombuy.util.U;
 import com.taca.boombuy.vo.VO_Gift_Total_SendernReceiver;
@@ -625,6 +626,44 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         e.printStackTrace();
                     }
                 }
+                break;
+            case 404:
+
+                Call<ResBasic> NetWithdrawal = NetSSL.getInstance().getMemberImpFactory().NetWithdrawal();
+                NetWithdrawal.enqueue(new Callback<ResBasic>() {
+                    @Override
+                    public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
+                        if (response.isSuccessful()) {
+                            if (response.body() != null && response.body().getMessage() != null) {
+                                Log.i("Result : ", response.body().getMessage());
+
+                                Log.i("회원탈퇴", " 완료");
+                                // 자동로그인 지우기
+                                // 패스워드 지우기
+                                // 어플 종료
+                                StorageHelper.getInstance().setBoolean(MainActivity.this, "auto_login", false);
+                                StorageHelper.getInstance().setString(MainActivity.this, "auto_login_password", "");
+
+
+                                finish();
+
+
+                            } else {
+                                Log.i("RESPONSE RESULT 1: ", response.message());
+                            }
+                        } else {
+
+                            Log.i("RESPONSE RESULT 2 : ", response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResBasic> call, Throwable t) {
+                        t.printStackTrace();
+
+                        Log.i("서버실패", t.getMessage());
+                    }
+                });
         }
     }
 
@@ -696,34 +735,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             U.getInstance().sendPhoneNumber(this);
         } else if (id == R.id.nav_withdrawal) {
             // 회원 탈퇴
-            Call<ResBasic> NetWithdrawal = NetSSL.getInstance().getMemberImpFactory().NetWithdrawal();
-            NetWithdrawal.enqueue(new Callback<ResBasic>() {
-                @Override
-                public void onResponse(Call<ResBasic> call, Response<ResBasic> response) {
-                    if (response.isSuccessful()) {
-                        if (response.body() != null && response.body().getMessage() != null) {
-                            Log.i("Result : ", response.body().getMessage());
+            Intent intent = new Intent(MainActivity.this, SignOutPopupActivity.class);
+            startActivityForResult(intent, 404);
 
-                            // 자동로그인 지우기
-                            // 패스워드 지우기
-                            // 어플 종료
-                            StorageHelper.getInstance().setBoolean(MainActivity.this, "auto_login", false);
-                            StorageHelper.getInstance().setString(MainActivity.this, "auto_login_password", "");
-                            finish();
 
-                        } else {
-                            Log.i("RESPONSE RESULT 1: ", response.message());
-                        }
-                    } else {
-
-                        Log.i("RESPONSE RESULT 2 : ", response.message());
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<ResBasic> call, Throwable t) {
-                }
-            });
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

@@ -210,7 +210,7 @@ public class SentGiftFrag extends Fragment {
             if(resSimpleSendOrders.getResult().get(position).getCnt() == 0 ){
                 holder.gift_Senders.setText(resSimpleSendOrders.getResult().get(position).getSender());
             }else {
-                holder.gift_Senders.setText(resSimpleSendOrders.getResult().get(position).getSender() + "외 " + resSimpleSendOrders.getResult().get(position).getCnt() + "명");
+                holder.gift_Senders.setText(resSimpleSendOrders.getResult().get(position).getSender() + " 외 " + resSimpleSendOrders.getResult().get(position).getCnt() + "명");
             }
 
             holder.gift_receivedPerson.setText(resSimpleSendOrders.getResult().get(position).getReceiver());

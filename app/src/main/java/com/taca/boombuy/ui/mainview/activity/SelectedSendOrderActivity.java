@@ -158,7 +158,14 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
             received_gift_cell_PayState.setBackgroundResource(R.drawable.ic_payment);
         }
 
-        gift_Senders.setText(resSelectedSendOrder.getResult().getOrders().getSender() + "외 " + resSelectedSendOrder.getResult().getOrders().getCnt() + "명");
+        if(resSelectedSendOrder.getResult().getOrders().getCnt() == 0 ){
+            gift_Senders.setText(resSelectedSendOrder.getResult().getOrders().getSender());
+        }else{
+
+            gift_Senders.setText(resSelectedSendOrder.getResult().getOrders().getSender() + " 외 " + resSelectedSendOrder.getResult().getOrders().getCnt() + "명");
+        }
+
+
         gift_receivedPerson.setText(resSelectedSendOrder.getResult().getOrders().getReceiver());
 
         ImageProc.getInstance().drawImage(resSelectedSendOrder.getResult().getOrders().getReceiverphoto(), received_gift_cell_receivedMemberProfile);

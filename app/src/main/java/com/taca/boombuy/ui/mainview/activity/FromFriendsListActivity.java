@@ -177,7 +177,7 @@ public class FromFriendsListActivity extends AppCompatActivity {
         fromFriendsLocalListAdapter = new FromFriendsListActivity.FromFriendsLocalListAdapter();
         //lv_from_friends_local_list.setAdapter(fromFriendsLocalListAdapter);
 
-        tv_devided_price.setText(Single_Value.getInstance().devided_non_master() + "원");
+        tv_devided_price.setText(String.format("%,3d", Single_Value.getInstance().devided_non_master()) + "원");
     }
 
     public void refreshList_add_friends() {
@@ -189,7 +189,7 @@ public class FromFriendsListActivity extends AppCompatActivity {
         fromFriendsLocalListAdapter = new FromFriendsListActivity.FromFriendsLocalListAdapter();
         lv_from_friends_local_list.setAdapter(fromFriendsLocalListAdapter);
 
-        tv_devided_price.setText(Single_Value.getInstance().devided_non_master() + "원");
+        tv_devided_price.setText(String.format("%,3d", Single_Value.getInstance().devided_non_master()) + "원");
     }
 
     // 자동완성 함수

@@ -141,7 +141,7 @@ public class couponfrag extends Fragment {
 
             couponViewHolder.lv_pname.setText(getItem(position).getName());
             ImageProc.getInstance().drawImage(getItem(position).getLocation(), couponViewHolder.lv_imageview);
-            couponViewHolder.lv_pprice.setText(getItem(position).getPrice()+"원");
+            couponViewHolder.lv_pprice.setText(String.format("%,3d", getItem(position).getPrice())+"원");
 
             couponViewHolder.lv_checkbox.setOnCheckedChangeListener(new MyCouponCheck(position));
             couponViewHolder.lv_checkbox.setChecked(getItem(position).isChecked());

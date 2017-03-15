@@ -198,7 +198,7 @@ public class brandSelectfrag extends Fragment {
             });
 
             holder.lv_pname.setText(resItems.getResult().get(position).getName());
-            holder.lv_pprice.setText(resItems.getResult().get(position).getPrice() + "원");
+            holder.lv_pprice.setText(String.format("%,3d", resItems.getResult().get(position).getPrice()) + "원");
 
             holder.lv_detailinfo.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -208,6 +208,8 @@ public class brandSelectfrag extends Fragment {
                     ItemDTO item = resItems.getResult().get(position);
                     intent.putExtra("item", item);
                     startActivity(intent);
+
+
                 }
             });
 
@@ -215,29 +217,6 @@ public class brandSelectfrag extends Fragment {
             holder.lv_checkbox.setOnCheckedChangeListener(new MyBrandSelectedCheck(position));
             holder.lv_checkbox.setChecked(resItems.getResult().get(position).isChecked());
 
-            /*holder.lv_checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-
-                    item_single.getInstance().itemDTO = new ItemDTO(
-                            resItems.getResult().get(position).getId(),
-                            resItems.getResult().get(position).getBid(),
-                            resItems.getResult().get(position).getName(),
-                            resItems.getResult().get(position).getPrice(),
-                            resItems.getResult().get(position).getDetail(),
-                            resItems.getResult().get(position).getLocation(),false
-                    );
-                    if (isChecked) {
-                        Collections.reverse(item_single.getInstance().itemDTOArrayList); // 새로운 데이터를 리스트의 앞에 추가 해야하므로 리버스한 후 추가 후 다시 리버스
-                        item_single.getInstance().itemDTOArrayList.add(item_single.getInstance().itemDTO);
-                        Collections.reverse(item_single.getInstance().itemDTOArrayList);
-
-                    } else {
-                        item_single.getInstance().itemDTOArrayList.remove(item_single.getInstance().itemDTO);
-                    }
-                }
-
-            });*/
 
             // 마지막 체크
             if (position == getItemCount() - 1) {

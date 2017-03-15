@@ -259,7 +259,7 @@ public class SelectedSendOrderActivity extends AppCompatActivity {
                             changeState(1);
                             // 통신떄려서 결제상태 -> 결제 취소 바꿔주고
                             holder.received_gift_cell_cancelPaybtn.setVisibility(View.GONE);
-                            holder.received_gift_cell_sendPayBtn.setBackgroundResource(R.drawable.ic_progress);
+                            holder.received_gift_cell_sendPayBtn.setBackgroundResource(R.drawable.ic_return);
                             // 결제 취소모양으로 버튼이미지 바꿔줘야함
 
                         }

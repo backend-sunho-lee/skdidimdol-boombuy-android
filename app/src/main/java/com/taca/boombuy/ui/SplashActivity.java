@@ -7,6 +7,7 @@ import android.os.Handler;
 
 import com.taca.boombuy.R;
 import com.taca.boombuy.Single_Value;
+import com.taca.boombuy.TutorialActivity;
 import com.taca.boombuy.database.StorageHelper;
 import com.taca.boombuy.ui.sign.LoginActivity;
 import com.taca.boombuy.util.ImageProc;

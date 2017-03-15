@@ -42,13 +42,12 @@
     <!--뷰페이저-->
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="180dp">
+        android:layout_height="160dp">
         <!-- 화면을 꽉채워서 좌우 스크롤( 페이지 단위) -->
         <android.support.v4.view.ViewPager
-            android:layout_margin="1dp"
             android:id="@+id/viewPager_main"
             android:layout_width="match_parent"
-            android:layout_height="180dp"/>
+            android:layout_height="160dp"/>
 
         <TextView
             android:id="@+id/curDot"
@@ -57,8 +56,7 @@
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="5dp"
-            android:text="●  ○  ○"
-            android:textColor="#ffffff"
+            android:textColor="@color/appColor"
             android:textSize="8dp" />
     </RelativeLayout>
 
@@ -108,7 +106,7 @@
     <!--선택한 상품 리싸이클러뷰-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="146dp">
+        android:layout_height="166dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recyclerview"

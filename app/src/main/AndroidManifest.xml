@@ -87,7 +87,6 @@
         <activity
             android:name=".ui.mainview.activity.GiftDetailInfoActivity"
             android:screenOrientation="portrait" />
-
         <activity
             android:name=".ui.mainview.activity.GiftSelectDetailInfoActivity"
             android:label="@string/title_activity_gift_select_detail_info"
@@ -98,10 +97,13 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.payment.PaymentActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.mainview.activity.SettingActivity"
             android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".TutorialActivity"
+            android:theme="@style/AppTheme.NoActionBar" />/>
     </application>
 
 </manifest>

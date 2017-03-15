@@ -22,6 +22,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.OrientationHelper;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -189,6 +190,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         ///////뷰페이저/////////////////////////////////////////////////////////////////////////////////
         viewPager_main = (ViewPager) findViewById(R.id.viewPager_main);
         curDot = (TextView) findViewById(R.id.curDot);
+        StringBuffer sb = new StringBuffer();
+        sb.append("<font color='#7448ef'>●　　</font>");
+        sb.append("<font color='#ffffff'>●　　</font>");
+        sb.append("<font color='#ffffff'>●</font>");
+        curDot.setText(Html.fromHtml(sb.toString().trim()), TextView.BufferType.SPANNABLE);
         myPageAdapter = new MyPageAdapter();
         viewPager_main.setAdapter(myPageAdapter); // 뷰페이져에  페이지어뎁터를 넣는다
         viewPager_main.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -361,7 +367,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 }
             });
         } else {
-            Toast.makeText(this, "선물과 받을 사람을 선택하세요", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "상품과 받을 사람을 선택하세요", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -473,7 +479,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             ImageProc.getInstance().drawImage(image, product_imageView_cell);
             product_title_cell.setText(pname);
-            product_price_cell.setText(pprice + "원");
+            product_price_cell.setText(String.format("%,3d", pprice) + "원");
 
             final String tmp_text = pname;
             btn_remove_gift.setOnClickListener(new View.OnClickListener() {
@@ -527,7 +533,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // 데이터 설정
             ImageProc.getInstance().drawImage(Single_Value.getInstance().vo_from_friends_infos.get(position).getLocation(), holder.iv_from_profile_cell);
             holder.tv_from_name_cell.setText(Single_Value.getInstance().vo_from_friends_infos.get(position).getName());
-            holder.tv_divided_cell.setText(Single_Value.getInstance().devided_non_master() + "원");
+            holder.tv_divided_cell.setText(String.format("%,3d", Single_Value.getInstance().devided_non_master()) + "원");
         }
 
         @Override
@@ -593,7 +599,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             // 내 이미지 설정 부분
             ImageProc.getInstance().drawImage(Single_Value.getInstance().vo_from_friends_infos.get(position).getLocation(), holder.iv_from_profile_cell);
             holder.tv_from_name_cell.setText(Single_Value.getInstance().vo_from_friends_infos.get(position).getName());
-            holder.tv_divided_cell.setText(Single_Value.getInstance().devided_non_master() + "원");
+            holder.tv_divided_cell.setText(String.format("%,3d", Single_Value.getInstance().devided_non_master()) + "원");
 
             return convertView;
         }
@@ -799,10 +805,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         rv_from_name_list.setAdapter(fromRecycleAdapter);
 
         // 내가 결제할 금액 세팅
-        tv_devided_master.setText(Single_Value.getInstance().devided_master() + "원");
+        tv_devided_master.setText(String.format("%,3d", Single_Value.getInstance().devided_master()) + "원");
 
         // 총 결제 금액 세팅
-        tv_total_price.setText(Single_Value.getInstance().getTotalPrice() + "원");
+        tv_total_price.setText(String.format("%,3d", Single_Value.getInstance().getTotalPrice()) + "원");
         // 리싸이클뷰
         recyclerview.setAdapter(recycleAdapter);
 
@@ -840,12 +846,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < poster.length; i++) {
 
-            if (i == position)
-                sb.append("● ");
-            else
-                sb.append("○ ");
+            if (i == position) {
+                if (i == poster.length - 1) {
+                    sb.append("<font color='#7448ef'>●</font>");
+                } else {
+                    sb.append("<font color='#7448ef'>●　　</font>");
+                }
+            }
+            else {
+                if (i == poster.length - 1) {
+                    sb.append("<font color='#ffffff'>●</font>");
+                } else {
+                    sb.append("<font color='#ffffff'>●　　</font>");
+                }
+            }
         }
-        curDot.setText(sb.toString().trim());
+        curDot.setText(Html.fromHtml(sb.toString().trim()), TextView.BufferType.SPANNABLE);
     }
 
 
@@ -893,9 +909,31 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         item_single.getInstance().itemDTOArrayList.add(itemDTO);
                         Collections.reverse(item_single.getInstance().itemDTOArrayList);
                     } else if (position == 1) {
-
+                        ItemDTO itemDTO = new ItemDTO(
+                                191,
+                                17,
+                                "그릭요거트 스트로베리 블루베리L",
+                                6900,
+                                "",
+                                "https://boombuy.s3.ap-northeast-2.amazonaws.com/itemsPhotos/1487229203166_smoothieKing_0.13906814635176445",
+                                true
+                        );
+                        Collections.reverse(item_single.getInstance().itemDTOArrayList);
+                        item_single.getInstance().itemDTOArrayList.add(itemDTO);
+                        Collections.reverse(item_single.getInstance().itemDTOArrayList);
                     } else {
-
+                        ItemDTO itemDTO = new ItemDTO(
+                                65,
+                                6,
+                                "캘리포니아스테이크샐러드+과일 에이드(1)",
+                                28600,
+                                "",
+                                "https://boombuy.s3.ap-northeast-2.amazonaws.com/itemsPhotos/1487224540624_outback_0.8778730006694875",
+                                true
+                        );
+                        Collections.reverse(item_single.getInstance().itemDTOArrayList);
+                        item_single.getInstance().itemDTOArrayList.add(itemDTO);
+                        Collections.reverse(item_single.getInstance().itemDTOArrayList);
                     }
                     refreshMainView();
                 }

@@ -126,7 +126,7 @@ public class totalfrag extends Fragment {
 
             holder.lv_pname.setText(getItem(position).getName());
             // pcontent
-            holder.lv_pprice.setText(getItem(position).getPrice() + "원");
+            holder.lv_pprice.setText(String.format("%,3d", getItem(position).getPrice()) + "원");
             holder.lv_checkbox.setOnCheckedChangeListener(new MyTotalCheck(position));
             holder.lv_checkbox.setChecked(getItem(position).isChecked());
 

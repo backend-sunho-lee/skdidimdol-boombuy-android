@@ -14,7 +14,7 @@ import com.taca.boombuy.util.ImageProc;
 
 public class SplashActivity extends Activity {
 
-    private int SPLASH_TIME_OUT = 2000;
+    private int SPLASH_TIME_OUT = 3000;
     boolean nonFirst;
 
     @Override

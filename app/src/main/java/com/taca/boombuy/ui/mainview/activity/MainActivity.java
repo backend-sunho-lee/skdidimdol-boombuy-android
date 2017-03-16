@@ -192,8 +192,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         curDot = (TextView) findViewById(R.id.curDot);
         StringBuffer sb = new StringBuffer();
         sb.append("<font color='#7448ef'>●　　</font>");
-        sb.append("<font color='#ffffff'>●　　</font>");
-        sb.append("<font color='#ffffff'>●</font>");
+        sb.append("<font color='#e5e5e5'>●　　</font>");
+        sb.append("<font color='#e5e5e5'>●</font>");
         curDot.setText(Html.fromHtml(sb.toString().trim()), TextView.BufferType.SPANNABLE);
         myPageAdapter = new MyPageAdapter();
         viewPager_main.setAdapter(myPageAdapter); // 뷰페이져에  페이지어뎁터를 넣는다
@@ -855,9 +855,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             }
             else {
                 if (i == poster.length - 1) {
-                    sb.append("<font color='#ffffff'>●</font>");
+                    sb.append("<font color='#e5e5e5'>●</font>");
                 } else {
-                    sb.append("<font color='#ffffff'>●　　</font>");
+                    sb.append("<font color='#e5e5e5'>●　　</font>");
                 }
             }
         }
